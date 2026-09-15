@@ -1,0 +1,7 @@
+# Dependencies and build output (rebuilt automatically on every deploy)
+node_modules/
+dist/
+.astro/
+
+# macOS
+.DS_Store
