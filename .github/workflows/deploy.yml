@@ -1,0 +1,46 @@
+# Builds the site and publishes it to GitHub Pages on every change to `main`
+# (including edits made to content.js directly on github.com).
+# Official Astro workflow: https://docs.astro.build/en/guides/deploy/github/
+#
+# If the build fails (for example a missing comma in content.js), the deploy job
+# never runs and the site that is already online stays exactly as it was.
+name: Deploy to GitHub Pages
+
+on:
+  push:
+    branches: [main]
+  # Lets you re-run the deploy by hand from the Actions tab.
+  workflow_dispatch:
+
+# Allow this workflow to read the repository and publish the Pages site.
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+# Never run two deploys at the same time; a newer one waits for the older one.
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout the repository
+        uses: actions/checkout@v7
+      - name: Install, build and upload the site
+        uses: withastro/action@v6
+        with:
+          node-version: 24
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v5

@@ -6,6 +6,13 @@ export default defineConfig({
   // The website's public address. It is written ONLY here: the sitemap and
   // robots.txt read it from this line. When jpsa-ipsf.com is connected,
   // change this one value (and add public/CNAME).
+  //
+  // The site must be served from the ROOT of this address, so the GitHub
+  // repository has to be named exactly jpsa-ipsf.github.io. Pictures and scripts
+  // are linked from the root (/_astro/...): under any other repository name
+  // (github.io/<name>/) the pages open with their colours and fonts, but no
+  // picture loads, nothing interactive works, and every section that fades in
+  // while scrolling stays hidden.
   site: "https://jpsa-ipsf.github.io",
 
   build: {
