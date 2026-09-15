@@ -1,0 +1,7 @@
+---
+import Icon from "./Icon.astro";
+import { ext } from "../lib/text.js";
+
+const { label, href, variant = "primary", iconName = "arrow-right", size = "" } = Astro.props;
+---
+<a class={`btn btn--${variant}${size ? " btn--" + size : ""}`} href={href} {...ext(href)}>{label}{iconName && <Icon name={iconName} />}</a>

@@ -10,7 +10,7 @@
    • Lines marked TODO still need information from the JPSA team.
    ========================================================================== */
 
-window.JPSA = {
+export default {
   site: {
     name: "Jordan Pharmaceutical Students' Association",
     short: "JPSA",

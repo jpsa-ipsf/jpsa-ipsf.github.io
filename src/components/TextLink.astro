@@ -1,0 +1,7 @@
+---
+import Icon from "./Icon.astro";
+import { ext, isExternal } from "../lib/text.js";
+
+const { label, href } = Astro.props;
+---
+<a class="text-link" href={href} {...ext(href)}>{label}<Icon name={isExternal(href) ? "arrow-up-right" : "arrow-right"} /></a>

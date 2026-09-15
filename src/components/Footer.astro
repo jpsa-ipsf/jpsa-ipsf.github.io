@@ -1,0 +1,51 @@
+---
+import { Image } from "astro:assets";
+import C from "../../content.js";
+import Icon from "./Icon.astro";
+import { img } from "../lib/images.js";
+import { ext, mailto } from "../lib/text.js";
+
+const L = C.site.links;
+const social = [
+  ["instagram", L.instagram, "JPSA on Instagram"],
+  ["facebook", L.facebook, "JPSA on Facebook"],
+  ["linkedin", L.linkedin, "JPSA on LinkedIn"],
+];
+const year = new Date().getFullYear();
+---
+<div class="container">
+  <div class="footer-grid">
+    <div class="footer-brand">
+      <Image src={img(C.site.logo.light)} alt="JPSA" widths={[200, 400]} sizes="128px" loading="lazy" />
+      <p>{C.footer.blurb}</p>
+      <div class="social">{social.map(([i, href, label]) => <a href={href} target="_blank" rel="noopener" aria-label={label}><Icon name={i} /></a>)}</div>
+    </div>
+    <div>
+      <p class="footer-title">Explore</p>
+      <ul class="footer-links">{C.nav.map((n) => <li><a href={n.href}>{n.label}</a></li>)}</ul>
+    </div>
+    <div>
+      <p class="footer-title">Get involved</p>
+      <ul class="footer-links">
+        <li><a href={L.join} {...ext(L.join)}>Join JPSA</a></li>
+        <li><a href="sep.html">Go on exchange</a></li>
+        <li><a href="index.html#family">Meet the family</a></li>
+        <li><a href={mailto("Partnership with JPSA")}>Partner with us</a></li>
+      </ul>
+    </div>
+    <div>
+      <p class="footer-title">Contact</p>
+      <div class="footer-contact">
+        <a href={mailto()}><Icon name="mail" />{C.site.email}</a>
+        <a href={L.sepInstagram} target="_blank" rel="noopener"><Icon name="plane" />@sep.jordan</a>
+        <a href={L.ipsfJpsa} target="_blank" rel="noopener"><Icon name="globe" />JPSA on ipsf.org</a>
+        <span style="display:inline-flex;gap:10px;align-items:center"><Icon name="map-pin" />Amman, Jordan</span>
+      </div>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <span>© <span data-year>{year}</span> {C.site.name}</span>
+    <span>{C.site.slogan}</span>
+  </div>
+</div>
+<div class="footer-wordmark" aria-hidden="true">JPSA</div>

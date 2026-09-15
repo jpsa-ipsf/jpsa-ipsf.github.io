@@ -1,0 +1,8 @@
+---
+import ICONS from "../lib/icons.js";
+
+const { name, class: cls = "" } = Astro.props;
+const paths = ICONS[name];
+if (!paths) console.warn(`[JPSA] Missing icon: ${name}`);
+---
+{paths && <svg class={`icon ${cls}`} viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false" set:html={paths}></svg>}
