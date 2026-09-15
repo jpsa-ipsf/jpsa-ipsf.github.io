@@ -23,15 +23,34 @@ const { page, title, description } = Astro.props;
   <link rel="stylesheet" href="assets/css/base.css">
   <link rel="stylesheet" href="assets/css/components.css">
   <link rel="stylesheet" href="assets/css/pages.css">
-  <noscript><style is:inline>.reveal{opacity:1!important;transform:none!important}</style></noscript>
+  {/* Without JavaScript: show everything at once, keep the mobile menu reachable,
+      stack the team panels and hide the controls that would do nothing (tabs, filters).
+      is:inline keeps this <style> inside <noscript> (Astro would otherwise move it). */}
+  <noscript><style is:inline>
+    .reveal{opacity:1!important;transform:none!important}
+    .manifesto__line{color:var(--ink)}
+    .journey__progress{width:100%}
+    .teams{grid-template-columns:1fr}
+    .teams__list,.filter-bar .pills{display:none}
+    .team-panel[hidden]{display:block!important}
+    @media (max-width:940px){
+      .site-header{position:static}
+      .menu-toggle{display:none}
+      .header-inner{height:auto;flex-wrap:wrap;padding-block:12px}
+      .nav{position:static;opacity:1;visibility:visible;transform:none;width:100%;padding:0;border:0;box-shadow:none;background:none;flex-direction:row;flex-wrap:wrap;align-items:center;gap:8px}
+      .nav-list{flex-direction:row;flex-wrap:wrap;gap:4px}
+      .nav-link{width:auto;font-size:1rem;padding:10px 12px;border-bottom:0;border-radius:var(--radius-pill)}
+      .nav-link[aria-current="page"]::after{left:12px;right:12px;width:auto;bottom:6px}
+    }
+  </style></noscript>
 </head>
 <body data-page={page}>
   <a class="skip-link" href="#main">Skip to content</a>
   <header class="site-header" id="site-header"><Header page={page} /></header>
   <main id="main" tabindex="-1"><slot /></main>
   <footer class="site-footer" id="site-footer"><Footer /></footer>
-  <noscript>
-    <p style="padding:24px;font-family:system-ui;text-align:center">This website needs JavaScript to show its content. You can also find JPSA on Instagram: <a href="https://www.instagram.com/jpsa_ipsf/">@jpsa_ipsf</a>.</p>
-  </noscript>
+  <script>
+    import "../scripts/app.js";
+  </script>
 </body>
 </html>
