@@ -1,4 +1,86 @@
 ---
 import Base from "../layouts/Base.astro";
+import C from "../../content.js";
+import PageHero from "../components/PageHero.astro";
+import Stats from "../components/Stats.astro";
+import SectionHead from "../components/SectionHead.astro";
+import Icon from "../components/Icon.astro";
+import Btn from "../components/Btn.astro";
+import CtaBand from "../components/CtaBand.astro";
+import ART from "../lib/art.js";
+import { delay, mailto } from "../lib/text.js";
+
+const s = C.sep;
+const L = C.site.links;
 ---
-<Base page="sep" title="Student Exchange Programme (SEP) — JPSA" description="Train abroad through IPSF's Student Exchange Programme, or come to Jordan: how JPSA's SEP works, who can apply and what to expect."></Base>
+<Base page="sep" title="Student Exchange Programme (SEP) — JPSA" description="Train abroad through IPSF's Student Exchange Programme, or come to Jordan: how JPSA's SEP works, who can apply and what to expect.">
+  <PageHero {...s.hero} />
+  <section class="section section--tight">
+    <div class="container">
+      <Stats list={s.stats} />
+      <p class="small muted" style="margin-top:18px">{s.statsSource}</p>
+    </div>
+  </section>
+
+  <section class="section section--paper" id="ways">
+    <div class="container">
+      <SectionHead kicker={s.ways.kicker} title={s.ways.title} />
+      <div class="ways">
+        {[["out", s.ways.out], ["in", s.ways.in]].map(([k, w], i) => <article class={`way way--${k} reveal`} style={`--delay:${i * 100}ms`}><span class="way__icon"><Icon name={w.icon} /></span><h3>{w.title}</h3><p>{w.text}</p></article>)}
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="fields">
+    <div class="container">
+      <SectionHead kicker={s.fields.kicker} title={s.fields.title} lead={s.fields.lead} split />
+      <div class="fields">{s.fields.list.map((f, i) => <div class="field reveal" style={delay(i, 60, 6)}><Icon name={f.icon} />{f.label}</div>)}</div>
+    </div>
+  </section>
+
+  <section class="section section--gray" id="apply">
+    <div class="container">
+      <SectionHead kicker={s.steps.kicker} title={s.steps.title} />
+      <ol class="steps" role="list">
+        {s.steps.list.map((st, i) => <li class="step reveal" style={delay(i)}><h3>{st.title}</h3><p>{st.text}</p></li>)}
+      </ol>
+      <p class="note reveal"><Icon name="info" /><span>{s.steps.note} <a href={L.ipsfSep} target="_blank" rel="noopener">IPSF's SEP page</a> · <a href={L.ipsfFaq} target="_blank" rel="noopener">IPSF FAQ</a></span></p>
+    </div>
+  </section>
+
+  <section class="section section--black" id="incoming">
+    <div class="container">
+      <SectionHead kicker={s.incoming.kicker} title={s.incoming.title} lead={s.incoming.lead} split />
+      <div class="split split--even">
+        <div class="fact-list reveal">
+          {s.incoming.facts.map((f) => <div class="fact"><div class="fact__k">{f.k}</div><div class="fact__v">{f.v}</div></div>)}
+        </div>
+        <div class="reveal" style="--delay:100ms">
+          <p class="lead">{s.incoming.note}</p>
+          <p class="small muted" style="margin-top:14px">{s.incoming.source}</p>
+          <div class="cluster" style="margin-top:24px">
+            <Btn label="Follow @sep.jordan" href={L.sepInstagram} variant="yellow" iconName="instagram" />
+            <Btn label="JPSA on ipsf.org" href={L.ipsfJpsa} variant="outline-light" iconName="arrow-up-right" />
+          </div>
+        </div>
+      </div>
+      <div class="jordan-tiles" style="margin-top:clamp(40px,6vw,72px)">
+        {s.incoming.tiles.map((t, i) => <article class="jtile reveal" style={delay(i, 80, 4)}><Fragment set:html={ART[t.art] || ""} /><h3>{t.title}</h3><p>{t.text}</p></article>)}
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="faq">
+    <div class="container split">
+      <div class="reveal">
+        <span class="kicker">{s.faq.kicker}</span>
+        <h2 style="margin-top:18px">{s.faq.title}</h2>
+      </div>
+      <div class="faq reveal">
+        {s.faq.list.map((f, i) => <details open={i === 0}><summary>{f.q}<Icon name="plus" /></summary><div class="faq__body"><p>{f.a}</p></div></details>)}
+      </div>
+    </div>
+  </section>
+
+  <CtaBand title={s.cta.title} text={s.cta.text}><Btn label="@sep.jordan" href={L.sepInstagram} variant="yellow" iconName="instagram" /><Btn label="Email the SEP team" href={mailto("Student Exchange Program")} variant="outline-light" iconName="mail" /></CtaBand>
+</Base>

@@ -1,4 +1,32 @@
 ---
 import Base from "../layouts/Base.astro";
+import C from "../../content.js";
+import Marquee from "../components/Marquee.astro";
+import CtaBand from "../components/CtaBand.astro";
+import Btn from "../components/Btn.astro";
+import HomeHero from "../sections/home/HomeHero.astro";
+import Manifesto from "../sections/home/Manifesto.astro";
+import About from "../sections/home/About.astro";
+import Journey from "../sections/home/Journey.astro";
+import Ipsf from "../sections/home/Ipsf.astro";
+import Mission from "../sections/home/Mission.astro";
+import Why from "../sections/home/Why.astro";
+import Family from "../sections/home/Family.astro";
+import Teams from "../sections/home/Teams.astro";
+
+const h = C.home;
+const L = C.site.links;
 ---
-<Base page="home" title="JPSA — Jordan Pharmaceutical Students' Association" description="JPSA brings pharmacy students across Jordan together: founded in 2007, affiliated with IPSF, active in 7 universities — conferences, student exchange, public health, humanitarian and social programs."></Base>
+<Base page="home" title="JPSA — Jordan Pharmaceutical Students' Association" description="JPSA brings pharmacy students across Jordan together: founded in 2007, affiliated with IPSF, active in 7 universities — conferences, student exchange, public health, humanitarian and social programs.">
+  <HomeHero />
+  <Marquee items={C.universities.map((u) => u.name)} />
+  <Manifesto />
+  <About />
+  <Journey />
+  <Ipsf />
+  <Mission />
+  <Why />
+  <Family />
+  <Teams />
+  <CtaBand title={h.cta.title} text={h.cta.text}><Btn label="Join JPSA" href={L.join} variant="yellow" /><Btn label="Follow @jpsa_ipsf" href={L.instagram} variant="outline-light" iconName="instagram" /></CtaBand>
+</Base>

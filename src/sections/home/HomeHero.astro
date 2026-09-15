@@ -1,0 +1,45 @@
+---
+import { Image } from "astro:assets";
+import C from "../../../content.js";
+import Btn from "../../components/Btn.astro";
+import Leaves from "../../components/Leaves.astro";
+import { img } from "../../lib/images.js";
+
+const h = C.home.hero;
+const L = C.site.links;
+---
+<section class="home-hero">
+  <div class="container home-hero__grid">
+    <div>
+      <span class="kicker reveal">{h.kicker}</span>
+      <h1 class="home-hero__title reveal" style="--delay:80ms">
+        <span class="line">{h.titleLines[0]}</span>
+        <span class="line">{h.titleLines[1]}<span class="dot">.</span></span>
+      </h1>
+      <p class="home-hero__sub reveal" style="--delay:160ms">{h.sub}</p>
+      <div class="cluster home-hero__meta reveal" style="--delay:220ms">
+        {h.chips.map((c, i) => <span class={`chip${i === 0 ? " chip--dark" : ""}`}>{c}</span>)}
+      </div>
+      <div class="cluster actions reveal" style="--delay:280ms">
+        <Btn label="Join JPSA" href={L.join} />
+        <Btn label="Explore our portfolios" href="portfolios.html" variant="outline" />
+      </div>
+    </div>
+    <div class="collage reveal" style="--delay:140ms">
+      <div class="collage__block"></div>
+      {h.photos.map((p, i) => <figure class={`collage__photo collage__photo--${i + 1}`}><Image src={img(p.src)} alt={p.alt} widths={[400, 800]} sizes="(max-width: 900px) 50vw, 280px" loading="eager" /></figure>)}
+      <Leaves class="collage__leaves" />
+      <svg class="badge-spin" viewBox="0 0 200 200" aria-hidden="true" focusable="false">
+        <defs><path id="badge-path" d="M100,100 m-76,0 a76,76 0 1,1 152,0 a76,76 0 1,1 -152,0"></path></defs>
+        <circle cx="100" cy="100" r="99" fill="#000"></circle>
+        <text font-family="DM Sans, system-ui, sans-serif" font-size="16.5" font-weight="700" fill="#fdd82e" textLength="470" lengthAdjust="spacing">
+          <textPath href="#badge-path">{h.badge.toUpperCase()}</textPath>
+        </text>
+        <g transform="translate(72 67) scale(0.5)">
+          <path d="M44 118C12 94 12 46 52 10c16 34 18 72-8 108z" fill="#c21f1f"></path>
+          <path d="M52 124c-2-34 20-62 58-68 2 36-20 64-58 68z" fill="#fdd82e"></path>
+        </g>
+      </svg>
+    </div>
+  </div>
+</section>

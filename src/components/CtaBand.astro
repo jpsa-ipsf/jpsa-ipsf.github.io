@@ -1,0 +1,20 @@
+---
+// Closing call-to-action band. Put the buttons inside the tag, on ONE line
+// (no spaces between them), e.g. <CtaBand …><Btn …/><Btn …/></CtaBand>
+import Leaves from "./Leaves.astro";
+import { rich } from "../lib/text.js";
+
+const { title, text } = Astro.props;
+---
+<section class="section section--tight">
+  <div class="container">
+    <div class="cta-band reveal">
+      <div>
+        <h2 set:html={rich(title)}></h2>
+        {text && <p set:html={rich(text)}></p>}
+      </div>
+      <div class="cluster"><slot /></div>
+      <Leaves class="cta-band__leaf" />
+    </div>
+  </div>
+</section>

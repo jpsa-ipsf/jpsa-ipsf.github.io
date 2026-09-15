@@ -15,3 +15,6 @@ export const ext = (href) => (isExternal(href) ? { target: "_blank", rel: "noope
 export const mailto = (subject) => `mailto:${C.site.email}${subject ? `?subject=${encodeURIComponent(subject)}` : ""}`;
 
 export const pad = (n) => String(n).padStart(2, "0");
+
+/** Staggered fade-in delay for the i-th item of a list (style attribute value). */
+export const delay = (i, step = 80, mod = 3) => `--delay:${(i % mod) * step}ms`;

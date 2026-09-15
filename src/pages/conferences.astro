@@ -1,4 +1,86 @@
 ---
+import { Image } from "astro:assets";
 import Base from "../layouts/Base.astro";
+import C from "../../content.js";
+import PageHero from "../components/PageHero.astro";
+import SectionHead from "../components/SectionHead.astro";
+import Icon from "../components/Icon.astro";
+import Btn from "../components/Btn.astro";
+import CtaBand from "../components/CtaBand.astro";
+import { img } from "../lib/images.js";
+import { rich, delay, mailto } from "../lib/text.js";
+
+const c = C.conferences;
+const n = c.national;
+const ev = c.events.list;
+const L = C.site.links;
 ---
-<Base page="conferences" title="Conferences — JPSA" description="JPSA's National Conference, the IPSF Eastern Mediterranean symposium we hosted in Amman, and the national figures who stood with us."></Base>
+<Base page="conferences" title="Conferences — JPSA" description="JPSA's National Conference, the IPSF Eastern Mediterranean symposium we hosted in Amman, and the national figures who stood with us.">
+  <PageHero {...c.hero} />
+
+  <section class="section section--red">
+    <div class="container split split--center">
+      <div class="reveal">
+        <span class="kicker">Why we gather</span>
+        <p class="lead" style="margin-top:18px">{c.intro}</p>
+      </div>
+      <p class="quote-band reveal" style="--delay:100ms">{c.missionQuote}</p>
+    </div>
+  </section>
+
+  <section class="section section--paper" id="national-symposium">
+    <div class="container">
+      <SectionHead kicker={n.kicker} title={n.title} />
+      <article class="feature reveal">
+        <div class="feature__side">
+          <span class="chip chip--yellow" style="align-self:flex-start"><Icon name="calendar" />{n.when}</span>
+          <div>
+            <div class="feature__big">{n.edition}<sup>{n.editionSuffix}</sup></div>
+            <p style="margin-top:10px;font-family:var(--font-display);font-size:clamp(1.6rem,3vw,2.4rem);line-height:1;text-transform:uppercase">{n.label}</p>
+          </div>
+        </div>
+        <div class="feature__body">
+          <span class="kicker">Theme of the {n.edition + n.editionSuffix} edition</span>
+          <h3 style="margin-top:14px">{n.theme}</h3>
+          {n.text.map((t) => <p set:html={rich(t)}></p>)}
+          <div class="feature__photos">{n.photos.map((p) => <Image src={img(p.src)} alt={p.alt} widths={[400, 800]} sizes="(max-width: 860px) 45vw, 300px" />)}</div>
+        </div>
+      </article>
+    </div>
+  </section>
+
+  <section class="section" id="organized">
+    <div class="container">
+      <SectionHead kicker={c.events.kicker} title={c.events.title} />
+      <div class={`event-cards${ev.length === 2 || ev.length === 4 ? " event-cards--2" : ""}`}>
+        {ev.map((e, i) => <article class="event-card reveal" style={delay(i, 80, 2)}>
+              <span class="event-card__when"><Icon name={e.icon} />{e.tag}</span>
+              <h3>{e.title}</h3>
+              <p>{e.text}</p>
+              {e.where && <p class="event-card__where"><Icon name="map-pin" />{e.where}</p>}
+            </article>)}
+      </div>
+    </div>
+  </section>
+
+  <section class="section section--black" id="patrons">
+    <div class="container">
+      <SectionHead kicker={c.patrons.kicker} title={c.patrons.title} lead={c.patrons.lead} split />
+      <div class="patrons">
+        {c.patrons.list.map((p, i) => <article class="patron reveal" style={delay(i, 90, 2)}><span class="patron__mono" aria-hidden="true">{p.mono}</span><div><p class="patron__title">{p.title}</p><p class="patron__name">{p.name}</p></div></article>)}
+      </div>
+      <p class="family-lines reveal" style="max-width:60ch;margin-top:clamp(32px,5vw,56px)">{c.patrons.closing}</p>
+    </div>
+  </section>
+
+  <section class="section" id="international">
+    <div class="container">
+      <SectionHead kicker={c.international.kicker} title={c.international.title} lead={c.international.lead} split />
+      <div class="grid grid-2">
+        {c.international.list.map((x, i) => <article class="card card--block reveal" style={`--delay:${i * 90}ms`}><span class="icon-badge"><Icon name={x.icon} /></span><h3>{x.title}</h3><p>{x.text}</p></article>)}
+      </div>
+    </div>
+  </section>
+
+  <CtaBand title={c.cta.title} text={c.cta.text}><Btn label="Email JPSA" href={mailto("Conference partnership")} variant="yellow" iconName="mail" /><Btn label="Follow @jpsa_ipsf" href={L.instagram} variant="outline-light" iconName="instagram" /></CtaBand>
+</Base>

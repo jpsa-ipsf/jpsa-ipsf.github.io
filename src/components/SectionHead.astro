@@ -1,0 +1,9 @@
+---
+import { rich } from "../lib/text.js";
+
+const { kicker, title, lead, center = false, split = false } = Astro.props;
+const cls = ["section-head", center && "section-head--center", split && "section-head--split"].filter(Boolean).join(" ");
+---
+{split
+  ? <div class={`${cls} reveal`}><div class="stack" style="--stack:18px">{kicker && <span class="kicker">{kicker}</span>}<h2 set:html={rich(title)}></h2></div><div>{lead && <p class="lead" set:html={rich(lead)}></p>}</div></div>
+  : <div class={`${cls} reveal`}>{kicker && <span class="kicker">{kicker}</span>}<h2 set:html={rich(title)}></h2>{lead && <p class="lead" set:html={rich(lead)}></p>}</div>}

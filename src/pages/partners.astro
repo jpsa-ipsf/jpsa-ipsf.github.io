@@ -1,4 +1,92 @@
 ---
+import { Image } from "astro:assets";
 import Base from "../layouts/Base.astro";
+import C from "../../content.js";
+import PageHero from "../components/PageHero.astro";
+import SectionHead from "../components/SectionHead.astro";
+import Icon from "../components/Icon.astro";
+import Btn from "../components/Btn.astro";
+import TextLink from "../components/TextLink.astro";
+import CtaBand from "../components/CtaBand.astro";
+import { img } from "../lib/images.js";
+import { delay, mailto, pad } from "../lib/text.js";
+
+const P = C.partners;
+const L = C.site.links;
 ---
-<Base page="partners" title="Partners & Collaborators — JPSA" description="The institutions, hospitals and companies that work with JPSA — and the perks that come with membership."></Base>
+<Base page="partners" title="Partners & Collaborators — JPSA" description="The institutions, hospitals and companies that work with JPSA — and the perks that come with membership.">
+  <PageHero {...P.hero}>
+    <div class="page-hero__card" aria-hidden="true">
+      <div class="member-card">
+        <div class="member-card__top"><Image src={img(C.site.logo.light)} alt="" widths={[200, 400]} sizes="96px" loading="eager" /><span class="member-card__chip"></span></div>
+        <div><div class="member-card__label">Membership card</div><div class="member-card__name">JPSA Member</div></div>
+      </div>
+    </div>
+  </PageHero>
+
+  <section class="section section--tight">
+    <div class="container">
+      <div class="filter-bar reveal">
+        <p class="lead" style="max-width:58ch">{P.intro}</p>
+        <div class="pills" role="group" aria-label="Filter partners">
+          {P.filters.map((f, i) => <button class="pill" type="button" data-filter={f.id} aria-pressed={i === 0 ? "true" : "false"}>{f.label}</button>)}
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section section--paper" id="strategic" data-group="strategic">
+    <div class="container">
+      <SectionHead kicker={P.strategic.kicker} title={P.strategic.title} />
+      <div class="partner-grid">{P.strategic.list.map((x) => <article class="partner partner--strategic reveal">
+        <span class="partner__mono" aria-hidden="true">{x.mono}</span>
+        {x.type && <span class="partner__type">{x.type}</span>}
+        <h3 class="partner__name">{x.name}</h3>
+        <p>{x.text}</p>
+      </article>)}</div>
+    </div>
+  </section>
+
+  <section class="section" id="hospitals" data-group="hospitals">
+    <div class="container">
+      <SectionHead kicker={P.hospitals.kicker} title={P.hospitals.title} />
+      <div class="partner-grid">{P.hospitals.list.map((x) => <article class="partner reveal">
+        <span class="partner__mono" aria-hidden="true">{x.mono}</span>
+        {x.type && <span class="partner__type">{x.type}</span>}
+        <h3 class="partner__name">{x.name}</h3>
+        <p>{x.text}</p>
+      </article>)}</div>
+    </div>
+  </section>
+
+  <section class="section section--gray" id="areas" data-group="all">
+    <div class="container">
+      <SectionHead kicker={P.areas.kicker} title={P.areas.title} />
+      <ol class="areas" role="list">
+        {P.areas.list.map((a, i) => <li class="area reveal" style={delay(i, 70, 5)}><div class="area__num">{pad(i + 1)}</div><h3>{a.title}</h3><p>{a.text}</p></li>)}
+      </ol>
+    </div>
+  </section>
+
+  <section class="section" id="careers" data-group="careers">
+    <div class="container">
+      <SectionHead kicker={P.careers.kicker} title={P.careers.title} lead={P.careers.lead} split />
+      <div class="wordmarks reveal">{P.careers.list.map((x) => <div class="wordmark"><strong>{x.name}</strong><span>{x.note}</span></div>)}</div>
+    </div>
+  </section>
+
+  <section class="section section--paper" id="perks" data-group="perks">
+    <div class="container">
+      <SectionHead kicker={P.perks.kicker} title={P.perks.title} lead={P.perks.lead} split />
+      <div class="perks">{P.perks.list.length ? P.perks.list.map((x) => <article class="coupon reveal">
+        <div class="coupon__main"><h3>{x.name}</h3><p>{x.area}</p>{x.note && <p class="small">{x.note}</p>}</div>
+        <div class="coupon__stub">{x.discount}<span class="small" style="font-family:var(--font-body);font-weight:700">off</span></div>
+      </article>) : <article class="coupon coupon--soon reveal">
+        <div class="coupon__main"><h3>{P.perks.soon.title}</h3><p>{P.perks.soon.text}</p><div style="margin-top:6px"><TextLink label="@jpsa_ipsf" href={L.instagram} /></div></div>
+        <div class="coupon__stub"><Icon name="coffee" /></div>
+      </article>}</div>
+    </div>
+  </section>
+
+  <CtaBand title={P.cta.title} text={P.cta.text}><Btn label="Become a partner" href={mailto("Partnership with JPSA")} variant="yellow" iconName="mail" /><Btn label="JPSA on LinkedIn" href={L.linkedin} variant="outline-light" iconName="linkedin" /></CtaBand>
+</Base>

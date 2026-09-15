@@ -1,0 +1,21 @@
+---
+import C from "../../../content.js";
+import Icon from "../../components/Icon.astro";
+import Stats from "../../components/Stats.astro";
+import { rich } from "../../lib/text.js";
+
+const a = C.home.about;
+---
+<section class="section section--paper" id="about">
+  <div class="container">
+    <div class="split">
+      <div class="reveal">
+        <span class="kicker">{a.kicker}</span>
+        <h2 style="margin-top:18px">{a.title}</h2>
+        <div class="tri-badges">{a.badges.map((b) => <span class="chip chip--red"><Icon name="check" />{b}</span>)}</div>
+      </div>
+      <div class="prose lead reveal" style="--delay:100ms">{a.text.map((t) => <p set:html={rich(t)}></p>)}</div>
+    </div>
+    <div class="about-stats"><Stats list={a.stats} /></div>
+  </div>
+</section>

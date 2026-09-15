@@ -1,0 +1,21 @@
+---
+import C from "../../../content.js";
+import { rich, pad } from "../../lib/text.js";
+
+const m = C.home.manifesto;
+---
+<section class="section">
+  <div class="container manifesto">
+    <div class="manifesto__aside reveal">
+      <span class="kicker">{m.kicker}</span>
+      <h2 style="margin-top:18px">{m.title}</h2>
+      <div class="prose muted" style="margin-top:22px">{m.text.map((t) => <p set:html={rich(t)}></p>)}</div>
+    </div>
+    <div>
+      <ol class="manifesto__lines" role="list">
+        {m.lines.map((l, i) => <li class="manifesto__line"><span class="n">{pad(i + 1)}</span><span>{l}</span></li>)}
+      </ol>
+      <p class="manifesto__close reveal" set:html={rich(m.close)}></p>
+    </div>
+  </div>
+</section>

@@ -1,0 +1,17 @@
+---
+// Dark hero at the top of every inner page. Optional extra artwork goes inside the tag.
+import Icon from "./Icon.astro";
+import { rich } from "../lib/text.js";
+
+const { kicker, title, lead, ghost, crumb } = Astro.props;
+---
+<section class="page-hero">
+  {ghost && <div class="page-hero__ghost" aria-hidden="true">{ghost}</div>}
+  <slot />
+  <div class="container page-hero__inner">
+    <nav class="crumbs" aria-label="Breadcrumb"><a href="index.html">Home</a><Icon name="chevron-right" /><span aria-current="page">{crumb || kicker}</span></nav>
+    <span class="kicker">{kicker}</span>
+    <h1 set:html={rich(title)}></h1>
+    {lead && <p class="lead" set:html={rich(lead)}></p>}
+  </div>
+</section>

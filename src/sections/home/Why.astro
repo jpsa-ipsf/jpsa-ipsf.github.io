@@ -1,0 +1,34 @@
+---
+import C from "../../../content.js";
+import Icon from "../../components/Icon.astro";
+import Btn from "../../components/Btn.astro";
+import { rich, delay } from "../../lib/text.js";
+
+const w = C.home.why;
+const L = C.site.links;
+const badge = (i) => `icon-badge${i % 3 === 1 ? " icon-badge--red" : i % 3 === 2 ? " icon-badge--black" : ""}`;
+---
+<section class="section section--gray" id="why">
+  <div class="container">
+    <div class="why">
+      <div class="reveal">
+        <span class="kicker">{w.kicker}</span>
+        <p class="why__quote" style="margin-top:20px">{w.quote}</p>
+      </div>
+      <div class="why__body reveal" style="--delay:100ms">
+        <h2 style="font-size:clamp(2rem,4.2vw,3.4rem)">{w.title}</h2>
+        <div class="prose" style="margin-top:20px">{w.text.map((t) => <p set:html={rich(t)}></p>)}</div>
+        <ul class="why__words" role="list">{w.words.map((x) => <li>{x}</li>)}</ul>
+        <p class="prose" style="margin-top:22px" set:html={rich(w.after)}></p>
+      </div>
+    </div>
+    <h2 class="reveal" style="margin-top:clamp(56px,7vw,96px);font-size:clamp(1.9rem,3.6vw,2.8rem)">{w.benefitsTitle}</h2>
+    <div class="benefits" style="margin-top:24px">
+      {w.benefits.map((b, i) => <a class="benefit reveal" style={delay(i)} href={b.href}>
+            <span class={badge(i)}><Icon name={b.icon} /></span>
+            <div><h3>{b.title}</h3><p>{b.text}</p></div>
+          </a>)}
+    </div>
+    <div class="eligibility reveal"><Icon name="badge-check" /><p set:html={rich(w.eligibility)}></p><Btn label="Join JPSA" href={L.join} variant="yellow" size="sm" /></div>
+  </div>
+</section>

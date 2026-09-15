@@ -1,0 +1,4 @@
+---
+const { list } = Astro.props;
+---
+<div class="stats">{list.map((s, i) => <div class="stat reveal" style={`--delay:${i * 90}ms`}><div class="stat__num" data-count={s.num}>{s.num}</div><p class="stat__label">{s.label}</p></div>)}</div>

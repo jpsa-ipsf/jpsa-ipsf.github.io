@@ -1,0 +1,28 @@
+---
+import C from "../../../content.js";
+import Icon from "../../components/Icon.astro";
+import SectionHead from "../../components/SectionHead.astro";
+import TextLink from "../../components/TextLink.astro";
+
+const list = C.teams;
+---
+<section class="section" id="teams">
+  <div class="container">
+    <SectionHead kicker="Our teams" title="Five teams. One family." lead="Every JPSA activity is run by one of our teams. Pick one to see what they do." split />
+    <div class="teams reveal" data-tabs>
+      <div class="teams__list" role="tablist" aria-label="JPSA teams">
+        {list.map((t, i) => <button class="team-tab" type="button" role="tab" id={`tab-${t.id}`} aria-controls={`panel-${t.id}`} aria-selected={i === 0 ? "true" : "false"} tabindex={i === 0 ? "0" : "-1"}><Icon name={t.icon} /><span>{t.name}</span></button>)}
+      </div>
+      {list.map((t, i) => <div class="team-panel" role="tabpanel" id={`panel-${t.id}`} aria-labelledby={`tab-${t.id}`} tabindex="0" hidden={i !== 0}>
+            <div class="team-panel__top">
+              <div><h3>{t.name}</h3><p class="team-panel__tag">{t.tagline}</p></div>
+              <span class="icon-badge icon-badge--red" style="margin:0"><Icon name={t.icon} /></span>
+            </div>
+            <p class="team-panel__body">{t.summary}</p>
+            <ul class="checks" role="list">{t.does.map((d) => <li><Icon name="check" />{d}</li>)}</ul>
+            {t.leads && t.leads.length > 0 && <p class="muted" style="margin-top:20px"><strong>Led by:</strong> {t.leads.map((l) => l.name + (l.role ? ` (${l.role})` : "")).join(", ")}</p>}
+            <TextLink label={t.href.indexOf("sep") === 0 ? "Explore the exchange program" : "See what they do"} href={t.href} />
+          </div>)}
+    </div>
+  </div>
+</section>

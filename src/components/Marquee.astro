@@ -1,0 +1,4 @@
+---
+const { items, variant = "" } = Astro.props;
+---
+<div class={`marquee ${variant}`} aria-hidden="true"><div class="marquee__track"><div class="marquee__group">{items.map((t) => <span class="marquee__item">{t}</span>)}</div><div class="marquee__group">{items.map((t) => <span class="marquee__item">{t}</span>)}</div></div></div>

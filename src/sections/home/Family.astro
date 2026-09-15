@@ -1,0 +1,30 @@
+---
+import { Image } from "astro:assets";
+import C from "../../../content.js";
+import SectionHead from "../../components/SectionHead.astro";
+import Person from "../../components/Person.astro";
+import { img } from "../../lib/images.js";
+import { delay, pad } from "../../lib/text.js";
+
+const f = C.family;
+const wall = Array.from({ length: f.wallCount }, (_, i) => `assets/img/family/f${pad(i + 1)}.jpg`);
+const half = Math.ceil(wall.length / 2);
+const rows = [[wall.slice(0, half), false], [wall.slice(half), true]];
+---
+<section class="section section--black" id="family">
+  <div class="container">
+    <SectionHead kicker={f.kicker} title={f.title} lead={f.lead} split />
+    <div class="structure">
+      {f.structure.map((s, i) => <article class="structure__card reveal" style={delay(i, 90)}><div class="structure__num">{pad(i + 1)}</div><h3>{s.title}</h3><p>{s.text}</p></article>)}
+    </div>
+  </div>
+  <div class="wall family-wall" role="img" aria-label="Portraits of JPSA members">{rows.map(([list, reverse]) => <div class={`wall__row${reverse ? " wall__row--reverse" : ""}`}>{[...list, ...list].map((src) => <div class="wall__img"><Image src={img(src)} alt="" widths={[180, 360]} sizes="(max-width: 900px) 130px, 180px" /></div>)}</div>)}</div>
+  <div class="container">
+    <p class="family-lines reveal">{f.lines}</p>
+    <div class="section-head reveal" style="margin-top:clamp(56px,7vw,96px)">
+      <h2>{f.peopleTitle}</h2>
+      <p class="lead">{f.peopleLead}</p>
+    </div>
+    <div class="people">{f.people.map((p, i) => <Person p={p} i={i} />)}</div>
+  </div>
+</section>
