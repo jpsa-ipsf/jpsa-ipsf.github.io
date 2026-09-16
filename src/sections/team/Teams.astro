@@ -55,12 +55,13 @@ const notYet = order.filter((abbr) => !covered.includes(abbr));
           <div class="team-card__people">
             {local.length > 0 && <div class="team-card__group">
               <h5 class="team-card__subtitle">{L.local}</h5>
-              <table class="members">
-                <thead><tr><th scope="col">{L.name}</th><th scope="col">{L.role}</th><th scope="col">{L.university}</th></tr></thead>
-                <tbody>{local.map((m) => <tr>
-                  <td><span class="members__person"><Avatar person={m.p} />{m.p.name}</span></td>
-                  <td>{m.role}</td>
-                  <td>{m.p.university ? <abbr title={university(m.p.university).name}>{m.p.university}</abbr> : L.noUniversity}</td>
+              {/* The roles keep this a table for screen readers on phones, where the CSS shows each row as two lines. */}
+              <table class="members" role="table">
+                <thead role="rowgroup"><tr role="row"><th scope="col" role="columnheader">{L.name}</th><th scope="col" role="columnheader">{L.role}</th><th scope="col" role="columnheader">{L.university}</th></tr></thead>
+                <tbody role="rowgroup">{local.map((m) => <tr role="row">
+                  <td role="cell"><span class="members__person"><Avatar person={m.p} />{m.p.name}</span></td>
+                  <td role="cell">{m.role}</td>
+                  <td role="cell">{m.p.university ? <abbr title={university(m.p.university).name}>{m.p.university}</abbr> : L.noUniversity}</td>
                 </tr>)}</tbody>
               </table>
             </div>}
