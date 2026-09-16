@@ -297,7 +297,7 @@ export default {
           now: "",
           join: "You help prepare trainings, the Scientific Research Program and the JPSA Podcast, and organize our annual National Symposium.",
           local: [],
-          committee: ["ahmad-bakri", "asma-mefrej", "faisal-alhadid", "tamam-alttayyeb", "shahd-naser", "mira-hamad", "zeena-alhaj", "bissan-alghroz", "jamal-alrazem"],
+          committee: ["ahmad-bakri", "asma-mefrej", "faisal-alhadid", "tamam-alttayyeb", "shahed-nasser", "mira-hamad", "zeena-alhaj", "bissan-alghroz", "jamal-alrazem"],
         },
         {
           id: "humanitarian", name: "Humanitarian Campaigns", group: "portfolios", work: "portfolios.html#humanitarian",
@@ -327,7 +327,7 @@ export default {
           now: "",
           join: "As a local exchange officer, you answer exchange questions at your university and help welcome incoming students.",
           local: [
-            { person: "tamam-eltayyeb", role: "Local exchange officer" },
+            { person: "tamam-alttayyeb", role: "Local exchange officer" },
             { person: "lara-alashi", role: "Promotion & cultural coordinator" },
             { person: "sadeen-salem", role: "Local exchange officer" },
             { person: "layan-mansour", role: "Local exchange officer" },
@@ -409,14 +409,13 @@ export default {
       { id: "noura-almajali", name: "Noura Almajali", university: "JU" },
       { id: "jude-rabayah", name: "Jude Rabayah", university: "JUST" },
       { id: "aya-alajlouni", name: "Aya Alajlouni", university: "HU" },
-      { id: "tala-hilweh", name: "Tala Hilweh" }, // TODO: university
+      { id: "tala-hilweh", name: "Tala Hilweh", university: "UOP" },
       { id: "zeena-alhaj", name: "Zeena Alhaj", university: "MEU" }, // also in Professional Development
       // Professional Development
       { id: "ahmad-bakri", name: "Ahmad Bakri" },
       { id: "asma-mefrej", name: "Asma Mefrej" },
       { id: "faisal-alhadid", name: "Faisal Alhadid" },
-      { id: "tamam-alttayyeb", name: "Tamam Alttayyeb" }, // TODO: confirm the spelling (the exchange team lists "Tamam Eltayyeb")
-      { id: "shahd-naser", name: "Shahd Naser" }, // TODO: confirm the spelling (photo shahed-nasser.jpg was saved as "Shahed Nasser")
+      { id: "shahed-nasser", name: "Shahed Nasser", university: "ASU" }, // university kept for later: the committee list shows none
       { id: "mira-hamad", name: "Mira Hamad" },
       { id: "bissan-alghroz", name: "Bissan Alghroz" },
       { id: "jamal-alrazem", name: "Jamal Alrazem" },
@@ -424,7 +423,7 @@ export default {
       { id: "majd-alshlool", name: "Majd Alshlool", university: "JU" },
       { id: "salma-alnasser", name: "Salma Alnasser", university: "JUST" },
       { id: "tala-almagharbeh", name: "Tala Almagharbeh", university: "UOP" },
-      { id: "yazan-jarrar", name: "Yazan Jarrar" }, // TODO: university
+      { id: "yazan-jarrar", name: "Yazan Jarrar", university: "ASU" },
       { id: "dima-halasa", name: "Dima Halasa", university: "MEU" },
       // Social Events
       { id: "hala-dawoud", name: "Hala Dawoud" },
@@ -432,7 +431,7 @@ export default {
       { id: "reema-mustafa", name: "Reema Mustafa" },
       { id: "suleiman-awjan", name: "Suleiman Awjan" },
       // Student Exchange Programme
-      { id: "tamam-eltayyeb", name: "Tamam Eltayyeb", university: "JUST" }, // TODO: confirm the spelling (see Tamam Alttayyeb)
+      { id: "tamam-alttayyeb", name: "Tamam Alttayyeb", university: "JUST" }, // also in Professional Development
       { id: "lara-alashi", name: "Lara Alashi", university: "JU" },
       { id: "sadeen-salem", name: "Sadeen Salem", university: "UOP" },
       { id: "layan-mansour", name: "Layan Mansour", university: "JU" },
