@@ -84,6 +84,11 @@
     visibility: hidden;
     transform: translateY(-10px);
     transition: opacity var(--dur) var(--ease), transform var(--dur) var(--ease), visibility 0s linear var(--dur);
+    /* A long menu scrolls instead of running off small screens. */
+    max-height: calc(100vh - var(--header-h));
+    max-height: calc(100dvh - var(--header-h));
+    overflow-y: auto;
+    overscroll-behavior: contain;
   }
   .nav.is-open {
     opacity: 1;
