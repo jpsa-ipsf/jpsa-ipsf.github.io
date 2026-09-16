@@ -108,7 +108,7 @@ export default {
       after: "JPSA is where an idea can become an initiative, a teammate can become a lifelong friend, and a student can discover a version of themselves they hadn't met yet.",
       benefitsTitle: "What you get as a member",
       benefits: [
-        { icon: "plane-takeoff", title: "Train abroad with SEP", text: "Apply for professional exchanges through IPSF's Student Exchange Program — or host students coming to Jordan.", href: "sep.html" },
+        { icon: "plane-takeoff", title: "Train abroad with SEP", text: "Apply for professional exchanges through IPSF's Student Exchange Programme — or host students coming to Jordan.", href: "sep.html" },
         { icon: "presentation", title: "Symposium & conferences", text: "Our annual National Symposium and conferences put you in the room with professionals and leaders.", href: "conferences.html" },
         { icon: "microscope", title: "Scientific Research Program", text: "Take your first steps into scientific research with our annual program.", href: "portfolios.html#professional-development" },
         { icon: "briefcase", title: "Internships & careers", text: "Training and internship opportunities with partners such as AstraZeneca, KHCC and Saudi Hospital.", href: "partners.html#careers" },
@@ -149,7 +149,7 @@ export default {
       stats: [
         { num: "2007", label: "Founded in May 2007" },
         { num: "7", label: "Universities across Jordan" },
-        { num: "4", label: "Main portfolios, plus our exchange program" },
+        { num: "4", label: "Main portfolios, plus our exchange programme" },
         { num: "100", label: "Countries in the IPSF network" },
       ],
     },
@@ -256,13 +256,13 @@ export default {
         now: "What's happening now",
         join: "If you join",
         work: "See what they do",
-        local: "Local coordinators",
+        local: "At your university",
         committee: "8th National Symposium committee",
         name: "Name",
         role: "Role",
         university: "University",
         noUniversity: "—",
-        coverage: "Local coordinators today:",
+        coverage: "At your university today:",
         notYet: "Not yet:",
         jump: "Teams",
         meetTeam: "Meet the team",
@@ -270,6 +270,9 @@ export default {
       /* For each team:
          • work: the page that describes the team's work (portfolios and exchange), linked instead of repeated.
          • does / join: DRAFTS written on 2026-09-16, to be corrected by the committee.
+           join says what a member of this team does all year, in words no other team uses. Name the
+           National Symposium only where it is the team's own work (Professional Development leads it):
+           the symposium is one event a year, and the teams work all year.
          • now: left empty on purpose; the committee fills it in (hidden while empty).
          • local: people who represent a university, with their role (shown with the university).
          • committee: members of the National Symposium committee (shown without a university). */
@@ -292,7 +295,7 @@ export default {
           id: "professional-development", name: "Professional Development", group: "portfolios", work: "portfolios.html#professional-development",
           does: "Builds the programs that help members prepare for their careers, and brings together the committee behind our National Symposium.",
           now: "",
-          join: "You work on the National Symposium committee, planning the symposium together with members from other teams.",
+          join: "You help prepare trainings, the Scientific Research Program and the JPSA Podcast, and organize our annual National Symposium.",
           local: [],
           committee: ["ahmad-bakri", "asma-mefrej", "faisal-alhadid", "tamam-alttayyeb", "shahd-naser", "mira-hamad", "zeena-alhaj", "bissan-alghroz", "jamal-alrazem"],
         },
@@ -314,12 +317,12 @@ export default {
           id: "social", name: "Social Events", group: "portfolios", work: "portfolios.html#social",
           does: "Brings members from different universities together outside the classroom, so the association feels like a community.",
           now: "",
-          join: "You work on the National Symposium committee and help plan the moments that bring members together.",
+          join: "You plan sports, game nights and creative sessions, from the first idea to the day itself.",
           local: [],
           committee: ["hala-dawoud", "yasmeen-abudayyeh", "reema-mustafa", "suleiman-awjan"],
         },
         {
-          id: "student-exchange", name: "Student Exchange Program", group: "exchange", work: "sep.html", workLabel: "Explore the exchange program",
+          id: "student-exchange", name: "Student Exchange Programme", group: "exchange", work: "sep.html", workLabel: "Explore the exchange programme",
           does: "Runs JPSA's part of the IPSF exchange: it guides members who apply to go abroad and hosts the students who come to Jordan.",
           now: "",
           join: "As a local exchange officer, you answer exchange questions at your university and help welcome incoming students.",
@@ -335,7 +338,7 @@ export default {
           id: "secretary-general", name: "Secretary General", group: "operations",
           does: "Keeps the association organized: meeting records, official documents and deadlines.",
           now: "",
-          join: "You work on the National Symposium committee and keep its records and documents in order.",
+          join: "You take the minutes at meetings, follow up on what each team agreed to do, and keep our files in order.",
           local: [],
           committee: ["diana-aboqudais"],
         },
@@ -343,7 +346,7 @@ export default {
           id: "treasurer", name: "Treasurer", group: "operations",
           does: "Looks after JPSA's finances: budgets, payments and financial records.",
           now: "",
-          join: "You work on the National Symposium committee and help track its budget and expenses.",
+          join: "You prepare each activity's budget with the Treasurer, collect the receipts, and keep a clear record of what comes in and goes out.",
           local: [],
           committee: ["bassel-mahfouz", "mohammad-alqaisi", "saleh-mohammad", "leen-shawabkeh", "aisha-jaradat", "nadia-nasri"],
         },
@@ -363,7 +366,7 @@ export default {
           id: "external-relations", name: "External Relations", group: "operations",
           does: "Builds JPSA's relationships with hospitals, companies and institutions, and looks after our partnerships.",
           now: "",
-          join: "You work on the National Symposium committee and help reach partners and sponsors.",
+          join: "You look for new partners and sponsors, prepare the proposals we send them, and stay in touch with the ones we already have.",
           local: [],
           committee: ["mohammad-albeshtawi", "aleen-arar", "jamal-almomani", "hala-abushattal", "layan-faidi", "zaid-asaad", "zaid-abushanab", "noor-awadallah", "yara-altarsha", "mohammad-selawe"],
         },
@@ -371,7 +374,7 @@ export default {
           id: "internal-communication", name: "Internal Communication", group: "operations",
           does: "Keeps our teams and members connected, so everyone knows what is happening and who to ask.",
           now: "",
-          join: "You work on the National Symposium committee and keep its members coordinated and informed.",
+          join: "You pass updates between teams and universities, answer members' questions, and help new members find their way.",
           local: [],
           committee: ["tala-khalaf", "yasmeen-denieh", "juri-al-hadid", "samer-tadrous", "nadeen-shoshary", "mustafa-daoud", "hala-obeid", "neveen-shawabkeh", "sarah-alwrekat"],
         },
@@ -379,7 +382,7 @@ export default {
           id: "media-publications", name: "Media and Publications", group: "operations",
           does: "Tells JPSA's story: social media, design, photography and publications for every team.",
           now: "",
-          join: "You work on the National Symposium committee and create its posts, designs and coverage.",
+          join: "You design our posts, photograph our activities, and write the captions and publications that go with them.",
           local: [],
           committee: ["boshra-rawashdeh", "laina-alzuhiri", "noor-bataineh", "sadeen-alrosan", "rahaf-masoud", "shahd-ahmad", "tala-amro"],
         },
@@ -428,7 +431,7 @@ export default {
       { id: "yasmeen-abudayyeh", name: "Yasmeen Abudayyeh" },
       { id: "reema-mustafa", name: "Reema Mustafa" },
       { id: "suleiman-awjan", name: "Suleiman Awjan" },
-      // Student Exchange Program
+      // Student Exchange Programme
       { id: "tamam-eltayyeb", name: "Tamam Eltayyeb", university: "JUST" }, // TODO: confirm the spelling (see Tamam Alttayyeb)
       { id: "lara-alashi", name: "Lara Alashi", university: "JU" },
       { id: "sadeen-salem", name: "Sadeen Salem", university: "UOP" },
@@ -488,11 +491,11 @@ export default {
       kicker: "Beyond borders. Beyond classrooms.",
       title: "Student Exchange Programme", // the page's h1: the full name, for search
       crumb: "Student Exchange Programme",
-      lead: "The Student Exchange Program opens the door for students to experience pharmacy and life from a global perspective.",
+      lead: "The Student Exchange Programme opens the door for students to experience pharmacy and life from a global perspective.",
       ghost: "SEP",
     },
     stats: [
-      { num: "1953", label: "The year IPSF's exchange program began" },
+      { num: "1953", label: "The year IPSF's exchange programme began" },
       { num: "80+", label: "Countries taking part" },
       { num: "1,000+", label: "Students exchanged every year" },
       { num: "2–12", label: "Weeks per placement (2 weeks to 3 months)" },
@@ -507,7 +510,7 @@ export default {
     fields: {
       kicker: "Where you can train",
       title: "Across the fields of pharmacy",
-      lead: "The program provides training opportunities across different fields of pharmacy, allowing students to gain practical experience, broaden their knowledge, and discover new areas of interest.",
+      lead: "The programme provides training opportunities across different fields of pharmacy, allowing students to gain practical experience, broaden their knowledge, and discover new areas of interest.",
       list: [
         { icon: "pill", label: "Community pharmacy" },
         { icon: "hospital", label: "Hospital & clinical" },
@@ -651,7 +654,7 @@ export default {
       lead: "At JPSA, we believe that being a pharmacy student is about more than academics. It is about growing, serving, connecting, exploring, and creating an impact.",
       ghost: "Impact",
     },
-    intro: "Through our four main portfolios — and our Student Exchange Program — we aim to provide students with experiences and opportunities that enrich every aspect of their journey.",
+    intro: "Through our four main portfolios — and our Student Exchange Programme — we aim to provide students with experiences and opportunities that enrich every aspect of their journey.",
     list: [
       {
         id: "public-health", num: "01", name: "Public Health", theme: "white",
@@ -718,7 +721,7 @@ export default {
       },
       {
         // No tagline or intro here: sep.html already opens with them, and repeating them would duplicate that page.
-        id: "student-exchange", num: "05", name: "Student Exchange Program", theme: "black",
+        id: "student-exchange", num: "05", name: "Student Exchange Programme", theme: "black",
         items: [
           { icon: "plane-takeoff", title: "Go abroad", text: "Travel, experience different cultures and explore new academic environments.", href: "sep.html" },
           { icon: "map-pin", title: "Welcome students to Jordan", text: "Host exchange students and show them our culture and our country.", href: "sep.html#incoming" },
