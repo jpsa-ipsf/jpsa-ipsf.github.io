@@ -1,5 +1,6 @@
 ---
 import C from "../../../content.js";
+import TextLink from "../../components/TextLink.astro";
 import { rich, pad } from "../../lib/text.js";
 
 const m = C.home.manifesto;
@@ -16,6 +17,7 @@ const m = C.home.manifesto;
         {m.lines.map((l, i) => <li class="manifesto__line"><span class="n">{pad(i + 1)}</span><span>{l}</span></li>)}
       </ol>
       <p class="manifesto__close reveal" set:html={rich(m.close)}></p>
+      <div class="reveal" style="margin-top:28px"><TextLink label="Read our story" href="about.html" /></div>
     </div>
   </div>
 </section>

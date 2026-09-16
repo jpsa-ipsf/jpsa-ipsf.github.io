@@ -23,16 +23,14 @@ const { page, title, description } = Astro.props;
   <link rel="stylesheet" href="assets/css/base.css">
   <link rel="stylesheet" href="assets/css/components.css">
   <link rel="stylesheet" href="assets/css/pages.css">
-  {/* Without JavaScript: show everything at once, keep the mobile menu reachable,
-      stack the team panels and hide the controls that would do nothing (tabs, filters).
+  {/* Without JavaScript: show everything at once, keep the mobile menu reachable
+      and hide the controls that would do nothing (partner filters).
       is:inline keeps this <style> inside <noscript> (Astro would otherwise move it). */}
   <noscript><style is:inline>
     .reveal{opacity:1!important;transform:none!important}
     .manifesto__line{color:var(--ink)}
     .journey__progress{width:100%}
-    .teams{grid-template-columns:1fr}
-    .teams__list,.filter-bar .pills{display:none}
-    .team-panel[hidden]{display:block!important}
+    .filter-bar .pills{display:none}
     @media (max-width:940px){
       .site-header{position:static}
       .menu-toggle{display:none}

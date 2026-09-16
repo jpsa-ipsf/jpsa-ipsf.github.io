@@ -33,15 +33,19 @@ export default {
     },
   },
 
+  /* The top menu and the footer's "Explore" list.
+     menu: false → footer only (the logo already links to the home page). */
   nav: [
-    { page: "home", label: "Home", href: "index.html" },
+    { page: "home", label: "Home", href: "index.html", menu: false },
+    { page: "about", label: "About", href: "about.html" },
     { page: "sep", label: "Student Exchange", href: "sep.html" },
     { page: "conferences", label: "Conferences", href: "conferences.html" },
     { page: "portfolios", label: "Portfolios", href: "portfolios.html" },
     { page: "partners", label: "Partners", href: "partners.html" },
   ],
 
-  /* The year each university joined JPSA ("Our journey") */
+  /* The year each university joined JPSA ("Our journey" on the About page;
+     the names also scroll across the home page) */
   universities: [
     { year: 2007, abbr: "JU", name: "The University of Jordan" },
     { year: 2014, abbr: "JUST", name: "Jordan University of Science & Technology" },
@@ -54,6 +58,12 @@ export default {
 
   /* ------------------------------------------------------------------ HOME */
   home: {
+    // Shown in search results and link previews.
+    meta: {
+      title: "JPSA — Jordan Pharmaceutical Students' Association",
+      description: "JPSA brings pharmacy students across Jordan together through student exchange, conferences, public health and humanitarian campaigns, and social events.",
+    },
+
     hero: {
       kicker: "Jordan Pharmaceutical Students' Association",
       titleLines: ["This is", "JPSA"],
@@ -61,8 +71,8 @@ export default {
       chips: ["Est. May 2007", "Affiliated with IPSF", "7 universities"],
       photos: [
         { src: "assets/img/moments/jpsa-banner.jpg", alt: "A JPSA member next to the JPSA banner: Students Today, Pharmacists Tomorrow" },
-        { src: "assets/img/moments/national-symposium-7.jpg", alt: "A JPSA member at the 7th National Symposium" },
-        { src: "assets/img/moments/national-symposium-7-b.jpg", alt: "A JPSA member at the 7th National Symposium" },
+        { src: "assets/img/moments/national-symposium-7.jpg", alt: "A JPSA member in a suit in front of the 7th National Symposium backdrop" },
+        { src: "assets/img/moments/national-symposium-7-b.jpg", alt: "A JPSA member with arms crossed in front of the 7th National Symposium banner" },
       ],
       badge: "Est. 2007 • Affiliated with IPSF • ",
     },
@@ -84,7 +94,46 @@ export default {
       close: "And somewhere along the way… a community started feeling like home. <strong>That's JPSA.</strong>",
     },
 
-    about: {
+    why: {
+      kicker: "Why JPSA?",
+      title: "You don't just build your CV. You build yourself.",
+      quote: "Maybe you join for the experience. Maybe for the opportunities. Maybe for the people. But somehow, you stay for something more.",
+      text: [
+        "You stay because JPSA gives you a space to try before you feel ready, to speak before you feel confident, to lead before you ever imagined yourself as a leader.",
+        "Here, pharmacy goes beyond lectures, labs, and exams. It becomes:",
+      ],
+      words: ["Conversations", "Connections", "Projects", "Challenges", "Stages", "Friendships"],
+      after: "JPSA is where an idea can become an initiative, a teammate can become a lifelong friend, and a student can discover a version of themselves they hadn't met yet.",
+      benefitsTitle: "What you get as a member",
+      benefits: [
+        { icon: "plane-takeoff", title: "Train abroad with SEP", text: "Apply for professional exchanges through IPSF's Student Exchange Program — or host students coming to Jordan.", href: "sep.html" },
+        { icon: "presentation", title: "Symposium & conferences", text: "Our annual National Symposium and conferences put you in the room with professionals and leaders.", href: "conferences.html" },
+        { icon: "microscope", title: "Scientific Research Program", text: "Take your first steps into scientific research with our annual program.", href: "portfolios.html#professional-development" },
+        { icon: "briefcase", title: "Internships & careers", text: "Training and internship opportunities with partners such as AstraZeneca, KHCC and Saudi Hospital.", href: "partners.html#careers" },
+        { icon: "hospital", title: "Hospital collaborations", text: "Scientific activities, awareness campaigns and training with hospitals across Jordan.", href: "partners.html#hospitals" },
+        { icon: "heart-pulse", title: "Public health campaigns", text: "Turn knowledge into action through awareness campaigns, lectures and our Medical Convention.", href: "portfolios.html#public-health" },
+        { icon: "hand-heart", title: "Humanitarian campaigns", text: "Iftar gatherings with orphans, Eid clothing campaigns, blood donation and elderly visits.", href: "portfolios.html#humanitarian" },
+        { icon: "party-popper", title: "Social events", text: "Sports, games, creative activities and gatherings — the moments you'll remember most.", href: "portfolios.html#social" },
+        { icon: "users", title: "Lead a team", text: "Join a subcommittee or become a local coordinator at your university.", href: "about.html#family" },
+      ],
+      eligibility: "<strong>Who can join?</strong> Every pharmacy student at a Jordanian university — and graduates, up to four years after graduation.",
+    },
+
+    cta: {
+      title: "What will yours be?",
+      text: "Ask ten members and you might get ten different answers. Your JPSA story starts with one decision.",
+    },
+  },
+
+  /* ----------------------------------------------------------------- ABOUT */
+  about: {
+    // Shown in search results and link previews.
+    meta: {
+      title: "About JPSA — Our Story, Mission & IPSF",
+      description: "How JPSA started at the University of Jordan in 2007, grew to seven universities and joined IPSF's global network, and the mission and vision behind it.",
+    },
+
+    intro: {
       kicker: "About JPSA",
       title: "Founded in 2007. Built by students.",
       text: [
@@ -129,39 +178,10 @@ export default {
       vision: "We do not simply prepare students for their future. We help them discover it.",
       values: ["Growing", "Serving", "Connecting", "Exploring", "Creating impact"],
     },
-
-    why: {
-      kicker: "Why JPSA?",
-      title: "You don't just build your CV. You build yourself.",
-      quote: "Maybe you join for the experience. Maybe for the opportunities. Maybe for the people. But somehow, you stay for something more.",
-      text: [
-        "You stay because JPSA gives you a space to try before you feel ready, to speak before you feel confident, to lead before you ever imagined yourself as a leader.",
-        "Here, pharmacy goes beyond lectures, labs, and exams. It becomes:",
-      ],
-      words: ["Conversations", "Connections", "Projects", "Challenges", "Stages", "Friendships"],
-      after: "JPSA is where an idea can become an initiative, a teammate can become a lifelong friend, and a student can discover a version of themselves they hadn't met yet.",
-      benefitsTitle: "What you get as a member",
-      benefits: [
-        { icon: "plane-takeoff", title: "Train abroad with SEP", text: "Apply for professional exchanges through IPSF's Student Exchange Program — or host students coming to Jordan.", href: "sep.html" },
-        { icon: "presentation", title: "Symposium & conferences", text: "Our annual National Symposium and conferences put you in the room with professionals and leaders.", href: "conferences.html" },
-        { icon: "microscope", title: "Scientific Research Program", text: "Take your first steps into scientific research with our annual program.", href: "portfolios.html#professional-development" },
-        { icon: "briefcase", title: "Internships & careers", text: "Training and internship opportunities with partners such as AstraZeneca, KHCC and Saudi Hospital.", href: "partners.html#careers" },
-        { icon: "hospital", title: "Hospital collaborations", text: "Scientific activities, awareness campaigns and training with hospitals across Jordan.", href: "partners.html#hospitals" },
-        { icon: "heart-pulse", title: "Public health campaigns", text: "Turn knowledge into action through awareness campaigns, lectures and our Medical Convention.", href: "portfolios.html#public-health" },
-        { icon: "hand-heart", title: "Humanitarian campaigns", text: "Iftar gatherings with orphans, Eid clothing campaigns, blood donation and elderly visits.", href: "portfolios.html#humanitarian" },
-        { icon: "party-popper", title: "Social events", text: "Sports, games, creative activities and gatherings — the moments you'll remember most.", href: "portfolios.html#social" },
-        { icon: "users", title: "Lead a team", text: "Join a subcommittee or become a local coordinator at your university.", href: "#family" },
-      ],
-      eligibility: "<strong>Who can join?</strong> Every pharmacy student at a Jordanian university — and graduates, up to four years after graduation.",
-    },
-
-    cta: {
-      title: "What will yours be?",
-      text: "Ask ten members and you might get ten different answers. Your JPSA story starts with one decision.",
-    },
   },
 
-  /* ---------------------------------------------------------- THE FAMILY */
+  /* ---------------------------------------------------------- THE FAMILY
+     "Meet the family" on the About page. The photo wall (wallCount) is on the home page. */
   family: {
     kicker: "Meet the family",
     title: "More than a mandate. A family.",
@@ -192,48 +212,24 @@ export default {
     ],
   },
 
-  /* Teams shown in the home-page team explorer.
+  /* The five teams, shown as cards on the About page. Each card links to the
+     page that describes what the team does (so that text is not repeated here).
      "leads" is optional: [{ name: "…", role: "Team lead" }] */
   teams: [
-    {
-      id: "public-health", name: "Public Health", icon: "heart-pulse",
-      tagline: "Raising awareness. Saving lives.",
-      summary: "The Public Health Team works to empower students and communities with knowledge about health and disease prevention — turning knowledge into meaningful action.",
-      does: ["Awareness campaigns on prevalent diseases", "Lectures on rare diseases & clinical cases", "Our Medical Convention", "Campaigns with hospitals and JBCP"],
-      href: "portfolios.html#public-health", leads: [],
-    },
-    {
-      id: "professional-development", name: "Professional Development", icon: "briefcase",
-      tagline: "Preparing students for what comes next.",
-      summary: "The Professional Development Team equips students with the knowledge, skills, and experiences they need to step confidently into their future careers.",
-      does: ["Training programs & career initiatives", "The annual Scientific Research Program", "The annual National Symposium", "The JPSA Podcast"],
-      href: "portfolios.html#professional-development", leads: [],
-    },
-    {
-      id: "humanitarian", name: "Humanitarian Campaigns", icon: "hand-heart",
-      tagline: "Where humanity meets the joy of giving.",
-      summary: "The Humanitarian Campaigns Team creates opportunities for students to give back to their communities and bring happiness to those who need it most.",
-      does: ["Iftar gatherings with orphans", "Eid clothing campaigns", "Blood donation campaigns", "Elderly visits & volunteering"],
-      href: "portfolios.html#humanitarian", leads: [],
-    },
-    {
-      id: "social", name: "Social Events", icon: "party-popper",
-      tagline: "Because every journey needs a little fun.",
-      summary: "The Social Events Team creates spaces for students to connect, have fun, build friendships, and expand their circles beyond their usual surroundings.",
-      does: ["Sports & recreational activities", "Drawing & decorating", "Games & social gatherings", "Memories that last"],
-      href: "portfolios.html#social", leads: [],
-    },
-    {
-      id: "student-exchange", name: "Student Exchange Program", icon: "plane",
-      tagline: "Beyond borders. Beyond classrooms.",
-      summary: "The SEP team opens the door for students to experience pharmacy and life from a global perspective — and welcomes students from around the world to Jordan.",
-      does: ["Exchanges abroad through IPSF", "Hosting incoming students in Jordan", "Training across fields of pharmacy", "Culture, trips and friendships"],
-      href: "sep.html", leads: [],
-    },
+    { id: "public-health", name: "Public Health", icon: "heart-pulse", href: "portfolios.html#public-health", leads: [] },
+    { id: "professional-development", name: "Professional Development", icon: "briefcase", href: "portfolios.html#professional-development", leads: [] },
+    { id: "humanitarian", name: "Humanitarian Campaigns", icon: "hand-heart", href: "portfolios.html#humanitarian", leads: [] },
+    { id: "social", name: "Social Events", icon: "party-popper", href: "portfolios.html#social", leads: [] },
+    { id: "student-exchange", name: "Student Exchange Program", icon: "plane", href: "sep.html", leads: [] },
   ],
 
   /* ------------------------------------------------------------------- SEP */
   sep: {
+    // Shown in search results and link previews.
+    meta: {
+      title: "Student Exchange Programme (SEP) — JPSA",
+      description: "Train abroad through IPSF's Student Exchange Programme, or come to Jordan: how JPSA's SEP works, who can apply and what to expect.",
+    },
     hero: {
       kicker: "Student Exchange Program",
       title: "Beyond borders. Beyond classrooms.",
@@ -317,6 +313,11 @@ export default {
 
   /* ----------------------------------------------------------- CONFERENCES */
   conferences: {
+    // Shown in search results and link previews.
+    meta: {
+      title: "Conferences — JPSA",
+      description: "JPSA's National Conference, the IPSF Eastern Mediterranean symposium we hosted in Amman, and the national figures who stood with us.",
+    },
     hero: {
       kicker: "Conferences",
       title: "Stages worth standing on.",
@@ -338,8 +339,8 @@ export default {
         "The 7th edition was held under the patronage of former Prime Minister Dr. Abd Al Raouf Al Rawabdeh, in cooperation with the Jordan Pharmacists Association — our strategic partner for the conference.",
       ],
       photos: [
-        { src: "assets/img/moments/national-symposium-7.jpg", alt: "The 7th National Symposium backdrop" },
-        { src: "assets/img/moments/national-symposium-7-b.jpg", alt: "A JPSA member at the 7th National Symposium" },
+        { src: "assets/img/moments/national-symposium-7.jpg", alt: "A JPSA member in a suit in front of the 7th National Symposium backdrop" },
+        { src: "assets/img/moments/national-symposium-7-b.jpg", alt: "A JPSA member with arms crossed in front of the 7th National Symposium banner" },
       ],
     },
     events: {
@@ -384,6 +385,11 @@ export default {
 
   /* ------------------------------------------------------------ PORTFOLIOS */
   portfolios: {
+    // Shown in search results and link previews.
+    meta: {
+      title: "Our Portfolios — JPSA",
+      description: "Public Health, Professional Development, Humanitarian Campaigns and Social Events: the four portfolios behind everything JPSA does.",
+    },
     hero: {
       kicker: "Our portfolios",
       title: "More than a pharmacy student experience.",
@@ -403,7 +409,7 @@ export default {
           { icon: "megaphone", title: "Awareness campaigns", text: "Campaigns on prevalent diseases, their prevention and proper management — on campus and in the community." },
           { icon: "book-open", title: "Educational lectures", text: "Lectures on rare diseases and clinical cases that take students beyond the curriculum." },
           { icon: "stethoscope", title: "Medical Convention", text: "Our convention that lets students expand their medical knowledge and meet the field." },
-          { icon: "hospital", title: "Hospital collaborations", text: "Awareness activities and scientific sessions with hospitals such as Jordan Hospital, KHCC and Specialty Hospital.", href: "partners.html#hospitals" },
+          { icon: "hospital", title: "Hospital collaborations", text: "Awareness activities and scientific sessions with hospitals such as Jordan Hospital, KHCC and Specialty Hospital, plus campaigns with the Jordan Breast Cancer Program (JBCP).", href: "partners.html#hospitals" },
         ],
         highlight: { num: "~7,000", text: "<strong>residents served</strong> at a free medical day in Al-Sukhna camp, organized with Universal Medicine in December 2024." },
       },
@@ -456,11 +462,8 @@ export default {
         ],
       },
       {
+        // No tagline or intro here: sep.html already opens with them, and repeating them would duplicate that page.
         id: "student-exchange", num: "05", name: "Student Exchange Program", theme: "black",
-        tagline: "Beyond borders. Beyond classrooms.",
-        intro: [
-          "The Student Exchange Program opens the door for students to experience pharmacy and life from a global perspective — while JPSA welcomes students from around the world to discover Jordan.",
-        ],
         items: [
           { icon: "plane-takeoff", title: "Go abroad", text: "Travel, experience different cultures and explore new academic environments.", href: "sep.html" },
           { icon: "map-pin", title: "Welcome students to Jordan", text: "Host exchange students and show them our culture and our country.", href: "sep.html#incoming" },
@@ -478,6 +481,11 @@ export default {
 
   /* -------------------------------------------------------------- PARTNERS */
   partners: {
+    // Shown in search results and link previews.
+    meta: {
+      title: "Partners & Collaborators — JPSA",
+      description: "The institutions, hospitals and companies that work with JPSA — and the perks that come with membership.",
+    },
     hero: {
       kicker: "Partners & collaborations",
       title: "Partnerships for a healthier community.",

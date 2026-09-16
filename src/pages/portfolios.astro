@@ -12,7 +12,7 @@ const L = C.site.links;
 const themeCls = { white: "", gray: "section--gray", yellow: "section--yellow", black: "section--black" };
 const dot = { white: "var(--red)", gray: "var(--red)", yellow: "var(--yellow)", black: "#555" };
 ---
-<Base page="portfolios" title="Our Portfolios — JPSA" description="Public Health, Professional Development, Humanitarian Campaigns and Social Events: the four portfolios behind everything JPSA does.">
+<Base page="portfolios" {...p.meta}>
   <PageHero {...p.hero} />
   <section class="section section--tight">
     <div class="container"><p class="lead reveal" style="max-width:64ch">{p.intro}</p></div>
@@ -29,8 +29,8 @@ const dot = { white: "var(--red)", gray: "var(--red)", yellow: "var(--yellow)", 
           <div>
             <span class="kicker">Portfolio {x.num}</span>
             <h2 style="margin-top:14px">{x.name}</h2>
-            <p class="portfolio__tag">{x.tagline}</p>
-            <div class="portfolio__intro prose">{x.intro.map((t) => <p set:html={rich(t)}></p>)}</div>
+            {x.tagline && <p class="portfolio__tag">{x.tagline}</p>}
+            {x.intro && <div class="portfolio__intro prose">{x.intro.map((t) => <p set:html={rich(t)}></p>)}</div>}
           </div>
         </div>
         <div class={`grid ${x.items.length === 3 ? "grid-3" : "grid-4"}`}>
@@ -62,7 +62,7 @@ const dot = { white: "var(--red)", gray: "var(--red)", yellow: "var(--yellow)", 
       <span class="serif">{p.closing.serif}</span>
       <div class="cluster" style="justify-content:center;margin-top:32px">
         <Btn label="Join JPSA" href={L.join} />
-        <Btn label="Meet the family" href="index.html#family" variant="outline" />
+        <Btn label="Meet the family" href="about.html#family" variant="outline" />
       </div>
     </div>
   </section>

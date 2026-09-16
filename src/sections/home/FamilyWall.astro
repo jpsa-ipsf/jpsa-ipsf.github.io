@@ -1,0 +1,13 @@
+---
+import { Image } from "astro:assets";
+import C from "../../../content.js";
+import { img } from "../../lib/images.js";
+import { pad } from "../../lib/text.js";
+
+const wall = Array.from({ length: C.family.wallCount }, (_, i) => `assets/img/family/f${pad(i + 1)}.jpg`);
+const half = Math.ceil(wall.length / 2);
+const rows = [[wall.slice(0, half), false], [wall.slice(half), true]];
+---
+<section class="section section--black section--tight">
+  <div class="wall family-wall" role="img" aria-label="Portraits of JPSA members" style="margin-block:0">{rows.map(([list, reverse]) => <div class={`wall__row${reverse ? " wall__row--reverse" : ""}`}>{[...list, ...list].map((src) => <div class="wall__img"><Image src={img(src)} alt="" widths={[180, 360]} sizes="(max-width: 900px) 130px, 180px" /></div>)}</div>)}</div>
+</section>

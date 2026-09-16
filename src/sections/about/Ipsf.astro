@@ -1,0 +1,24 @@
+---
+import C from "../../../content.js";
+import Btn from "../../components/Btn.astro";
+import { rich } from "../../lib/text.js";
+
+const x = C.about.ipsf;
+const L = C.site.links;
+---
+<section class="section section--yellow" id="ipsf">
+  <div class="container ipsf-grid">
+    <div class="reveal">
+      <span class="kicker">{x.kicker}</span>
+      <h2 style="margin-top:18px">{x.title}</h2>
+      <div class="prose" style="margin-top:24px">{x.text.map((t) => <p set:html={rich(t)}></p>)}</div>
+      <div class="cluster" style="margin-top:28px">
+        <Btn label="Visit ipsf.org" href={L.ipsf} variant="dark" iconName="arrow-up-right" />
+        <Btn label="JPSA on the IPSF site" href={L.ipsfJpsa} variant="outline" iconName="arrow-up-right" />
+      </div>
+    </div>
+    <div class="fact-list reveal" style="--delay:120ms">
+      {x.facts.map((f) => <div class="fact"><div class="fact__k">{f.k}</div><div class="fact__v">{f.v}</div></div>)}
+    </div>
+  </div>
+</section>

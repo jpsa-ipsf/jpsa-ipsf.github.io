@@ -14,7 +14,7 @@ import { delay, mailto, pad } from "../lib/text.js";
 const P = C.partners;
 const L = C.site.links;
 ---
-<Base page="partners" title="Partners & Collaborators — JPSA" description="The institutions, hospitals and companies that work with JPSA — and the perks that come with membership.">
+<Base page="partners" {...P.meta}>
   <PageHero {...P.hero}>
     <div class="page-hero__card" aria-hidden="true">
       <div class="member-card">
