@@ -111,7 +111,7 @@ export default {
         { icon: "plane-takeoff", title: "Train abroad with SEP", text: "Apply for professional exchanges through IPSF's Student Exchange Programme — or host students coming to Jordan.", href: "sep.html" },
         { icon: "presentation", title: "Symposium & conferences", text: "Our annual National Symposium and conferences put you in the room with professionals and leaders.", href: "conferences.html" },
         { icon: "microscope", title: "Scientific Research Program", text: "Take your first steps into scientific research with our annual program.", href: "portfolios.html#professional-development" },
-        { icon: "briefcase", title: "Internships & careers", text: "Training and internship opportunities with partners such as AstraZeneca, KHCC and Saudi Hospital.", href: "partners.html#careers" },
+        { icon: "briefcase", title: "Internships & careers", text: "Training and internship opportunities with partners such as AstraZeneca, Ibn Sina Pharmacy and Saudi Hospital.", href: "partners.html#careers" },
         { icon: "hospital", title: "Hospital collaborations", text: "Scientific activities, awareness campaigns and training with hospitals across Jordan.", href: "partners.html#hospitals" },
         { icon: "heart-pulse", title: "Public health campaigns", text: "Turn knowledge into action through awareness campaigns, lectures and our Medical Convention.", href: "portfolios.html#public-health" },
         { icon: "hand-heart", title: "Humanitarian campaigns", text: "Iftar gatherings with orphans, Eid clothing campaigns, blood donation and elderly visits.", href: "portfolios.html#humanitarian" },
@@ -604,7 +604,7 @@ export default {
       kicker: "Hosted by JPSA",
       title: "Conferences we've organized",
       list: [
-        { tag: "July 2018", icon: "earth", title: "7th IPSF Eastern Mediterranean Pharmaceutical Symposium", text: "JPSA hosted IPSF's regional symposium (EMPS), welcoming pharmacy students from across the Eastern Mediterranean region.", where: "Amman, Jordan" },
+        { tag: "July 2018", icon: "earth", title: "IPSF Eastern Mediterranean Pharmaceutical Symposium", text: "JPSA hosted IPSF's regional symposium (EMPS), welcoming pharmacy students from across the Eastern Mediterranean region.", where: "Amman, Jordan" },
         // TODO confirm, then uncomment: { tag: "2010", icon: "earth", title: "1st IPSF Eastern Mediterranean Pharmaceutical Symposium", text: "…", where: "Jordan" },
         { tag: "Every year", icon: "presentation", title: "National Symposium", text: "Our flagship annual conference, now in its seventh edition, built with the Jordan Pharmacists Association.", where: "Jordan" },
         { tag: "Public Health", icon: "stethoscope", title: "Medical Convention", text: "Organized by our Public Health Team so students can expand their medical knowledge and look beyond the classroom.", where: "" },
@@ -616,7 +616,6 @@ export default {
       title: "Honored by their presence",
       lead: "Over the years, our conferences have been honored by the patronage and presence of distinguished national figures, including:",
       list: [
-        { title: "Her Royal Highness", name: "Princess Sumaya bint El Hassan", mono: "SH" },
         { title: "Former Prime Minister", name: "Abd Al Raouf Al Rawabdeh", mono: "AR" },
         { title: "Former Minister of Youth", name: "Mohammad Al Nabulsi", mono: "MN" },
         { title: "Her Royal Highness", name: "Princess Alia Al Tabbaa", mono: "AT" },
@@ -629,7 +628,7 @@ export default {
       lead: "As an IPSF member association, JPSA connects Jordanian pharmacy students with IPSF's global and regional events.",
       list: [
         { icon: "earth", title: "IPSF World Congress", text: "IPSF's annual global gathering of pharmacy students, with the federation's General Assembly, educational sessions and cultural exchange." },
-        { icon: "map", title: "Eastern Mediterranean Pharmaceutical Symposium", text: "IPSF EMRO's regional symposium for our region — hosted by JPSA in Amman in 2018." },
+        { icon: "map", title: "Eastern Mediterranean Pharmaceutical Symposium", text: "IPSF EMRO's regional symposium for our region." },
       ],
       // TODO: list the congresses JPSA delegations attended, e.g.
       // { icon: "plane", title: "71st IPSF World Congress", text: "Bangkok, Thailand — 2026" },
@@ -654,9 +653,19 @@ export default {
       ghost: "Impact",
     },
     intro: "Through our four main portfolios — and our Student Exchange Programme — we aim to provide students with experiences and opportunities that enrich every aspect of their journey.",
+    /* The sections of the page, in order.
+       • Portfolios are numbered automatically in this order (01, 02, …). The Student Exchange
+         Programme is not a portfolio (portfolio: false), so it has no number.
+       • gallery: photos from the team's big events, shown after its cards (nothing is shown while
+         the list is empty). One entry per event, with the photos in assets/img/portfolios/<id>/:
+           { event: "Free medical day, Al-Sukhna camp", when: "December 2024", photos: [
+               { src: "assets/img/portfolios/public-health/sukhna-1.jpg", alt: "What the photo shows, in one sentence" },
+           ] },
+         Every event needs a name and at least one photo, and every photo a description (alt):
+         otherwise the build stops and says what is missing. */
     list: [
       {
-        id: "public-health", num: "01", name: "Public Health", theme: "white",
+        id: "public-health", name: "Public Health", theme: "white",
         tagline: "Raising awareness. Saving lives.",
         intro: [
           "The Public Health Team works to empower students and communities with knowledge about health and disease prevention. Through awareness campaigns addressing prevalent diseases, their prevention, and proper management, the team turns knowledge into meaningful action.",
@@ -669,9 +678,10 @@ export default {
           { icon: "hospital", title: "Hospital collaborations", text: "Awareness activities and scientific sessions with hospitals such as Jordan Hospital, KHCC and Specialty Hospital, plus campaigns with the Jordan Breast Cancer Program (JBCP).", href: "partners.html#hospitals" },
         ],
         highlight: { num: "~7,000", text: "<strong>residents served</strong> at a free medical day in Al-Sukhna camp, organized with Universal Medicine in December 2024." },
+        gallery: [],
       },
       {
-        id: "professional-development", num: "02", name: "Professional Development", theme: "gray",
+        id: "professional-development", name: "Professional Development", theme: "gray",
         tagline: "Preparing students for what comes next.",
         intro: [
           "The Professional Development Team focuses on equipping students with the knowledge, skills, and experiences they need to step confidently into their future careers. Through training programs and career-oriented initiatives, students explore different fields of pharmacy and better understand the world of work.",
@@ -688,9 +698,10 @@ export default {
           tagline: "Where ideas find their voice.",
           text: "Conversations beyond the classroom that bring together students, professionals, leaders, and changemakers to explore the experiences, challenges, and opportunities shaping the future of pharmacy.",
         },
+        gallery: [],
       },
       {
-        id: "humanitarian", num: "03", name: "Humanitarian Campaigns", theme: "white",
+        id: "humanitarian", name: "Humanitarian Campaigns", theme: "white",
         tagline: "Where humanity meets the joy of giving.",
         intro: [
           "Because making a difference is not always about how much we give, but about how much we care.",
@@ -703,9 +714,10 @@ export default {
           { icon: "heart-handshake", title: "Elderly visits", text: "Visits to the elderly, and many other volunteering initiatives." },
         ],
         closing: "Through every campaign, the team reminds us that small acts of kindness can leave a lasting impact.",
+        gallery: [],
       },
       {
-        id: "social", num: "04", name: "Social Events", theme: "yellow",
+        id: "social", name: "Social Events", theme: "yellow",
         tagline: "Because every journey needs a little fun.",
         intro: [
           "After learning, developing ourselves, raising awareness, and giving back to our communities, there is always room to simply enjoy the journey.",
@@ -717,15 +729,18 @@ export default {
           { icon: "gamepad-2", title: "Games & gatherings", text: "Game nights and social gatherings that bring people together." },
           { icon: "camera", title: "Memories", text: "The moments that often become the memories we remember most." },
         ],
+        gallery: [],
       },
       {
         // No tagline or intro here: sep.html already opens with them, and repeating them would duplicate that page.
-        id: "student-exchange", num: "05", name: "Student Exchange Programme", theme: "black",
+        // Not a fifth portfolio: no number and no "Portfolio" label (the intro above says "four main portfolios").
+        id: "student-exchange", portfolio: false, name: "Student Exchange Programme", theme: "black",
         items: [
           { icon: "plane-takeoff", title: "Go abroad", text: "Travel, experience different cultures and explore new academic environments.", href: "sep.html" },
           { icon: "map-pin", title: "Welcome students to Jordan", text: "Host exchange students and show them our culture and our country.", href: "sep.html#incoming" },
           { icon: "flask-conical", title: "Train across pharmacy", text: "Gain practical experience in different fields of pharmacy.", href: "sep.html#fields" },
         ],
+        gallery: [],
       },
     ],
     closing: {
@@ -797,10 +812,9 @@ export default {
       list: [
         { name: "AstraZeneca", note: "Pharmaceutical company" },
         { name: "OMNITRADE", note: "Career partner" },
-        { name: "King Hussein Cancer Center", note: "Healthcare" },
         { name: "Saudi Hospital", note: "Healthcare" },
-        { name: "SKYDERMA", note: "Career partner" },
-        { name: "SKN GYM", note: "Career partner" },
+        { name: "Ibn Sina Pharmacy", note: "Pharmacy" },
+        { name: "Nairoukh Pharma", note: "Pharmaceutical company" },
       ],
     },
     perks: {

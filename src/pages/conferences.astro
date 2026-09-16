@@ -13,7 +13,9 @@ import { rich, delay, mailto } from "../lib/text.js";
 const c = C.conferences;
 const n = c.national;
 const ev = c.events.list;
+const intl = c.international.list;
 const L = C.site.links;
+const twoCols = (list) => (list.length === 2 || list.length === 4 ? " event-cards--2" : "");
 ---
 <Base page="conferences" {...c.meta}>
   <PageHero {...c.hero} />
@@ -52,7 +54,7 @@ const L = C.site.links;
   <section class="section" id="organized">
     <div class="container">
       <SectionHead kicker={c.events.kicker} title={c.events.title} />
-      <div class={`event-cards${ev.length === 2 || ev.length === 4 ? " event-cards--2" : ""}`}>
+      <div class={`event-cards${twoCols(ev)}`}>
         {ev.map((e, i) => <article class="event-card reveal" style={delay(i, 80, 2)}>
               <span class="event-card__when"><Icon name={e.icon} />{e.tag}</span>
               <h3>{e.title}</h3>
@@ -63,22 +65,27 @@ const L = C.site.links;
     </div>
   </section>
 
-  <section class="section section--black" id="patrons">
+  {/* Right after the conferences JPSA organized, in the same card style: the IPSF events beyond Jordan. */}
+  <section class="section section--gray" id="international">
     <div class="container">
-      <SectionHead kicker={c.patrons.kicker} title={c.patrons.title} lead={c.patrons.lead} split />
-      <div class="patrons">
-        {c.patrons.list.map((p, i) => <article class="patron reveal" style={delay(i, 90, 2)}><span class="patron__mono" aria-hidden="true">{p.mono}</span><div><p class="patron__title">{p.title}</p><p class="patron__name">{p.name}</p></div></article>)}
+      <SectionHead kicker={c.international.kicker} title={c.international.title} lead={c.international.lead} split />
+      <div class={`event-cards${twoCols(intl)}`}>
+        {intl.map((x, i) => <article class="event-card reveal" style={delay(i, 80, 2)}>
+              <span class="icon-badge icon-badge--black"><Icon name={x.icon} /></span>
+              <h3>{x.title}</h3>
+              <p>{x.text}</p>
+            </article>)}
       </div>
-      <p class="family-lines reveal" style="max-width:60ch;margin-top:clamp(32px,5vw,56px)">{c.patrons.closing}</p>
     </div>
   </section>
 
-  <section class="section" id="international">
+  <section class="section section--black" id="patrons">
     <div class="container">
-      <SectionHead kicker={c.international.kicker} title={c.international.title} lead={c.international.lead} split />
-      <div class="grid grid-2">
-        {c.international.list.map((x, i) => <article class="card card--block reveal" style={`--delay:${i * 90}ms`}><span class="icon-badge"><Icon name={x.icon} /></span><h3>{x.title}</h3><p>{x.text}</p></article>)}
+      <SectionHead kicker={c.patrons.kicker} title={c.patrons.title} lead={c.patrons.lead} split />
+      <div class={`patrons${c.patrons.list.length === 3 ? " patrons--3" : ""}`}>
+        {c.patrons.list.map((p, i) => <article class="patron reveal" style={delay(i, 90, 3)}><span class="patron__mono" aria-hidden="true">{p.mono}</span><div><p class="patron__title">{p.title}</p><p class="patron__name">{p.name}</p></div></article>)}
       </div>
+      <p class="family-lines reveal" style="max-width:60ch;margin-top:clamp(32px,5vw,56px)">{c.patrons.closing}</p>
     </div>
   </section>
 

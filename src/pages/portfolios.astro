@@ -1,17 +1,36 @@
 ---
+import { Image } from "astro:assets";
 import Base from "../layouts/Base.astro";
 import C from "../../content.js";
 import PageHero from "../components/PageHero.astro";
 import Icon from "../components/Icon.astro";
 import Btn from "../components/Btn.astro";
 import TextLink from "../components/TextLink.astro";
-import { rich, delay } from "../lib/text.js";
+import { img } from "../lib/images.js";
+import { rich, delay, pad } from "../lib/text.js";
 
 const p = C.portfolios;
 const L = C.site.links;
 const team = C.team.teams.labels;
 const themeCls = { white: "", gray: "section--gray", yellow: "section--yellow", black: "section--black" };
 const dot = { white: "var(--red)", gray: "var(--red)", yellow: "var(--yellow)", black: "#555" };
+
+// Portfolios are numbered in page order (01, 02, …); the Student Exchange Programme (portfolio: false) has no number.
+const portfolios = p.list.filter((x) => x.portfolio !== false);
+const numberOf = (x) => (x.portfolio === false ? "" : pad(portfolios.indexOf(x) + 1));
+
+// Event photos: a mistake stops the build with a message saying what to fix.
+for (const x of p.list) {
+  (x.gallery || []).forEach((ev, i) => {
+    const where = `content.js, portfolio "${x.name}", gallery entry ${i + 1}`;
+    if (!ev.event) throw new Error(`${where}: the event has no name (event: "...").`);
+    if (!ev.photos || !ev.photos.length) throw new Error(`${where} ("${ev.event}"): add at least one photo, or remove the entry.`);
+    ev.photos.forEach((ph, j) => {
+      if (!ph.alt || !ph.alt.trim()) throw new Error(`${where} ("${ev.event}"), photo ${j + 1} (${ph.src}): add a description (alt: "...").`);
+      img(ph.src); // stops the build if the file is missing
+    });
+  });
+}
 ---
 <Base page="portfolios" {...p.meta}>
   <PageHero {...p.hero} />
@@ -23,13 +42,13 @@ const dot = { white: "var(--red)", gray: "var(--red)", yellow: "var(--yellow)", 
       {p.list.map((x) => <a href={`#${x.id}`} data-spy={x.id}><span class="dot" style={`--dot:${dot[x.theme] || "var(--red)"}`}></span>{x.name}</a>)}
     </div>
   </nav>
-  {p.list.map((x) => <section class={`section portfolio ${themeCls[x.theme] || ""}`} id={x.id}>
+  {p.list.map((x) => { const num = numberOf(x); return <section class={`section portfolio ${themeCls[x.theme] || ""}`} id={x.id}>
       <div class="container">
-        <div class="portfolio__head reveal">
-          <div class="portfolio__num" aria-hidden="true">{x.num}</div>
+        <div class={`portfolio__head${num ? "" : " portfolio__head--plain"} reveal`}>
+          {num && <div class="portfolio__num" aria-hidden="true">{num}</div>}
           <div>
-            <span class="kicker">Portfolio {x.num}</span>
-            <h2 style="margin-top:14px">{x.name}</h2>
+            {num && <span class="kicker">Portfolio {num}</span>}
+            <h2 style={num ? "margin-top:14px" : undefined}>{x.name}</h2>
             {x.tagline && <p class="portfolio__tag">{x.tagline}</p>}
             {x.intro && <div class="portfolio__intro prose">{x.intro.map((t) => <p set:html={rich(t)}></p>)}</div>}
             <p style="margin-top:20px"><TextLink label={team.meetTeam} href={`team.html#${x.id}`} /></p>
@@ -44,6 +63,13 @@ const dot = { white: "var(--red)", gray: "var(--red)", yellow: "var(--yellow)", 
               </article>)}
         </div>
         {x.highlight && <div class="highlight reveal"><span class="highlight__num">{x.highlight.num}</span><p set:html={rich(x.highlight.text)}></p></div>}
+        {x.gallery && x.gallery.length > 0 && <div class="event-gallery">
+          {x.gallery.map((ev) => <div class="event-gallery__event reveal">
+            <h3 class="event-gallery__title">{ev.event}</h3>
+            {ev.when && <p class="event-gallery__when">{ev.when}</p>}
+            <div class="event-gallery__photos">{ev.photos.map((ph) => <Image src={img(ph.src)} alt={ph.alt} widths={[400, 800]} sizes="(max-width: 720px) 45vw, (max-width: 1200px) 30vw, 380px" />)}</div>
+          </div>)}
+        </div>}
         {x.podcast && <div class="podcast reveal">
           <div class="wave" aria-hidden="true">{Array.from({ length: 12 }, (_, i) => <span style={`--i:${i}`}></span>)}</div>
           <div>
@@ -55,7 +81,7 @@ const dot = { white: "var(--red)", gray: "var(--red)", yellow: "var(--yellow)", 
         {x.closing && <p class="portfolio__tag reveal" style="max-width:40ch;margin-top:40px">{x.closing}</p>}
         {x.id === "student-exchange" && <div class="cluster" style="margin-top:36px"><Btn label="Explore the exchange programme" href="sep.html" variant="yellow" /></div>}
       </div>
-    </section>)}
+    </section>; })}
   <section class="section closing">
     <div class="container reveal">
       <span class="kicker">{p.closing.kicker}</span>
