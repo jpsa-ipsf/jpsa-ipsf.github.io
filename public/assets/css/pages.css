@@ -509,3 +509,77 @@
 .section--paper .coupon::before, .section--paper .coupon::after { background: var(--paper-2); }
 
 .is-filtered-out { display: none !important; }
+
+/* ---------- Team page ---------- */
+/* The three structure cards sit right under the page's h1, so their titles are h2 here;
+   they keep the look they had as h3 on the About page. */
+.team-structure .structure__title {
+  margin: 10px 0 8px;
+  font-family: var(--font-body);
+  font-size: var(--fs-h3);
+  font-weight: 700;
+  line-height: 1.2;
+  letter-spacing: -0.01em;
+  text-transform: none;
+  color: #fff;
+}
+.exco-group + .exco-group { margin-top: clamp(40px, 5vw, 64px); }
+.exco-group__title, .team-group__title { margin-bottom: 20px; }
+.person__name a { color: inherit; text-decoration: none; }
+.person__name a:hover { text-decoration: underline; text-underline-offset: 3px; }
+
+.coverage { display: flex; flex-wrap: wrap; align-items: center; gap: 10px 12px; }
+.coverage__label { font-weight: 700; color: var(--ink-2); }
+.coverage__list { display: flex; flex-wrap: wrap; gap: 8px; margin: 0 8px 0 0; padding: 0; list-style: none; }
+.coverage abbr, .members abbr { text-decoration: none; }
+
+.team-group { margin-top: clamp(40px, 5vw, 64px); }
+.team-card {
+  display: grid;
+  grid-template-columns: minmax(0, 0.85fr) minmax(0, 1.15fr);
+  gap: 20px clamp(24px, 4vw, 56px);
+  padding: clamp(22px, 3vw, 36px);
+  background: #fff;
+  border-top: 4px solid var(--red);
+  border-radius: var(--radius-sm);
+  box-shadow: var(--shadow-sm);
+  scroll-margin-top: calc(var(--header-h) + 84px);
+}
+.team-card + .team-card { margin-top: clamp(16px, 2.4vw, 24px); }
+.team-card__head {
+  grid-column: 1 / -1;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px 24px;
+  padding-bottom: 18px;
+  border-bottom: 1px solid var(--line);
+}
+.team-card__name { font-family: var(--font-display); font-size: clamp(1.8rem, 3.2vw, 2.4rem); font-weight: 400; line-height: 1; letter-spacing: 0.005em; text-transform: uppercase; }
+.team-card__meta { display: flex; align-items: center; gap: 10px; color: var(--ink-2); }
+.team-card__fields { display: grid; gap: 18px; align-content: start; margin: 0; }
+.team-card__fields dt { font-size: 0.78rem; font-weight: 800; letter-spacing: 0.1em; text-transform: uppercase; color: var(--red); }
+.team-card__fields dd { margin: 6px 0 0; color: var(--ink-2); }
+.team-card__work { display: block; margin-top: 8px; }
+.team-card__people { display: grid; gap: 24px; align-content: start; }
+.team-card__subtitle { margin: 0 0 8px; font-size: 0.78rem; font-weight: 800; letter-spacing: 0.1em; text-transform: uppercase; color: var(--ink-3); }
+
+.members { width: 100%; border-collapse: collapse; }
+.members th { padding: 0 12px 8px 0; border-bottom: 1px solid var(--line); text-align: left; font-size: 0.78rem; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; color: var(--ink-3); }
+.members td { padding: 10px 12px 10px 0; border-bottom: 1px solid var(--line); font-size: 0.95rem; vertical-align: middle; }
+.members th:last-child, .members td:last-child { padding-right: 0; }
+.members tr:last-child td { border-bottom: 0; }
+.members__person { display: flex; align-items: center; gap: 10px; font-weight: 600; }
+.committee { display: grid; grid-template-columns: repeat(auto-fill, minmax(190px, 1fr)); gap: 10px 16px; margin: 0; padding: 0; list-style: none; }
+.committee li { display: flex; align-items: center; gap: 10px; font-size: 0.95rem; font-weight: 600; }
+
+/* A person's small photo, or their initials until a photo is added. */
+.avatar { flex: none; display: inline-grid; place-items: center; width: 40px; height: 40px; overflow: hidden; border-radius: 50%; background: var(--gray); font-family: var(--font-display); font-size: 0.95rem; color: var(--red); }
+.avatar img { width: 100%; height: 100%; object-fit: cover; object-position: 50% 18%; }
+
+@media (max-width: 860px) { .team-card { grid-template-columns: 1fr; } }
+@media (max-width: 480px) {
+  .avatar { width: 32px; height: 32px; font-size: 0.8rem; }
+  .members td { font-size: 0.9rem; }
+}

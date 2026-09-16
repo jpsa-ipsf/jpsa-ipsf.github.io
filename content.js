@@ -5,8 +5,8 @@
    Edit the text between the quotes, save, and refresh the page.
 
    • Text can use <strong>…</strong>, <em>…</em> and <br> for emphasis.
-   • Photos live in assets/img/. To add a person, drop a 4:5 portrait
-     (e.g. 640×800) into assets/img/people/ and point "photo" to it.
+   • Photos live in assets/img/. People's photos go in assets/img/people/
+     and are named after the person's id in the TEAM section (e.g. eyad-tayem.jpg).
    • Lines marked TODO still need information from the JPSA team.
    ========================================================================== */
 
@@ -34,11 +34,13 @@ export default {
   },
 
   /* The top menu and the footer's "Explore" list.
-     menu: false → footer only (the logo already links to the home page). */
+     menu: false → footer only (the logo already links to the home page).
+     menuLabel → a shorter name for the top menu only (the footer keeps "label"). */
   nav: [
     { page: "home", label: "Home", href: "index.html", menu: false },
     { page: "about", label: "About", href: "about.html" },
-    { page: "sep", label: "Student Exchange", href: "sep.html" },
+    { page: "team", label: "Team", href: "team.html" },
+    { page: "sep", label: "Student Exchange", menuLabel: "Exchange", href: "sep.html" },
     { page: "conferences", label: "Conferences", href: "conferences.html" },
     { page: "portfolios", label: "Portfolios", href: "portfolios.html" },
     { page: "partners", label: "Partners", href: "partners.html" },
@@ -114,10 +116,13 @@ export default {
         { icon: "heart-pulse", title: "Public health campaigns", text: "Turn knowledge into action through awareness campaigns, lectures and our Medical Convention.", href: "portfolios.html#public-health" },
         { icon: "hand-heart", title: "Humanitarian campaigns", text: "Iftar gatherings with orphans, Eid clothing campaigns, blood donation and elderly visits.", href: "portfolios.html#humanitarian" },
         { icon: "party-popper", title: "Social events", text: "Sports, games, creative activities and gatherings — the moments you'll remember most.", href: "portfolios.html#social" },
-        { icon: "users", title: "Lead a team", text: "Join a subcommittee or become a local coordinator at your university.", href: "about.html#family" },
+        { icon: "users", title: "Lead a team", text: "Join a subcommittee or become a local coordinator at your university.", href: "team.html" },
       ],
       eligibility: "<strong>Who can join?</strong> Every pharmacy student at a Jordanian university — and graduates, up to four years after graduation.",
     },
+
+    // The photo wall near the end of the page: assets/img/family/f01.jpg … f66.jpg
+    wallCount: 66,
 
     cta: {
       title: "What will yours be?",
@@ -180,48 +185,297 @@ export default {
     },
   },
 
-  /* ---------------------------------------------------------- THE FAMILY
-     "Meet the family" on the About page. The photo wall (wallCount) is on the home page. */
-  family: {
-    kicker: "Meet the family",
-    title: "More than a mandate. A family.",
-    lead: "From our Executive Committee, who led the journey with vision and commitment, to our Local Coordinators, who brought the spirit of JPSA closer to every university, and our Subcommittees, whose passion, creativity, and dedication turned ideas into action — every individual played a role in shaping this mandate.",
+  /* ------------------------------------------------------------------ TEAM
+     team.html: the Executive Committee and the eleven teams.
+     • Every person is written ONCE, in "people" at the end of this section. Positions and
+       teams point to a person by id, so a name is always spelled the same way on the site.
+     • Photos appear by themselves: add assets/img/people/<id>.jpg (for example
+       eyad-tayem.jpg). Until then, the person's initials are shown.
+     • "university" is only for people who represent a university (local coordinators).
+     • A mistake (an id that is not in "people", a university that is not in the list at the
+       top of this file, a team without a leader) stops the build with a message saying what
+       to fix, so the live site stays as it was. */
+  team: {
+    // Shown in search results and link previews.
+    meta: {
+      title: "Our Team — JPSA",
+      description: "Meet JPSA's Executive Committee and eleven teams: who leads each one, what they do, and who to contact at your university.",
+    },
+
+    hero: {
+      kicker: "Meet the family",
+      title: "More than a mandate. A family.",
+      lead: "From our Executive Committee, who led the journey with vision and commitment, to our Local Coordinators, who brought the spirit of JPSA closer to every university, and our Subcommittees, whose passion, creativity, and dedication turned ideas into action — every individual played a role in shaping this mandate.",
+      ghost: "Family",
+    },
+
     structure: [
       { title: "Executive Committee", text: "Leads the journey with vision and commitment." },
       { title: "Local Coordinators", text: "Bring the spirit of JPSA closer to every university." },
       { title: "Subcommittees", text: "Turn ideas into action with passion, creativity and dedication." },
     ],
     lines: "This family was never defined by positions or titles. It was built through teamwork, late nights, shared challenges, unforgettable moments, and a common belief in making a difference.",
-    wallCount: 66, // photos assets/img/family/f01.jpg … f66.jpg
-    peopleTitle: "The faces behind the vision.",
-    peopleLead: "The voices behind the ideas. The hands behind every achievement.",
-    // TODO: add each person's role (e.g. "President", "Public Health Director") and university.
+
+    groups: [
+      { id: "leadership", name: "Leadership" },
+      { id: "portfolios", name: "Portfolios" },
+      { id: "exchange", name: "Student Exchange" },
+      { id: "operations", name: "Operations" },
+    ],
+
+    exco: {
+      title: "The faces behind the vision.",
+      lead: "The voices behind the ideas. The hands behind every achievement.",
+      // "team" is the id of the team the position leads (the President and Vice President lead none).
+      positions: [
+        { title: "President", person: "eyad-tayem", group: "leadership" },
+        { title: "Vice President", person: "malak-elaian", group: "leadership" },
+        { title: "Public Health", person: "abd-alrahman-abu-rumman", group: "portfolios", team: "public-health" },
+        { title: "Professional Development", person: "ahmad-alhourani", group: "portfolios", team: "professional-development" },
+        { title: "Humanitarian Campaigns", person: "jude-obaidat", group: "portfolios", team: "humanitarian" },
+        { title: "Social Events", person: "sama-shadid", group: "portfolios", team: "social" },
+        { title: "Student Exchange Officer", person: "saif-khraino", group: "exchange", team: "student-exchange" },
+        { title: "Secretary General", person: "layan-ayman", group: "operations", team: "secretary-general" },
+        { title: "Treasurer", person: "saif-ghassab", group: "operations", team: "treasurer" },
+        { title: "Contact Person", person: "bayanne-fannoun", group: "operations", team: "contact-person" },
+        { title: "External Relations", person: "abd-alrahman-shammout", group: "operations", team: "external-relations" },
+        { title: "Internal Communication", person: "abd-alrahman-othman", group: "operations", team: "internal-communication" },
+        { title: "Media and Publications", person: "adawiya-ali", group: "operations", team: "media-publications" },
+      ],
+    },
+
+    teams: {
+      kicker: "Our teams",
+      title: "Eleven teams. One family.",
+      lead: "Every JPSA activity is run by one of our teams. Pick one to see what they do.",
+      labels: {
+        ledBy: "Led by",
+        member: "member",
+        members: "members",
+        does: "What the team does",
+        now: "What's happening now",
+        join: "If you join",
+        work: "See what they do",
+        local: "Local coordinators",
+        committee: "8th National Symposium committee",
+        name: "Name",
+        role: "Role",
+        university: "University",
+        noUniversity: "—",
+        coverage: "Local coordinators today:",
+        notYet: "Not yet:",
+        jump: "Teams",
+        meetTeam: "Meet the team",
+      },
+      /* For each team:
+         • work: the page that describes the team's work (portfolios and exchange), linked instead of repeated.
+         • does / join: DRAFTS written on 2026-09-16, to be corrected by the committee.
+         • now: left empty on purpose; the committee fills it in (hidden while empty).
+         • local: people who represent a university, with their role (shown with the university).
+         • committee: members of the National Symposium committee (shown without a university). */
+      list: [
+        {
+          id: "public-health", name: "Public Health", group: "portfolios", work: "portfolios.html#public-health",
+          does: "Plans JPSA's public health activities and takes them to campuses through its local coordinators.",
+          now: "",
+          join: "As a local coordinator, you bring the team's activities to your own university and help run them there.",
+          local: [
+            { person: "noura-almajali", role: "Local coordinator" },
+            { person: "jude-rabayah", role: "Local coordinator" },
+            { person: "aya-alajlouni", role: "Local coordinator" },
+            { person: "tala-hilweh", role: "Local coordinator" },
+            { person: "zeena-alhaj", role: "Local coordinator" },
+          ],
+          committee: [],
+        },
+        {
+          id: "professional-development", name: "Professional Development", group: "portfolios", work: "portfolios.html#professional-development",
+          does: "Builds the programs that help members prepare for their careers, and brings together the committee behind our National Symposium.",
+          now: "",
+          join: "You work on the National Symposium committee, planning the symposium together with members from other teams.",
+          local: [],
+          committee: ["ahmad-bakri", "asma-mefrej", "faisal-alhadid", "tamam-alttayyeb", "shahd-naser", "mira-hamad", "zeena-alhaj", "bissan-alghroz", "jamal-alrazem"],
+        },
+        {
+          id: "humanitarian", name: "Humanitarian Campaigns", group: "portfolios", work: "portfolios.html#humanitarian",
+          does: "Organizes JPSA's volunteering and giving campaigns, run on campuses by its local coordinators.",
+          now: "",
+          join: "As a local coordinator, you gather students at your university and organize the team's campaigns there.",
+          local: [
+            { person: "majd-alshlool", role: "Local coordinator" },
+            { person: "salma-alnasser", role: "Local coordinator" },
+            { person: "tala-almagharbeh", role: "Local coordinator" },
+            { person: "yazan-jarrar", role: "Local coordinator" },
+            { person: "dima-halasa", role: "Local coordinator" },
+          ],
+          committee: [],
+        },
+        {
+          id: "social", name: "Social Events", group: "portfolios", work: "portfolios.html#social",
+          does: "Brings members from different universities together outside the classroom, so the association feels like a community.",
+          now: "",
+          join: "You work on the National Symposium committee and help plan the moments that bring members together.",
+          local: [],
+          committee: ["hala-dawoud", "yasmeen-abudayyeh", "reema-mustafa", "suleiman-awjan"],
+        },
+        {
+          id: "student-exchange", name: "Student Exchange Program", group: "exchange", work: "sep.html", workLabel: "Explore the exchange program",
+          does: "Runs JPSA's part of the IPSF exchange: it guides members who apply to go abroad and hosts the students who come to Jordan.",
+          now: "",
+          join: "As a local exchange officer, you answer exchange questions at your university and help welcome incoming students.",
+          local: [
+            { person: "tamam-eltayyeb", role: "Local exchange officer" },
+            { person: "lara-alashi", role: "Promotion & cultural coordinator" },
+            { person: "sadeen-salem", role: "Local exchange officer" },
+            { person: "layan-mansour", role: "Local exchange officer" },
+          ],
+          committee: [],
+        },
+        {
+          id: "secretary-general", name: "Secretary General", group: "operations",
+          does: "Keeps the association organized: meeting records, official documents and deadlines.",
+          now: "",
+          join: "You work on the National Symposium committee and keep its records and documents in order.",
+          local: [],
+          committee: ["diana-aboqudais"],
+        },
+        {
+          id: "treasurer", name: "Treasurer", group: "operations",
+          does: "Looks after JPSA's finances: budgets, payments and financial records.",
+          now: "",
+          join: "You work on the National Symposium committee and help track its budget and expenses.",
+          local: [],
+          committee: ["bassel-mahfouz", "mohammad-alqaisi", "saleh-mohammad", "leen-shawabkeh", "aisha-jaradat", "nadia-nasri"],
+        },
+        {
+          id: "contact-person", name: "Contact Person", group: "operations",
+          does: "Connects JPSA with IPSF: official communication with the federation, and its news and opportunities for our members.",
+          now: "",
+          join: "As a subcommittee member at your university, you share IPSF news and opportunities with students on your campus.",
+          local: [
+            { person: "mariam-amer", role: "Subcommittee" },
+            { person: "amjad-rani", role: "Subcommittee" },
+            { person: "tala-amro", role: "Subcommittee" },
+          ],
+          committee: [],
+        },
+        {
+          id: "external-relations", name: "External Relations", group: "operations",
+          does: "Builds JPSA's relationships with hospitals, companies and institutions, and looks after our partnerships.",
+          now: "",
+          join: "You work on the National Symposium committee and help reach partners and sponsors.",
+          local: [],
+          committee: ["mohammad-albeshtawi", "aleen-arar", "jamal-almomani", "hala-abushattal", "layan-faidi", "zaid-asaad", "zaid-abushanab", "noor-awadallah", "yara-altarsha", "mohammad-selawe"],
+        },
+        {
+          id: "internal-communication", name: "Internal Communication", group: "operations",
+          does: "Keeps our teams and members connected, so everyone knows what is happening and who to ask.",
+          now: "",
+          join: "You work on the National Symposium committee and keep its members coordinated and informed.",
+          local: [],
+          committee: ["tala-khalaf", "yasmeen-denieh", "juri-al-hadid", "samer-tadrous", "nadeen-shoshary", "mustafa-daoud", "hala-obeid", "neveen-shawabkeh", "sarah-alwrekat"],
+        },
+        {
+          id: "media-publications", name: "Media and Publications", group: "operations",
+          does: "Tells JPSA's story: social media, design, photography and publications for every team.",
+          now: "",
+          join: "You work on the National Symposium committee and create its posts, designs and coverage.",
+          local: [],
+          committee: ["boshra-rawashdeh", "laina-alzuhiri", "noor-bataineh", "sadeen-alrosan", "rahaf-masoud", "shahd-ahmad", "tala-amro"],
+        },
+      ],
+    },
+
+    /* Everyone, once. The id is the name in lowercase with hyphens, and names the photo file. */
     people: [
-      { name: "Boshra Rawashdeh", role: "", photo: "assets/img/people/boshra-rawashdeh.jpg" },
-      { name: "Dima Halasa", role: "", photo: "assets/img/people/dima-halasa.jpg" },
-      { name: "Jude Rabayah", role: "", photo: "assets/img/people/jude-rabayah.jpg" },
-      { name: "Juri Al-Hadid", role: "", photo: "assets/img/people/juri-al-hadid.jpg" },
-      { name: "Lara Alashi", role: "", photo: "assets/img/people/lara-alashi.jpg" },
-      { name: "Mira Hamad", role: "", photo: "assets/img/people/mira-hamad.jpg" },
-      { name: "Mustafa Daoud", role: "", photo: "assets/img/people/mustafa-daoud.jpg" },
-      { name: "Samer Tadrous", role: "", photo: "assets/img/people/samer-tadrous.jpg" },
-      { name: "Sarah Alwrekat", role: "", photo: "assets/img/people/sarah-alwrekat.jpg" },
-      { name: "Shahd Ahmad", role: "", photo: "assets/img/people/shahd-ahmad.jpg" },
-      { name: "Shahed Nasser", role: "", photo: "assets/img/people/shahed-nasser.jpg" },
-      { name: "Zeena Alhaj", role: "", photo: "assets/img/people/zeena-alhaj.jpg" },
+      // Executive Committee
+      { id: "eyad-tayem", name: "Eyad Tayem" },
+      { id: "malak-elaian", name: "Malak Elaian" },
+      { id: "abd-alrahman-abu-rumman", name: "Abd Alrahman Abu Rumman" },
+      { id: "ahmad-alhourani", name: "Ahmad Alhourani" },
+      { id: "jude-obaidat", name: "Jude Obaidat" },
+      { id: "sama-shadid", name: "Sama Shadid" },
+      { id: "saif-khraino", name: "Saif Khraino" },
+      { id: "layan-ayman", name: "Layan Ayman" },
+      { id: "saif-ghassab", name: "Saif Ghassab" },
+      { id: "bayanne-fannoun", name: "Bayanne Fannoun" },
+      { id: "abd-alrahman-shammout", name: "Abd Alrahman Shammout" },
+      { id: "abd-alrahman-othman", name: "Abd Alrahman Othman" },
+      { id: "adawiya-ali", name: "Adawiya Ali" },
+      // Public Health
+      { id: "noura-almajali", name: "Noura Almajali", university: "JU" },
+      { id: "jude-rabayah", name: "Jude Rabayah", university: "JUST" },
+      { id: "aya-alajlouni", name: "Aya Alajlouni", university: "HU" },
+      { id: "tala-hilweh", name: "Tala Hilweh" }, // TODO: university
+      { id: "zeena-alhaj", name: "Zeena Alhaj", university: "MEU" }, // also in Professional Development
+      // Professional Development
+      { id: "ahmad-bakri", name: "Ahmad Bakri" },
+      { id: "asma-mefrej", name: "Asma Mefrej" },
+      { id: "faisal-alhadid", name: "Faisal Alhadid" },
+      { id: "tamam-alttayyeb", name: "Tamam Alttayyeb" }, // TODO: confirm the spelling (the exchange team lists "Tamam Eltayyeb")
+      { id: "shahd-naser", name: "Shahd Naser" }, // TODO: confirm the spelling (photo shahed-nasser.jpg was saved as "Shahed Nasser")
+      { id: "mira-hamad", name: "Mira Hamad" },
+      { id: "bissan-alghroz", name: "Bissan Alghroz" },
+      { id: "jamal-alrazem", name: "Jamal Alrazem" },
+      // Humanitarian Campaigns
+      { id: "majd-alshlool", name: "Majd Alshlool", university: "JU" },
+      { id: "salma-alnasser", name: "Salma Alnasser", university: "JUST" },
+      { id: "tala-almagharbeh", name: "Tala Almagharbeh", university: "UOP" },
+      { id: "yazan-jarrar", name: "Yazan Jarrar" }, // TODO: university
+      { id: "dima-halasa", name: "Dima Halasa", university: "MEU" },
+      // Social Events
+      { id: "hala-dawoud", name: "Hala Dawoud" },
+      { id: "yasmeen-abudayyeh", name: "Yasmeen Abudayyeh" },
+      { id: "reema-mustafa", name: "Reema Mustafa" },
+      { id: "suleiman-awjan", name: "Suleiman Awjan" },
+      // Student Exchange Program
+      { id: "tamam-eltayyeb", name: "Tamam Eltayyeb", university: "JUST" }, // TODO: confirm the spelling (see Tamam Alttayyeb)
+      { id: "lara-alashi", name: "Lara Alashi", university: "JU" },
+      { id: "sadeen-salem", name: "Sadeen Salem", university: "UOP" },
+      { id: "layan-mansour", name: "Layan Mansour", university: "JU" },
+      // Secretary General
+      { id: "diana-aboqudais", name: "Diana AboQudais" },
+      // Treasurer
+      { id: "bassel-mahfouz", name: "Bassel Mahfouz" },
+      { id: "mohammad-alqaisi", name: "Mohammad Alqaisi" },
+      { id: "saleh-mohammad", name: "Saleh Mohammad" },
+      { id: "leen-shawabkeh", name: "Leen Shawabkeh" },
+      { id: "aisha-jaradat", name: "Aisha Jaradat" },
+      { id: "nadia-nasri", name: "Nadia Nasri" },
+      // Contact Person
+      { id: "mariam-amer", name: "Mariam Amer", university: "UOP" },
+      { id: "amjad-rani", name: "Amjad Rani", university: "JU" },
+      { id: "tala-amro", name: "Tala Amro", university: "JUST" }, // also in Media and Publications
+      // External Relations
+      { id: "mohammad-albeshtawi", name: "Mohammad Albeshtawi" },
+      { id: "aleen-arar", name: "Aleen Arar" },
+      { id: "jamal-almomani", name: "Jamal Almomani" },
+      { id: "hala-abushattal", name: "Hala Abushattal" },
+      { id: "layan-faidi", name: "Layan Faidi" },
+      { id: "zaid-asaad", name: "Zaid Asaad" },
+      { id: "zaid-abushanab", name: "Zaid AbuShanab" },
+      { id: "noor-awadallah", name: "Noor Awadallah" },
+      { id: "yara-altarsha", name: "Yara Altarsha" },
+      { id: "mohammad-selawe", name: "Mohammad Selawe" },
+      // Internal Communication
+      { id: "tala-khalaf", name: "Tala Khalaf" },
+      { id: "yasmeen-denieh", name: "Yasmeen Denieh" },
+      { id: "juri-al-hadid", name: "Juri Al-Hadid" },
+      { id: "samer-tadrous", name: "Samer Tadrous" },
+      { id: "nadeen-shoshary", name: "Nadeen Shoshary" },
+      { id: "mustafa-daoud", name: "Mustafa Daoud" },
+      { id: "hala-obeid", name: "Hala Obeid" },
+      { id: "neveen-shawabkeh", name: "Neveen Shawabkeh" },
+      { id: "sarah-alwrekat", name: "Sarah Alwrekat" },
+      // Media and Publications
+      { id: "boshra-rawashdeh", name: "Boshra Rawashdeh" },
+      { id: "laina-alzuhiri", name: "Laina Alzuhiri" },
+      { id: "noor-bataineh", name: "Noor Bataineh" },
+      { id: "sadeen-alrosan", name: "Sadeen Alrosan" },
+      { id: "rahaf-masoud", name: "Rahaf Masoud" },
+      { id: "shahd-ahmad", name: "Shahd Ahmad" },
     ],
   },
-
-  /* The five teams, shown as cards on the About page. Each card links to the
-     page that describes what the team does (so that text is not repeated here).
-     "leads" is optional: [{ name: "…", role: "Team lead" }] */
-  teams: [
-    { id: "public-health", name: "Public Health", icon: "heart-pulse", href: "portfolios.html#public-health", leads: [] },
-    { id: "professional-development", name: "Professional Development", icon: "briefcase", href: "portfolios.html#professional-development", leads: [] },
-    { id: "humanitarian", name: "Humanitarian Campaigns", icon: "hand-heart", href: "portfolios.html#humanitarian", leads: [] },
-    { id: "social", name: "Social Events", icon: "party-popper", href: "portfolios.html#social", leads: [] },
-    { id: "student-exchange", name: "Student Exchange Program", icon: "plane", href: "sep.html", leads: [] },
-  ],
 
   /* ------------------------------------------------------------------- SEP */
   sep: {
@@ -231,8 +485,9 @@ export default {
       description: "Train abroad through IPSF's Student Exchange Programme, or come to Jordan: how JPSA's SEP works, who can apply and what to expect.",
     },
     hero: {
-      kicker: "Student Exchange Program",
-      title: "Beyond borders. Beyond classrooms.",
+      kicker: "Beyond borders. Beyond classrooms.",
+      title: "Student Exchange Programme", // the page's h1: the full name, for search
+      crumb: "Student Exchange Programme",
       lead: "The Student Exchange Program opens the door for students to experience pharmacy and life from a global perspective.",
       ghost: "SEP",
     },

@@ -1,0 +1,12 @@
+---
+// A person's small round photo, or their initials until a photo is added.
+// Decorative: the person's name is always written next to it.
+import { Image } from "astro:assets";
+import { img } from "../lib/images.js";
+import { photoOf } from "../lib/team.js";
+
+const { person } = Astro.props;
+const photo = photoOf(person.id);
+const initials = person.name.split(/\s+/).filter(Boolean).slice(0, 2).map((w) => w[0].toUpperCase()).join("");
+---
+<span class="avatar" aria-hidden="true">{photo ? <Image src={img(photo)} alt="" widths={[48, 96]} sizes="48px" /> : initials}</span>

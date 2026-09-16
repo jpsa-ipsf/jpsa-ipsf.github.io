@@ -1,0 +1,14 @@
+---
+import C from "../../../content.js";
+import { delay, pad } from "../../lib/text.js";
+
+const T = C.team;
+---
+<section class="section section--black team-structure">
+  <div class="container">
+    <div class="structure">
+      {T.structure.map((s, i) => <article class="structure__card reveal" style={delay(i, 90)}><div class="structure__num">{pad(i + 1)}</div><h2 class="structure__title">{s.title}</h2><p>{s.text}</p></article>)}
+    </div>
+    <p class="family-lines reveal" style="margin-top:clamp(48px,7vw,88px)">{T.lines}</p>
+  </div>
+</section>

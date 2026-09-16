@@ -1,0 +1,24 @@
+---
+import C from "../../../content.js";
+import SectionHead from "../../components/SectionHead.astro";
+import Person from "../../components/Person.astro";
+import { person, photoOf } from "../../lib/team.js";
+
+const T = C.team;
+const E = T.exco;
+---
+<section class="section" id="exco">
+  <div class="container">
+    <SectionHead title={E.title} lead={E.lead} split />
+    {T.groups.map((g) => {
+      const positions = E.positions.filter((pos) => pos.group === g.id);
+      return positions.length > 0 && <div class="exco-group">
+        <h3 class="kicker exco-group__title">{g.name}</h3>
+        <div class="people">{positions.map((pos, i) => {
+          const p = person(pos.person, `the position "${pos.title}"`);
+          return <Person p={{ name: p.name, role: pos.title, photo: photoOf(p.id) }} i={i} level={4} href={pos.team ? `#${pos.team}` : undefined} />;
+        })}</div>
+      </div>;
+    })}
+  </div>
+</section>

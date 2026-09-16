@@ -6,12 +6,14 @@ import Stats from "../components/Stats.astro";
 import SectionHead from "../components/SectionHead.astro";
 import Icon from "../components/Icon.astro";
 import Btn from "../components/Btn.astro";
+import TextLink from "../components/TextLink.astro";
 import CtaBand from "../components/CtaBand.astro";
 import ART from "../lib/art.js";
 import { delay, mailto } from "../lib/text.js";
 
 const s = C.sep;
 const L = C.site.links;
+const team = C.team.teams.labels;
 ---
 <Base page="sep" {...s.meta}>
   <PageHero {...s.hero} />
@@ -44,6 +46,7 @@ const L = C.site.links;
       <ol class="steps" role="list">
         {s.steps.list.map((st, i) => <li class="step reveal" style={delay(i)}><h3>{st.title}</h3><p>{st.text}</p></li>)}
       </ol>
+      <p class="reveal" style="margin-top:28px"><TextLink label={team.meetTeam} href="team.html#student-exchange" /></p>
       <p class="note reveal"><Icon name="info" /><span>{s.steps.note} <a href={L.ipsfSep} target="_blank" rel="noopener">IPSF's SEP page</a> · <a href={L.ipsfFaq} target="_blank" rel="noopener">IPSF FAQ</a></span></p>
     </div>
   </section>

@@ -4,7 +4,7 @@ import C from "../../../content.js";
 import { img } from "../../lib/images.js";
 import { pad } from "../../lib/text.js";
 
-const wall = Array.from({ length: C.family.wallCount }, (_, i) => `assets/img/family/f${pad(i + 1)}.jpg`);
+const wall = Array.from({ length: C.home.wallCount }, (_, i) => `assets/img/family/f${pad(i + 1)}.jpg`);
 const half = Math.ceil(wall.length / 2);
 const rows = [[wall.slice(0, half), false], [wall.slice(half), true]];
 ---

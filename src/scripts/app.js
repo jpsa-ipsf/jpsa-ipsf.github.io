@@ -140,7 +140,7 @@ function initTabs() {
   });
 }
 
-/* ---------- Sticky sub-nav scroll spy (portfolios) ---------- */
+/* ---------- Sticky sub-nav scroll spy (portfolios, team) ---------- */
 function initScrollSpy() {
   const links = Array.from(document.querySelectorAll(".subnav [data-spy]"));
   if (!links.length || !hasIO) return;

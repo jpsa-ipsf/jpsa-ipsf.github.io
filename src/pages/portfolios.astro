@@ -9,6 +9,7 @@ import { rich, delay } from "../lib/text.js";
 
 const p = C.portfolios;
 const L = C.site.links;
+const team = C.team.teams.labels;
 const themeCls = { white: "", gray: "section--gray", yellow: "section--yellow", black: "section--black" };
 const dot = { white: "var(--red)", gray: "var(--red)", yellow: "var(--yellow)", black: "#555" };
 ---
@@ -31,6 +32,7 @@ const dot = { white: "var(--red)", gray: "var(--red)", yellow: "var(--yellow)", 
             <h2 style="margin-top:14px">{x.name}</h2>
             {x.tagline && <p class="portfolio__tag">{x.tagline}</p>}
             {x.intro && <div class="portfolio__intro prose">{x.intro.map((t) => <p set:html={rich(t)}></p>)}</div>}
+            <p style="margin-top:20px"><TextLink label={team.meetTeam} href={`team.html#${x.id}`} /></p>
           </div>
         </div>
         <div class={`grid ${x.items.length === 3 ? "grid-3" : "grid-4"}`}>
@@ -62,7 +64,7 @@ const dot = { white: "var(--red)", gray: "var(--red)", yellow: "var(--yellow)", 
       <span class="serif">{p.closing.serif}</span>
       <div class="cluster" style="justify-content:center;margin-top:32px">
         <Btn label="Join JPSA" href={L.join} />
-        <Btn label="Meet the family" href="about.html#family" variant="outline" />
+        <Btn label="Meet the family" href="team.html" variant="outline" />
       </div>
     </div>
   </section>

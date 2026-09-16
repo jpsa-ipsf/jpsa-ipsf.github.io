@@ -1,0 +1,14 @@
+---
+import Base from "../layouts/Base.astro";
+import C from "../../content.js";
+import PageHero from "../components/PageHero.astro";
+import Structure from "../sections/team/Structure.astro";
+import Exco from "../sections/team/Exco.astro";
+import Teams from "../sections/team/Teams.astro";
+---
+<Base page="team" {...C.team.meta}>
+  <PageHero {...C.team.hero} />
+  <Structure />
+  <Exco />
+  <Teams />
+</Base>

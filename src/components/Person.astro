@@ -2,13 +2,15 @@
 import { Image } from "astro:assets";
 import { img } from "../lib/images.js";
 
-const { p, i = 0 } = Astro.props;
+// level: heading level of the name (3 by default). href: makes the name a link.
+const { p, i = 0, level = 3, href } = Astro.props;
+const Name = `h${level}`;
 const initials = (name) => String(name).split(/\s+/).filter(Boolean).slice(0, 2).map((w) => w[0].toUpperCase()).join("");
 ---
 <article class="person reveal" style={`--delay:${(i % 4) * 70}ms`}>
   <div class="person__photo">{p.photo ? <Image src={img(p.photo)} alt={p.name} widths={[320, 640]} sizes="(max-width: 640px) 50vw, (max-width: 960px) 33vw, 280px" /> : <span class="person__initials" aria-hidden="true">{initials(p.name)}</span>}</div>
   <div>
-    <h3 class="person__name">{p.name}</h3>
+    <Name class="person__name">{href ? <a href={href}>{p.name}</a> : p.name}</Name>
     {p.role && <p class="person__role">{p.role}</p>}
     {p.meta && <p class="person__meta">{p.meta}</p>}
   </div>
