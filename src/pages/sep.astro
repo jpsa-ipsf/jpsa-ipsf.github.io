@@ -6,14 +6,25 @@ import Stats from "../components/Stats.astro";
 import SectionHead from "../components/SectionHead.astro";
 import Icon from "../components/Icon.astro";
 import Btn from "../components/Btn.astro";
-import TextLink from "../components/TextLink.astro";
 import CtaBand from "../components/CtaBand.astro";
+import Avatar from "../components/Avatar.astro";
+import { person, leaderOf, university } from "../lib/team.js";
 import ART from "../lib/art.js";
 import { delay, mailto } from "../lib/text.js";
 
 const s = C.sep;
 const L = C.site.links;
 const team = C.team.teams.labels;
+
+// The exchange team is shown on this page (content.js marks it page: "sep"), so the programme,
+// how to apply and who to ask all live together.
+const sepTeam = C.team.teams.list.find((t) => t.id === "student-exchange");
+const sepLead = leaderOf(sepTeam.id);
+const sepLeader = person(sepLead.person, `the position "${sepLead.title}"`);
+const uniOrder = C.universities.map((u) => u.abbr);
+const sepLocal = sepTeam.local
+  .map((m) => ({ role: m.role, p: person(m.person, `the team "${sepTeam.name}"`) }))
+  .sort((a, b) => uniOrder.indexOf(a.p.university) - uniOrder.indexOf(b.p.university));
 ---
 <Base page="sep" {...s.meta}>
   <PageHero {...s.hero} />
@@ -46,8 +57,29 @@ const team = C.team.teams.labels;
       <ol class="steps" role="list">
         {s.steps.list.map((st, i) => <li class="step reveal" style={delay(i)}><h3>{st.title}</h3><p>{st.text}</p></li>)}
       </ol>
-      <p class="reveal" style="margin-top:28px"><TextLink label={team.meetTeam} href="team.html#student-exchange" /></p>
       <p class="note reveal"><Icon name="info" /><span>{s.steps.note} <a href={L.ipsfSep} target="_blank" rel="noopener">IPSF's SEP page</a> · <a href={L.ipsfFaq} target="_blank" rel="noopener">IPSF FAQ</a></span></p>
+    </div>
+  </section>
+
+  {/* The team that runs the programme: the officer who leads it, and who to ask at each university. */}
+  <section class="section" id="team">
+    <div class="container">
+      <SectionHead title={team.meetTeam} />
+      <p class="team-card__meta reveal"><Avatar person={sepLeader} /><span>{team.ledBy} <strong>{sepLeader.name}</strong> · {sepLead.title}</span></p>
+      <dl class="team-card__fields reveal" style="margin-top:22px;max-width:62ch">
+        <div><dt>{team.join}</dt><dd>{sepTeam.join}</dd></div>
+      </dl>
+      <div class="reveal" style="margin-top:28px">
+        <h3 class="team-card__subtitle">{team.local}</h3>
+        <table class="members" role="table">
+          <thead role="rowgroup"><tr role="row"><th scope="col" role="columnheader">{team.name}</th><th scope="col" role="columnheader">{team.role}</th><th scope="col" role="columnheader">{team.university}</th></tr></thead>
+          <tbody role="rowgroup">{sepLocal.map((m) => <tr role="row">
+            <td role="cell"><span class="members__person"><Avatar person={m.p} />{m.p.name}</span></td>
+            <td role="cell">{m.role}</td>
+            <td role="cell">{m.p.university ? <abbr title={university(m.p.university).name}>{m.p.university}</abbr> : team.noUniversity}</td>
+          </tr>)}</tbody>
+        </table>
+      </div>
     </div>
   </section>
 

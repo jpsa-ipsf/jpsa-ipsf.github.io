@@ -15,6 +15,17 @@ const team = C.team.teams.labels;
 const themeCls = { white: "", gray: "section--gray", yellow: "section--yellow", black: "section--black" };
 const dot = { white: "var(--red)", gray: "var(--red)", yellow: "var(--yellow)", black: "#555" };
 
+// The exchange team lives on sep.html, next to what the programme is; every other team is on team.html.
+const teamHref = (x) => (x.id === "student-exchange" ? "sep.html#team" : `team.html#${x.id}`);
+
+// A show (podcast, talks) is published once it has a description; until then the build says it is waiting.
+for (const x of p.list) {
+  (x.shows || []).forEach((sh) => {
+    if (!sh.name) throw new Error(`content.js, portfolio "${x.name}": a show has no name (name: "...").`);
+    if (!sh.text) console.warn(`[JPSA] "${sh.name}" (portfolio "${x.name}") has no description yet, so it is not shown.`);
+  });
+}
+
 // Portfolios are numbered in page order (01, 02, …); the Student Exchange Programme (portfolio: false) has no number.
 const portfolios = p.list.filter((x) => x.portfolio !== false);
 const numberOf = (x) => (x.portfolio === false ? "" : pad(portfolios.indexOf(x) + 1));
@@ -51,7 +62,7 @@ for (const x of p.list) {
             <h2 style={num ? "margin-top:14px" : undefined}>{x.name}</h2>
             {x.tagline && <p class="portfolio__tag">{x.tagline}</p>}
             {x.intro && <div class="portfolio__intro prose">{x.intro.map((t) => <p set:html={rich(t)}></p>)}</div>}
-            <p style="margin-top:20px"><TextLink label={team.meetTeam} href={`team.html#${x.id}`} /></p>
+            <p style="margin-top:20px"><TextLink label={team.meetTeam} href={teamHref(x)} /></p>
           </div>
         </div>
         <div class={`grid ${x.items.length === 3 ? "grid-3" : "grid-4"}`}>
@@ -70,14 +81,13 @@ for (const x of p.list) {
             <div class="event-gallery__photos">{ev.photos.map((ph) => <Image src={img(ph.src)} alt={ph.alt} widths={[400, 800]} sizes="(max-width: 720px) 45vw, (max-width: 1200px) 30vw, 380px" />)}</div>
           </div>)}
         </div>}
-        {x.podcast && <div class="podcast reveal">
+        {(x.shows || []).filter((sh) => sh.text).map((sh) => <div class="podcast reveal">
           <div class="wave" aria-hidden="true">{Array.from({ length: 12 }, (_, i) => <span style={`--i:${i}`}></span>)}</div>
           <div>
-            <span class="kicker">{x.podcast.kicker}</span>
-            <h3 style="margin-top:12px">{x.podcast.title} — <span>{x.podcast.tagline}</span></h3>
-            <p>{x.podcast.text}</p>
+            <h3>{sh.name}{sh.tagline && <Fragment> — <span>{sh.tagline}</span></Fragment>}</h3>
+            <p>{sh.text}</p>
           </div>
-        </div>}
+        </div>)}
         {x.closing && <p class="portfolio__tag reveal" style="max-width:40ch;margin-top:40px">{x.closing}</p>}
         {x.id === "student-exchange" && <div class="cluster" style="margin-top:36px"><Btn label="Explore the exchange programme" href="sep.html" variant="yellow" /></div>}
       </div>

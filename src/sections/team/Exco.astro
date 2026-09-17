@@ -11,7 +11,7 @@ const E = T.exco;
   <div class="container">
     <SectionHead title={E.title} lead={E.lead} split />
     {T.groups.map((g) => {
-      const positions = E.positions.filter((pos) => pos.group === g.id);
+      const positions = E.positions.filter((pos) => pos.group === g.id && !pos.page);
       return positions.length > 0 && <div class="exco-group">
         <h3 class="kicker exco-group__title">{g.name}</h3>
         <div class="people">{positions.map((pos, i) => {

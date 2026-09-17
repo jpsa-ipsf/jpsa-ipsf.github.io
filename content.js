@@ -186,7 +186,7 @@ export default {
   },
 
   /* ------------------------------------------------------------------ TEAM
-     team.html: the Executive Committee and the eleven teams.
+     team.html: the Executive Committee and the teams (the exchange team is on sep.html).
      • Every person is written ONCE, in "people" at the end of this section. Positions and
        teams point to a person by id, so a name is always spelled the same way on the site.
      • Photos appear by themselves: add assets/img/people/<id>.jpg (for example
@@ -199,7 +199,7 @@ export default {
     // Shown in search results and link previews.
     meta: {
       title: "Our Team — JPSA",
-      description: "Meet JPSA's Executive Committee and eleven teams: who leads each one, what they do, and who to contact at your university.",
+      description: "Meet JPSA's Executive Committee and ten teams: who leads each one, what they do, and who to contact at your university.",
     },
 
     hero: {
@@ -234,7 +234,8 @@ export default {
         { title: "Professional Development", person: "ahmad-alhourani", group: "portfolios", team: "professional-development" },
         { title: "Humanitarian Campaigns", person: "jude-obaidat", group: "portfolios", team: "humanitarian" },
         { title: "Social Events", person: "sama-shadid", group: "portfolios", team: "social" },
-        { title: "Student Exchange Officer", person: "saif-khraino", group: "exchange", team: "student-exchange" },
+        // page: "sep" → shown on sep.html, not on team.html: that page is the whole home of the programme.
+        { title: "Student Exchange Officer", person: "saif-khraino", group: "exchange", team: "student-exchange", page: "sep" },
         { title: "Secretary General", person: "layan-ayman", group: "operations", team: "secretary-general" },
         { title: "Treasurer", person: "saif-ghassab", group: "operations", team: "treasurer" },
         { title: "Contact Person", person: "bayanne-fannoun", group: "operations", team: "contact-person" },
@@ -246,7 +247,7 @@ export default {
 
     teams: {
       kicker: "Our teams",
-      title: "Eleven teams. One family.",
+      title: "Ten teams. One family.",
       lead: "Every JPSA activity is run by one of our teams. Pick one to see what they do.",
       labels: {
         ledBy: "Led by",
@@ -295,7 +296,7 @@ export default {
           id: "professional-development", name: "Professional Development", group: "portfolios", work: "portfolios.html#professional-development",
           does: "Builds the programs that help members prepare for their careers, and brings together the committee behind our National Symposium.",
           now: "",
-          join: "You help prepare trainings, the Scientific Research Program and the JPSA Podcast, and organize our annual National Symposium.",
+          join: "You help prepare trainings and the Scientific Research Program, work on the JPSA Podcast and JPSA Talks, and organize our annual National Symposium.",
           local: [],
           committee: ["ahmad-bakri", "asma-mefrej", "faisal-alhadid", "tamam-alttayyeb", "shahed-nasser", "mira-hamad", "zeena-alhaj", "bissan-alghroz", "jamal-alrazem"],
         },
@@ -322,8 +323,9 @@ export default {
           committee: ["hala-dawoud", "yasmeen-abudayyeh", "reema-mustafa", "suleiman-awjan"],
         },
         {
-          id: "student-exchange", name: "Student Exchange Programme", group: "exchange", work: "sep.html", workLabel: "Explore the exchange programme",
-          does: "Runs JPSA's part of the IPSF exchange: it guides members who apply to go abroad and hosts the students who come to Jordan.",
+          // The whole team is shown on sep.html (page: "sep"), next to what the programme is and how to apply.
+          id: "student-exchange", name: "Student Exchange Programme", group: "exchange", page: "sep",
+          // No "does" here: sep.html explains the programme above this team. "now" stays for updates.
           now: "",
           join: "As a local exchange officer, you answer exchange questions at your university and help welcome incoming students.",
           local: [
@@ -692,12 +694,21 @@ export default {
           { icon: "microscope", title: "Scientific Research Program", text: "An annual program introducing students to the fundamentals of research and scientific inquiry." },
           { icon: "presentation", title: "National Symposium", text: "Our annual symposium on diverse fields of pharmacy, current trends and the opportunities ahead.", href: "conferences.html" },
         ],
-        podcast: {
-          kicker: "JPSA Talks",
-          title: "JPSA Podcast",
-          tagline: "Where ideas find their voice.",
-          text: "Conversations beyond the classroom that bring together students, professionals, leaders, and changemakers to explore the experiences, challenges, and opportunities shaping the future of pharmacy.",
-        },
+        /* JPSA Talks and the JPSA Podcast are two different things, each with its own name and
+           description. One shows only once it has a description; while the text is empty it is
+           not published, and the build says so. */
+        shows: [
+          {
+            name: "JPSA Podcast",
+            tagline: "Where ideas find their voice.",
+            text: "Conversations beyond the classroom that bring together students, professionals, leaders, and changemakers to explore the experiences, challenges, and opportunities shaping the future of pharmacy.",
+          },
+          {
+            name: "JPSA Talks",
+            tagline: "", // TODO: the JPSA team is sending the tagline
+            text: "", // TODO: the JPSA team is sending the description; nothing is shown until then
+          },
+        ],
         gallery: [],
       },
       {
@@ -813,7 +824,7 @@ export default {
         { name: "AstraZeneca", note: "Pharmaceutical company" },
         { name: "OMNITRADE", note: "Career partner" },
         { name: "Saudi Hospital", note: "Healthcare" },
-        { name: "Ibn Sina Pharmacy", note: "Pharmacy" },
+        { name: "Ibn Sina Pharmacy", note: "" }, // TODO: official name and what it is (a medicine warehouse, not a pharmacy)
         { name: "Nairoukh Pharma", note: "Pharmaceutical company" },
       ],
     },

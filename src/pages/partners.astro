@@ -71,7 +71,7 @@ const L = C.site.links;
   <section class="section" id="careers" data-group="careers">
     <div class="container">
       <SectionHead kicker={P.careers.kicker} title={P.careers.title} lead={P.careers.lead} split />
-      <div class="wordmarks reveal">{P.careers.list.map((x) => <div class="wordmark"><strong>{x.name}</strong><span>{x.note}</span></div>)}</div>
+      <div class="wordmarks reveal">{P.careers.list.map((x) => <div class="wordmark"><strong>{x.name}</strong>{x.note && <span>{x.note}</span>}</div>)}</div>
     </div>
   </section>
 
