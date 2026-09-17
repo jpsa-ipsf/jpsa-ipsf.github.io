@@ -6,17 +6,21 @@ import { person, photoOf } from "../../lib/team.js";
 
 const T = C.team;
 const E = T.exco;
+
+// A position's card links to its team: on this page, or on the page that team lives on
+// (the exchange team is on sep.html, but its officer is still on the Executive Committee).
+const teamHref = (pos) => (!pos.team ? undefined : pos.page === "sep" ? "sep.html#team" : `#${pos.team}`);
 ---
 <section class="section" id="exco">
   <div class="container">
     <SectionHead title={E.title} lead={E.lead} split />
     {T.groups.map((g) => {
-      const positions = E.positions.filter((pos) => pos.group === g.id && !pos.page);
+      const positions = E.positions.filter((pos) => pos.group === g.id);
       return positions.length > 0 && <div class="exco-group">
         <h3 class="kicker exco-group__title">{g.name}</h3>
         <div class="people">{positions.map((pos, i) => {
           const p = person(pos.person, `the position "${pos.title}"`);
-          return <Person p={{ name: p.name, role: pos.title, photo: photoOf(p.id) }} i={i} level={4} href={pos.team ? `#${pos.team}` : undefined} />;
+          return <Person p={{ name: p.name, role: pos.title, photo: photoOf(p.id) }} i={i} level={4} href={teamHref(pos)} />;
         })}</div>
       </div>;
     })}

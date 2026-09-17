@@ -17,9 +17,12 @@ const intl = c.international.list;
 const L = C.site.links;
 const twoCols = (list) => (list.length === 2 || list.length === 4 ? " event-cards--2" : "");
 
-// Every name in "Honored by their presence" carries the event and year that tie them to JPSA.
-// A name without a specific event is not listed, so the section proves itself.
-c.patrons.list.forEach((p, i) => {
+// "Honored by their presence" is empty for now (2026-09-18): its one remaining fact is already in
+// the National Symposium paragraph above it. The section returns when content.js has two or more
+// documented names — every name carries the event and year that tie them to JPSA, and a name
+// without a specific event is not listed.
+const patrons = c.patrons && c.patrons.list ? c.patrons.list : [];
+patrons.forEach((p, i) => {
   if (!p.event || !p.year) {
     throw new Error(`content.js, conferences.patrons.list entry ${i + 1} ("${p.name}"): add the event and its year (event: "...", year: "..."), or remove the entry — a name without a specific event is not listed.`);
   }
@@ -87,15 +90,15 @@ c.patrons.list.forEach((p, i) => {
     </div>
   </section>
 
-  <section class="section section--black" id="patrons">
+  {patrons.length > 0 && <section class="section section--black" id="patrons">
     <div class="container">
       <SectionHead kicker={c.patrons.kicker} title={c.patrons.title} lead={c.patrons.lead} split />
-      <div class={`patrons patrons--${Math.min(c.patrons.list.length, 3)}`}>
-        {c.patrons.list.map((p, i) => <article class="patron reveal" style={delay(i, 90, 3)}><span class="patron__mono" aria-hidden="true">{p.mono}</span><div><p class="patron__title">{p.title}</p><p class="patron__name">{p.name}</p><p class="patron__event">{p.role ? `${p.role} · ` : ""}{p.event}, {p.year}</p></div></article>)}
+      <div class={`patrons patrons--${Math.min(patrons.length, 3)}`}>
+        {patrons.map((p, i) => <article class="patron reveal" style={delay(i, 90, 3)}><span class="patron__mono" aria-hidden="true">{p.mono}</span><div><p class="patron__title">{p.title}</p><p class="patron__name">{p.name}</p><p class="patron__event">{p.role ? `${p.role} · ` : ""}{p.event}, {p.year}</p></div></article>)}
       </div>
       <p class="family-lines reveal" style="max-width:60ch;margin-top:clamp(32px,5vw,56px)">{c.patrons.closing}</p>
     </div>
-  </section>
+  </section>}
 
   <CtaBand title={c.cta.title} text={c.cta.text}><Btn label="Email JPSA" href={mailto("Conference partnership")} variant="yellow" iconName="mail" /><Btn label="Follow @jpsa_ipsf" href={L.instagram} variant="outline-light" iconName="instagram" /></CtaBand>
 </Base>

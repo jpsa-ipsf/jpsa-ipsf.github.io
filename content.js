@@ -613,18 +613,6 @@ export default {
         { tag: "Professional Development", icon: "microscope", title: "Scientific Research Program", text: "An annual program that introduces students to the fundamentals of research and their first steps into scientific inquiry.", where: "" },
       ],
     },
-    patrons: {
-      kicker: "Who was with us",
-      title: "Honored by their presence",
-      lead: "Over the years, our conferences have been honored by the patronage and presence of distinguished national figures, including:",
-      /* Every name carries the event it is tied to and its year: that is what proves the section.
-         role is how they were part of it (patron, guest of honour, speaker...).
-         A name without a specific event is not listed, and the build stops if one is missing. */
-      list: [
-        { title: "Former Prime Minister", name: "Abd Al Raouf Al Rawabdeh", mono: "AR", role: "Under his patronage", event: "7th National Symposium", year: "2025" },
-      ],
-      closing: "Their support reflects the significance of our mission and our continued commitment to investing in the next generation of changemakers in Jordan.",
-    },
     international: {
       kicker: "Beyond Jordan",
       title: "On the international stage",
