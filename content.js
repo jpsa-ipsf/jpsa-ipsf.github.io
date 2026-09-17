@@ -615,10 +615,11 @@ export default {
       kicker: "Who was with us",
       title: "Honored by their presence",
       lead: "Over the years, our conferences have been honored by the patronage and presence of distinguished national figures, including:",
+      /* Every name carries the event it is tied to and its year: that is what proves the section.
+         role is how they were part of it (patron, guest of honour, speaker...).
+         A name without a specific event is not listed, and the build stops if one is missing. */
       list: [
-        { title: "Former Prime Minister", name: "Abd Al Raouf Al Rawabdeh", mono: "AR" },
-        { title: "Former Minister of Youth", name: "Mohammad Al Nabulsi", mono: "MN" },
-        { title: "Her Royal Highness", name: "Princess Alia Al Tabbaa", mono: "AT" },
+        { title: "Former Prime Minister", name: "Abd Al Raouf Al Rawabdeh", mono: "AR", role: "Under his patronage", event: "7th National Symposium", year: "2025" },
       ],
       closing: "Their support reflects the significance of our mission and our continued commitment to investing in the next generation of changemakers in Jordan.",
     },
@@ -658,8 +659,8 @@ export default {
          Programme is not a portfolio (portfolio: false), so it has no number.
        • gallery: photos from the team's big events, shown after its cards (nothing is shown while
          the list is empty). One entry per event, with the photos in assets/img/portfolios/<id>/:
-           { event: "Free medical day, Al-Sukhna camp", when: "December 2024", photos: [
-               { src: "assets/img/portfolios/public-health/sukhna-1.jpg", alt: "What the photo shows, in one sentence" },
+           { event: "Name of the event", when: "Month Year", photos: [
+               { src: "assets/img/portfolios/public-health/event-1.jpg", alt: "What the photo shows, in one sentence" },
            ] },
          Every event needs a name and at least one photo, and every photo a description (alt):
          otherwise the build stops and says what is missing. */
@@ -677,7 +678,6 @@ export default {
           { icon: "stethoscope", title: "Medical Convention", text: "Our convention that lets students expand their medical knowledge and meet the field." },
           { icon: "hospital", title: "Hospital collaborations", text: "Awareness activities and scientific sessions with hospitals such as Jordan Hospital, KHCC and Specialty Hospital, plus campaigns with the Jordan Breast Cancer Program (JBCP).", href: "partners.html#hospitals" },
         ],
-        highlight: { num: "~7,000", text: "<strong>residents served</strong> at a free medical day in Al-Sukhna camp, organized with Universal Medicine in December 2024." },
         gallery: [],
       },
       {

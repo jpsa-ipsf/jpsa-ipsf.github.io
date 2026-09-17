@@ -16,6 +16,14 @@ const ev = c.events.list;
 const intl = c.international.list;
 const L = C.site.links;
 const twoCols = (list) => (list.length === 2 || list.length === 4 ? " event-cards--2" : "");
+
+// Every name in "Honored by their presence" carries the event and year that tie them to JPSA.
+// A name without a specific event is not listed, so the section proves itself.
+c.patrons.list.forEach((p, i) => {
+  if (!p.event || !p.year) {
+    throw new Error(`content.js, conferences.patrons.list entry ${i + 1} ("${p.name}"): add the event and its year (event: "...", year: "..."), or remove the entry — a name without a specific event is not listed.`);
+  }
+});
 ---
 <Base page="conferences" {...c.meta}>
   <PageHero {...c.hero} />
@@ -82,8 +90,8 @@ const twoCols = (list) => (list.length === 2 || list.length === 4 ? " event-card
   <section class="section section--black" id="patrons">
     <div class="container">
       <SectionHead kicker={c.patrons.kicker} title={c.patrons.title} lead={c.patrons.lead} split />
-      <div class={`patrons${c.patrons.list.length === 3 ? " patrons--3" : ""}`}>
-        {c.patrons.list.map((p, i) => <article class="patron reveal" style={delay(i, 90, 3)}><span class="patron__mono" aria-hidden="true">{p.mono}</span><div><p class="patron__title">{p.title}</p><p class="patron__name">{p.name}</p></div></article>)}
+      <div class={`patrons patrons--${Math.min(c.patrons.list.length, 3)}`}>
+        {c.patrons.list.map((p, i) => <article class="patron reveal" style={delay(i, 90, 3)}><span class="patron__mono" aria-hidden="true">{p.mono}</span><div><p class="patron__title">{p.title}</p><p class="patron__name">{p.name}</p><p class="patron__event">{p.role ? `${p.role} · ` : ""}{p.event}, {p.year}</p></div></article>)}
       </div>
       <p class="family-lines reveal" style="max-width:60ch;margin-top:clamp(32px,5vw,56px)">{c.patrons.closing}</p>
     </div>
