@@ -247,7 +247,7 @@ export default {
     },
 
     teams: {
-      kicker: "Our teams",
+      kicker: "Who does what",
       title: "Our teams. One family.",
       lead: "Every JPSA activity is run by one of our teams. Pick one to see what they do.",
       labels: {
@@ -637,7 +637,7 @@ export default {
       title: "Conferences we took part in",
       list: [
         { name: "Pharmarise", year: "2025", with: ["HopeGivers"] },
-        { name: "Step Up", year: "2026", with: ["HopeGivers", "JADS", "Medical Club"],
+        { name: "Step Up Forum", year: "2026", with: ["HopeGivers", "JADS", "Medical Club"],
           gallery: [
             { event: "Step Up Forum 2026", photos: [
                 { src: "assets/img/conferences/step-up-forum-2026/01.jpg", alt: "A group posing in front of the Step Up Forum 2026 sponsor wall" },
