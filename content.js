@@ -111,7 +111,7 @@ export default {
         { icon: "plane-takeoff", title: "Train abroad with SEP", text: "Apply for professional exchanges through IPSF's Student Exchange Programme — or host students coming to Jordan.", href: "sep.html" },
         { icon: "presentation", title: "Symposium & conferences", text: "Our annual National Symposium and conferences put you in the room with professionals and leaders.", href: "conferences.html" },
         { icon: "microscope", title: "Scientific Research Program", text: "Take your first steps into scientific research with our annual program.", href: "portfolios.html#professional-development" },
-        { icon: "briefcase", title: "Internships & careers", text: "Training and internship opportunities with partners such as AstraZeneca, Ibn Sina Pharmacy and Saudi Hospital.", href: "partners.html#careers" },
+        { icon: "briefcase", title: "Internships & careers", text: "Training and internship opportunities with partners such as AstraZeneca, Nairoukh Pharma and Saudi Hospital.", href: "partners.html#careers" },
         { icon: "hospital", title: "Hospital collaborations", text: "Scientific activities, awareness campaigns and training with hospitals across Jordan.", href: "partners.html#hospitals" },
         { icon: "heart-pulse", title: "Public health campaigns", text: "Turn knowledge into action through awareness campaigns, lectures and our Medical Convention.", href: "portfolios.html#public-health" },
         { icon: "hand-heart", title: "Humanitarian campaigns", text: "Iftar gatherings with orphans, Eid clothing campaigns, blood donation and elderly visits.", href: "portfolios.html#humanitarian" },
@@ -199,7 +199,7 @@ export default {
     // Shown in search results and link previews.
     meta: {
       title: "Our Team — JPSA",
-      description: "Meet JPSA's Executive Committee and ten teams: who leads each one, what they do, and who to contact at your university.",
+      description: "Meet JPSA's Executive Committee and its teams: who leads each one, what they do, and who to contact at your university.",
     },
 
     hero: {
@@ -247,7 +247,7 @@ export default {
 
     teams: {
       kicker: "Our teams",
-      title: "Ten teams. One family.",
+      title: "Our teams. One family.",
       lead: "Every JPSA activity is run by one of our teams. Pick one to see what they do.",
       labels: {
         ledBy: "Led by",
@@ -575,7 +575,7 @@ export default {
     // Shown in search results and link previews.
     meta: {
       title: "Conferences — JPSA",
-      description: "JPSA's National Conference, the IPSF Eastern Mediterranean symposium we hosted in Amman, and the national figures who stood with us.",
+      description: "JPSA's National Symposium, the conferences we organized and took part in, and IPSF's events beyond Jordan.",
     },
     hero: {
       kicker: "Conferences",
@@ -595,6 +595,7 @@ export default {
       theme: "Prescribing Initiatives, Dispensing Innovation",
       text: [
         "Every year, our National Symposium brings students together to explore diverse fields of pharmacy, discuss current trends, and discover the opportunities that await them in the professional world.",
+        "The first edition was held in the presence of Her Royal Highness Princess Sumaya bint El Hassan.",
         "The 7th edition was held under the patronage of former Prime Minister Dr. Abd Al Raouf Al Rawabdeh, in cooperation with the Jordan Pharmacists Association — our strategic partner for the conference.",
       ],
       photos: [
@@ -612,6 +613,20 @@ export default {
         { tag: "Public Health", icon: "stethoscope", title: "Medical Convention", text: "Organized by our Public Health Team so students can expand their medical knowledge and look beyond the classroom.", where: "" },
         { tag: "Professional Development", icon: "microscope", title: "Scientific Research Program", text: "An annual program that introduces students to the fundamentals of research and their first steps into scientific inquiry.", where: "" },
       ],
+    },
+    /* Conferences in Jordan that JPSA took part in: one line each, with the year and the partners
+       (with: [...]). Leave "with" empty until the partners are confirmed. The build stops on a
+       conference without a name or a year. */
+    joined: {
+      kicker: "In Jordan, with others",
+      title: "Conferences we took part in",
+      list: [
+        { name: "Pharmarise", year: "2025", with: ["HopeGivers"] },
+        { name: "Step Up", year: "2026", with: ["HopeGivers", "JADS", "Medical Club"] },
+        { name: "Mandala", year: "2026", with: [] }, // TODO: partners not confirmed yet
+      ],
+      // Full names of abbreviations used above: shown on hover and read by screen readers.
+      abbr: { JADS: "Jordanian Association of Dental Students" },
     },
     international: {
       kicker: "Beyond Jordan",
@@ -682,21 +697,36 @@ export default {
           { icon: "microscope", title: "Scientific Research Program", text: "An annual program introducing students to the fundamentals of research and scientific inquiry." },
           { icon: "presentation", title: "National Symposium", text: "Our annual symposium on diverse fields of pharmacy, current trends and the opportunities ahead.", href: "conferences.html" },
         ],
-        /* JPSA Talks and the JPSA Podcast are two different things, each with its own name and
-           description. One shows only once it has a description; while the text is empty it is
-           not published, and the build says so. */
-        shows: [
-          {
-            name: "JPSA Podcast",
-            tagline: "Where ideas find their voice.",
-            text: "Conversations beyond the classroom that bring together students, professionals, leaders, and changemakers to explore the experiences, challenges, and opportunities shaping the future of pharmacy.",
-          },
-          {
-            name: "JPSA Talks",
-            tagline: "", // TODO: the JPSA team is sending the tagline
-            text: "", // TODO: the JPSA team is sending the description; nothing is shown until then
-          },
-        ],
+        /* JPSA Talks and the JPSA Podcast are two different things.
+           JPSA Talks is a yearly event with a theme and six speakers, so it gets the bigger block.
+           Each year is one entry in "editions", newest first: { year, theme, text, talks: [...] }.
+           The build stops on an edition without its year, theme, line or talks. */
+        talks: {
+          name: "JPSA Talks",
+          tagline: "The road, not just the destination.",
+          text: "A TED-style stage where entrepreneurs, leaders and people who have built something stand up for twenty to thirty minutes and tell how they got there. JPSA Talks started in the 2025/2026 mandate and returns every year under a new theme.",
+          editions: [
+            {
+              year: "2026",
+              theme: "The Unwritten",
+              text: "Six speakers, six parts of a life that rarely make it into the telling.",
+              talks: [
+                "The Unwritten Acts of Kindness",
+                "The Unwritten Rules of Influence",
+                "The Unwritten Challenges of Entrepreneurship",
+                "The Unwritten Moments Behind the Camera",
+                "The Unwritten Journey Between Passion and Profession",
+                "The Unwritten Side of Saving Lives",
+              ],
+            },
+          ],
+        },
+        // The JPSA Podcast: an ongoing series.
+        podcast: {
+          name: "JPSA Podcast",
+          tagline: "Where ideas find their voice.",
+          text: "Conversations beyond the classroom that bring together students, professionals, leaders, and changemakers to explore the experiences, challenges, and opportunities shaping the future of pharmacy.",
+        },
         gallery: [],
       },
       {
@@ -812,7 +842,7 @@ export default {
         { name: "AstraZeneca", note: "Pharmaceutical company" },
         { name: "OMNITRADE", note: "Career partner" },
         { name: "Saudi Hospital", note: "Healthcare" },
-        { name: "Ibn Sina Pharmacy", note: "" }, // TODO: official name and what it is (a medicine warehouse, not a pharmacy)
+        // TODO: Ibn Sina goes back here once the official name arrives (a medicine warehouse, not a pharmacy).
         { name: "Nairoukh Pharma", note: "Pharmaceutical company" },
       ],
     },

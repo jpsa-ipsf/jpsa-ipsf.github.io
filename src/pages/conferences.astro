@@ -22,6 +22,13 @@ const twoCols = (list) => (list.length === 2 || list.length === 4 ? " event-card
 // documented names — every name carries the event and year that tie them to JPSA, and a name
 // without a specific event is not listed.
 const patrons = c.patrons && c.patrons.list ? c.patrons.list : [];
+
+// Conferences in Jordan that JPSA took part in: every one needs its name and year.
+const joined = c.joined && c.joined.list ? c.joined.list : [];
+const abbrs = (c.joined && c.joined.abbr) || {};
+joined.forEach((e, i) => {
+  if (!e.name || !e.year) throw new Error(`content.js, conferences.joined.list entry ${i + 1}: add the conference's name and year.`);
+});
 patrons.forEach((p, i) => {
   if (!p.event || !p.year) {
     throw new Error(`content.js, conferences.patrons.list entry ${i + 1} ("${p.name}"): add the event and its year (event: "...", year: "..."), or remove the entry — a name without a specific event is not listed.`);
@@ -76,7 +83,21 @@ patrons.forEach((p, i) => {
     </div>
   </section>
 
-  {/* Right after the conferences JPSA organized, in the same card style: the IPSF events beyond Jordan. */}
+  {/* Conferences in Jordan that JPSA took part in, with the partners named once confirmed. */}
+  {joined.length > 0 && <section class="section section--paper" id="took-part">
+    <div class="container">
+      <SectionHead kicker={c.joined.kicker} title={c.joined.title} />
+      <div class={`event-cards${twoCols(joined)}`}>
+        {joined.map((e, i) => <article class="event-card reveal" style={delay(i, 80, 3)}>
+              <span class="event-card__when"><Icon name="calendar" />{e.year}</span>
+              <h3>{e.name}</h3>
+              {(e.with || []).length > 0 && <p class="event-card__where"><Icon name="users" /><span>With {e.with.map((w, k) => <Fragment>{k > 0 && (k === e.with.length - 1 ? " and " : ", ")}{abbrs[w] ? <abbr title={abbrs[w]}>{w}</abbr> : w}</Fragment>)}</span></p>}
+            </article>)}
+      </div>
+    </div>
+  </section>}
+
+  {/* Right after the conferences in Jordan, in the same card style: the IPSF events beyond Jordan. */}
   <section class="section section--gray" id="international">
     <div class="container">
       <SectionHead kicker={c.international.kicker} title={c.international.title} lead={c.international.lead} split />
