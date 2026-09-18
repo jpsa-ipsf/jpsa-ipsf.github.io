@@ -1,0 +1,54 @@
+---
+// The Executive Committee on team.html: all 13 in one strip of portrait cards, scrolled sideways.
+// Names, positions and groups all come from content.js (team.exco and team.groups).
+// Without JavaScript it is a strip that scrolls and snaps card by card. The depth (cards away
+// from the middle smaller, paler and turned back) is CSS (pages.css); src/scripts/exco-reel.js
+// adds the arrow buttons and keys, and the same depth where the CSS for it is missing.
+import { Image } from "astro:assets";
+import C from "../../../content.js";
+import SectionHead from "../../components/SectionHead.astro";
+import Icon from "../../components/Icon.astro";
+import { img } from "../../lib/images.js";
+import { person, photoOf } from "../../lib/team.js";
+
+const T = C.team;
+const E = T.exco;
+const committee = T.structure[0].title;
+const groupName = (id) => T.groups.find((g) => g.id === id).name;
+const cards = E.positions.map((pos) => {
+  const p = person(pos.person, `the position "${pos.title}"`);
+  return { name: p.name, role: pos.title, group: groupName(pos.group), photo: photoOf(p.id) };
+});
+const initials = (name) => name.split(/\s+/).filter(Boolean).slice(0, 2).map((w) => w[0].toUpperCase()).join("");
+---
+<section class="section section--paper exco-reel" id="exco">
+  <div class="container">
+    <SectionHead kicker={committee} title={E.title} lead={E.lead} split />
+  </div>
+  <div class="exco-reel__stage reveal" tabindex="0" role="region" aria-label={committee} style={`--count:${cards.length}`}>
+    <ul class="exco-reel__list" role="list">
+      {cards.map((c, i) => <li class="exco-reel__item" style={`--i:${i}`}>
+        <article class="exco-card">
+          <div class="exco-card__photo">{c.photo
+            ? <Image src={img(c.photo)} alt="" widths={[300, 450, 600]} sizes="(max-width: 900px) 68vw, 310px" loading="lazy" />
+            : <span class="exco-card__initials" aria-hidden="true">{initials(c.name)}</span>}</div>
+          <div class="exco-card__foot">
+            <p class="exco-card__group">{c.group}</p>
+            <h3 class="exco-card__name">{c.name}</h3>
+            <p class="exco-card__role">{c.role}</p>
+          </div>
+        </article>
+      </li>)}
+    </ul>
+  </div>
+  <div class="container exco-reel__bar">
+    {/* Shown by exco-reel.js: without JavaScript they would do nothing. */}
+    <div class="exco-reel__arrows" hidden>
+      <button type="button" class="exco-reel__arrow exco-reel__arrow--prev" aria-label="Previous"><Icon name="arrow-right" /></button>
+      <button type="button" class="exco-reel__arrow" aria-label="Next"><Icon name="arrow-right" /></button>
+    </div>
+  </div>
+</section>
+<script>
+  import "../../scripts/exco-reel.js";
+</script>

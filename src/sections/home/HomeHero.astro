@@ -3,12 +3,15 @@ import { Image } from "astro:assets";
 import C from "../../../content.js";
 import Btn from "../../components/Btn.astro";
 import Leaves from "../../components/Leaves.astro";
+import HeroTrials from "../../components/HeroTrials.astro";
 import { img } from "../../lib/images.js";
 
 const h = C.home.hero;
 const L = C.site.links;
 ---
 <section class="home-hero">
+  {/* The giant JPSA at the foot of the hero: decoration only (the real title is the h1 below). */}
+  <div class="home-hero__word" aria-hidden="true"><span>J</span><span>P</span><span>S</span><span>A</span></div>
   <div class="container home-hero__grid">
     <div>
       <span class="kicker reveal">{h.kicker}</span>
@@ -42,4 +45,6 @@ const L = C.site.links;
       </svg>
     </div>
   </div>
+  {/* Development only: three looks to compare, switched from the motion panel. */}
+  {import.meta.env.DEV && <HeroTrials />}
 </section>

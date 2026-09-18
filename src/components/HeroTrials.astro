@@ -1,0 +1,119 @@
+---
+// Development only (HomeHero.astro shows it when import.meta.env.DEV): three looks for the home
+// hero, switched from the motion panel (html[data-hero="a|b|c"]). The hero's content is the same
+// in all three (kicker, title, line, chips, buttons); only the look changes. Style inline, so
+// nothing reaches the built site. Once one is chosen it moves into the real hero.
+//   A  black, with the faces wall faint behind, and the giant word
+//   B  one strong photo filling the hero, darkened from below
+//   C  JPSA's own numbers as the hero, on black
+import { Image } from "astro:assets";
+import C from "../../content.js";
+import { img } from "../lib/images.js";
+import { pad } from "../lib/text.js";
+
+const faces = Array.from({ length: 48 }, (_, i) => `assets/img/family/f${pad(i + 1)}.jpg`);
+// B: the Medical Convention's full hall (JPSA's own event, a room full of students, no banner).
+// Cropped from the top when the image is made, so the social-media frame at its foot is cut away.
+const photo = "assets/img/portfolios/public-health/medical-convention-07.jpg";
+// C: only numbers the site already states, with the site's own wording.
+const stats = C.about.intro.stats;
+const national = C.conferences.national;
+const numbers = [
+  { num: stats[0].num, label: stats[0].label },
+  { num: stats[1].num, label: stats[1].label },
+  { num: national.edition, sup: national.editionSuffix, label: national.label },
+  { num: C.sep.incoming.facts[0].k, label: C.sep.incoming.facts[0].v },
+];
+---
+<div class="hero-trial hero-trial--faces" aria-hidden="true">
+  {faces.map((src) => <Image src={img(src)} alt="" widths={[120, 240]} sizes="(max-width: 900px) 20vw, 12.5vw" quality={50} loading="lazy" fetchpriority="low" />)}
+</div>
+<div class="hero-trial hero-trial--photo" aria-hidden="true">
+  <Image src={img(photo)} alt="" widths={[800, 1280, 1600]} width={1600} height={940} fit="cover" position="top" sizes="100vw" loading="lazy" />
+</div>
+<div class="hero-trial hero-trial--grain" aria-hidden="true"></div>
+<dl class="hero-trial hero-trial--numbers">
+  {numbers.map((n) => <div class="hero-trial__num"><dt class="hero-trial__label">{n.label}</dt><dd>{n.num}{n.sup && <sup>{n.sup}</sup>}</dd></div>)}
+</dl>
+
+<style is:inline>
+  .hero-trial { display: none; }
+
+  /* ---------- Shared by A, B and C: a dark hero, full screen, same content ---------- */
+  html:is([data-hero="a"], [data-hero="b"], [data-hero="c"]) .home-hero {
+    min-height: calc(100svh - var(--header-h));
+    background: var(--black);
+    color: #fff;
+    --fx-a: var(--red); --fx-b: var(--red-deep);
+    --fx-glow: min(1, calc(var(--fx-glow-dark) * 1.25)); /* the light, stronger on the dark */
+  }
+  html:is([data-hero="a"], [data-hero="b"], [data-hero="c"]) .home-hero .collage { display: none; }
+  html:is([data-hero="a"], [data-hero="b"], [data-hero="c"]) .home-hero__grid { grid-template-columns: minmax(0, 1fr); }
+  html:is([data-hero="a"], [data-hero="b"], [data-hero="c"]) .home-hero__grid > :first-child { max-width: 760px; }
+  html:is([data-hero="a"], [data-hero="b"], [data-hero="c"]) .home-hero .kicker { color: var(--yellow); }
+  html:is([data-hero="a"], [data-hero="b"], [data-hero="c"]) .home-hero__title { color: #fff; }
+  /* The title's dot turns yellow on the dark (red on black is too faint); red stays for Join JPSA. */
+  html:is([data-hero="a"], [data-hero="b"], [data-hero="c"]) .home-hero__title .dot { color: var(--yellow); }
+  html:is([data-hero="a"], [data-hero="b"], [data-hero="c"]) .home-hero__sub { color: rgba(255, 255, 255, 0.9); }
+  /* Chips: clear outlines, and the first one filled, instead of grey pills. */
+  html:is([data-hero="a"], [data-hero="b"], [data-hero="c"]) .home-hero .chip { background: rgba(0, 0, 0, 0.35); color: #fff; border: 1.5px solid rgba(255, 255, 255, 0.7); }
+  html:is([data-hero="a"], [data-hero="b"], [data-hero="c"]) .home-hero .chip--dark { background: var(--yellow); color: var(--black); border-color: var(--yellow); }
+  /* Join JPSA stays red and leads; the second button becomes a light outline. */
+  html:is([data-hero="a"], [data-hero="b"], [data-hero="c"]) .home-hero .btn--outline { color: #fff; border-color: rgba(255, 255, 255, 0.75); background: rgba(0, 0, 0, 0.25); }
+  html:is([data-hero="a"], [data-hero="b"], [data-hero="c"]) .home-hero .btn--outline:hover { background: #fff; color: var(--black); border-color: #fff; }
+  /* A stronger grain inside the dark hero, on top of the site's own. */
+  html:is([data-hero="a"], [data-hero="b"], [data-hero="c"]) .hero-trial--grain {
+    display: block; position: absolute; inset: 0; z-index: 9; pointer-events: none; opacity: 0.08; mix-blend-mode: hard-light;
+    background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='g' x='0' y='0' width='1' height='1' color-interpolation-filters='sRGB'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.8' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix values='1 0 0 0 0 1 0 0 0 0 1 0 0 0 0 0 0 0 0 1'/%3E%3CfeComponentTransfer%3E%3CfeFuncR type='linear' slope='2' intercept='-.5'/%3E%3CfeFuncG type='linear' slope='2' intercept='-.5'/%3E%3CfeFuncB type='linear' slope='2' intercept='-.5'/%3E%3C/feComponentTransfer%3E%3C/filter%3E%3Crect width='200' height='200' filter='url(%23g)'/%3E%3C/svg%3E") 0 0 / 200px 200px;
+  }
+
+  /* ---------- A: the faces wall, faint, behind the giant word ---------- */
+  html[data-hero="a"] .hero-trial--faces {
+    display: grid; grid-template-columns: repeat(8, 1fr); align-content: start; position: absolute; inset: 0; z-index: 0; overflow: hidden;
+    opacity: 0.24; filter: grayscale(1) contrast(1.1);
+  }
+  html[data-hero="a"] .hero-trial--faces img { display: block; width: 100%; height: auto; aspect-ratio: 1; object-fit: cover; object-position: 50% 25%; } /* height: auto, or the HTML height wins over the square */
+  /* Darker where the text stands, and at the foot, so the faces are felt, not read. */
+  html[data-hero="a"] .home-hero::after {
+    content: ""; position: absolute; inset: 0; z-index: 1; pointer-events: none;
+    background: linear-gradient(90deg, rgba(0, 0, 0, 0.88) 0%, rgba(0, 0, 0, 0.62) 42%, rgba(0, 0, 0, 0.2) 100%);
+  }
+  html[data-hero="a"] .home-hero { display: grid; align-content: center; }
+  html[data-hero="a"][data-fx-word="outline"] .home-hero__word { -webkit-text-stroke-color: rgba(255, 255, 255, 0.75); }
+
+  /* ---------- B: one photo, darkened from below ---------- */
+  html[data-hero="b"] .hero-trial--photo { display: block; position: absolute; inset: 0; z-index: 0; }
+  html[data-hero="b"] .hero-trial--photo img { width: 100%; height: 100%; object-fit: cover; object-position: 50% 65%; } /* more of the audience, less ceiling */
+  html[data-hero="b"] .hero-trial--photo::after {
+    content: ""; position: absolute; inset: 0;
+    background:
+      linear-gradient(0deg, rgba(0, 0, 0, 0.92) 0%, rgba(0, 0, 0, 0.78) 40%, rgba(0, 0, 0, 0.55) 75%, rgba(0, 0, 0, 0.62) 100%),
+      linear-gradient(90deg, rgba(0, 0, 0, 0.72) 0%, rgba(0, 0, 0, 0.38) 45%, transparent 72%);
+  }
+  html[data-hero="b"] .home-hero { display: grid; align-content: end; padding-bottom: clamp(56px, 8vw, 112px); }
+  html[data-hero="b"] .home-hero__word { display: none; }
+  html[data-hero="b"] .home-hero__grid { position: relative; z-index: 2; }
+
+  /* ---------- C: JPSA's numbers lead, the title follows ---------- */
+  html[data-hero="c"] .home-hero { display: flex; flex-direction: column; justify-content: center; gap: clamp(28px, 5vw, 64px); padding-bottom: clamp(56px, 8vw, 112px); }
+  html[data-hero="c"] .home-hero__word { display: none; }
+  html[data-hero="c"] .hero-trial--numbers {
+    order: -1; display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); margin: 0; position: relative; z-index: 2;
+    width: 100%; max-width: var(--container); margin-inline: auto; padding-inline: var(--gutter);
+  }
+  html[data-hero="c"] .hero-trial__num { display: flex; flex-direction: column-reverse; justify-content: flex-end; gap: 10px; padding: 0 clamp(12px, 2vw, 28px); border-inline-start: 1px solid rgba(255, 255, 255, 0.22); }
+  html[data-hero="c"] .hero-trial__num:first-child { padding-inline-start: 0; border: 0; }
+  html[data-hero="c"] .hero-trial__num dd { margin: 0; font-family: var(--font-display); font-size: clamp(3.6rem, 9vw, 8.6rem); line-height: 0.9; color: var(--yellow); }
+  html[data-hero="c"] .hero-trial__num sup { font-size: 0.4em; vertical-align: 0.95em; }
+  html[data-hero="c"] .hero-trial__label { font-size: 0.95rem; font-weight: 600; line-height: 1.35; color: rgba(255, 255, 255, 0.82); max-width: 18ch; }
+  html[data-hero="c"] .home-hero__title { font-size: clamp(3rem, 7vw, 6.2rem); }
+  html[data-hero="c"] .home-hero__grid { position: relative; z-index: 2; }
+
+  /* ---------- Phones and tablets ---------- */
+  @media (max-width: 900px) {
+    html[data-hero="a"] .hero-trial--faces { grid-template-columns: repeat(5, 1fr); }
+    html[data-hero="a"] .home-hero::after { background: linear-gradient(0deg, rgba(0, 0, 0, 0.5) 0%, rgba(0, 0, 0, 0.82) 30%, rgba(0, 0, 0, 0.82) 100%); }
+    html[data-hero="c"] .hero-trial--numbers { grid-template-columns: repeat(2, minmax(0, 1fr)); row-gap: 28px; }
+    html[data-hero="c"] .hero-trial__num:nth-child(3) { padding-inline-start: 0; border: 0; }
+  }
+</style>
