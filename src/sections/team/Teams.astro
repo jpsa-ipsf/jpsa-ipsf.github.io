@@ -30,32 +30,33 @@ const notYet = order.filter((abbr) => !covered.includes(abbr));
   <nav class="subnav" aria-label={L.jump}>
     <div class="container subnav__inner">{teams.map((t) => <a href={`#${t.id}`} data-spy={t.id}>{t.name}</a>)}</div>
   </nav>
-  <div class="container">
-    {T.groups.filter((g) => teams.some((t) => t.group === g.id)).map((g) => <div class="team-group">
-      <h3 class="kicker team-group__title">{g.name}</h3>
-      {teams.filter((t) => t.group === g.id).map((t) => {
-        const lead = leaderOf(t.id);
-        const leader = person(lead.person, `the position "${lead.title}"`);
-        const members = membersOf(t);
-        const count = members.length;
-        return <article class="team-card reveal" id={t.id}>
-          <header class="team-card__head">
-            <h4 class="team-card__name">{t.name}</h4>
-            <p class="team-card__meta"><Avatar person={leader} /><span>{L.ledBy} <strong>{leader.name}</strong> · {count} {count === 1 ? L.member : L.members}</span></p>
-          </header>
-          <dl class="team-card__fields">
-            <div><dt>{L.does}</dt><dd>{t.does}{t.work && <span class="team-card__work"><TextLink label={t.workLabel || L.work} href={t.work} /></span>}</dd></div>
-            {t.now && <div><dt>{L.now}</dt><dd>{t.now}</dd></div>}
-            <div><dt>{L.join}</dt><dd>{t.join}</dd></div>
-          </dl>
-          <div class="team-card__people">
-            {members.length > 0 && <div class="team-card__group">
-              <h5 class="team-card__subtitle">{L.local}</h5>
-              <Members rows={members} labels={L} />
-            </div>}
+  {/* One list, in the order of content.js. The four portfolios carry a tag that leads to their page. */}
+  <div class="container team-list">
+    {teams.map((t) => {
+      const lead = leaderOf(t.id);
+      const leader = person(lead.person, `the position "${lead.title}"`);
+      const members = membersOf(t);
+      const count = members.length;
+      return <article class="team-card reveal" id={t.id}>
+        <header class="team-card__head">
+          <div class="team-card__title">
+            <h3 class="team-card__name">{t.name}</h3>
+            {t.group === "portfolios" && <a class="team-card__tag" href="portfolios.html">{L.portfolio}</a>}
           </div>
-        </article>;
-      })}
-    </div>)}
+          <p class="team-card__meta"><Avatar person={leader} /><span>{L.ledBy} <strong>{leader.name}</strong> · {count} {count === 1 ? L.member : L.members}</span></p>
+        </header>
+        <dl class="team-card__fields">
+          <div><dt>{L.does}</dt><dd>{t.does}{t.work && <span class="team-card__work"><TextLink label={t.workLabel || L.work} href={t.work} /></span>}</dd></div>
+          {t.now && <div><dt>{L.now}</dt><dd>{t.now}</dd></div>}
+          <div><dt>{L.join}</dt><dd>{t.join}</dd></div>
+        </dl>
+        <div class="team-card__people">
+          {members.length > 0 && <div class="team-card__group">
+            <h4 class="team-card__subtitle">{L.local}</h4>
+            <Members rows={members} labels={L} />
+          </div>}
+        </div>
+      </article>;
+    })}
   </div>
 </section>

@@ -231,18 +231,18 @@ export default {
       positions: [
         { title: "President", person: "eyad-tayem", group: "leadership" },
         { title: "Vice President", person: "malak-elaian", group: "leadership" },
-        { title: "Public Health", person: "abd-alrahman-abu-rumman", group: "portfolios", team: "public-health" },
-        { title: "Professional Development", person: "ahmad-alhourani", group: "portfolios", team: "professional-development" },
-        { title: "Humanitarian Campaigns", person: "jude-obaidat", group: "portfolios", team: "humanitarian" },
-        { title: "Social Events", person: "sama-shadid", group: "portfolios", team: "social" },
-        // page: "sep" → shown on sep.html, not on team.html: that page is the whole home of the programme.
-        { title: "Student Exchange Officer", person: "saif-khraino", group: "exchange", team: "student-exchange", page: "sep" },
         { title: "Secretary General", person: "layan-ayman", group: "operations", team: "secretary-general" },
         { title: "Treasurer", person: "saif-ghassab", group: "operations", team: "treasurer" },
         { title: "Contact Person", person: "bayanne-fannoun", group: "operations", team: "contact-person" },
+        // page: "sep" → shown on sep.html, not on team.html: that page is the whole home of the programme.
+        { title: "Student Exchange Officer", person: "saif-khraino", group: "exchange", team: "student-exchange", page: "sep" },
         { title: "External Relations", person: "abd-alrahman-shammout", group: "operations", team: "external-relations" },
+        { title: "Humanitarian Campaigns", person: "jude-obaidat", group: "portfolios", team: "humanitarian" },
         { title: "Internal Communication", person: "abd-alrahman-othman", group: "operations", team: "internal-communication" },
         { title: "Media and Publications", person: "adawiya-ali", group: "operations", team: "media-publications" },
+        { title: "Professional Development", person: "ahmad-alhourani", group: "portfolios", team: "professional-development" },
+        { title: "Public Health", person: "abd-alrahman-abu-rumman", group: "portfolios", team: "public-health" },
+        { title: "Social Events", person: "sama-shadid", group: "portfolios", team: "social" },
       ],
     },
 
@@ -259,6 +259,7 @@ export default {
         join: "If you join",
         work: "See what they do",
         local: "At your university",
+        portfolio: "Portfolio",
         name: "Name",
         role: "Role",
         university: "University",
@@ -267,7 +268,8 @@ export default {
         jump: "Teams",
         meetTeam: "Meet the team",
       },
-      /* For each team:
+      /* The team cards follow the order of this list (the exchange team is on sep.html).
+         For each team:
          • work: the page that describes the team's work (portfolios and exchange), linked instead of repeated.
          • does / join: DRAFTS written on 2026-09-16, to be corrected by the committee.
            join says what a member of this team does all year, in words no other team uses. Name the
@@ -279,74 +281,6 @@ export default {
            people, sorted by university. A column only shows when someone in the team has it, so a
            member without a role is written { person: "their-id" }. */
       list: [
-        {
-          id: "public-health", name: "Public Health", group: "portfolios", work: "portfolios.html#public-health",
-          does: "Plans JPSA's public health activities and takes them to campuses through its local coordinators.",
-          now: "",
-          join: "As a local coordinator, you bring the team's activities to your own university and help run them there.",
-          members: [
-            { person: "noura-almajali", role: "Local coordinator" },
-            { person: "jude-rabayah", role: "Local coordinator" },
-            { person: "aya-alajlouni", role: "Local coordinator" },
-            { person: "tala-hilweh", role: "Local coordinator" },
-            { person: "zeena-alhaj", role: "Local coordinator" },
-          ],
-        },
-        {
-          id: "professional-development", name: "Professional Development", group: "portfolios", work: "portfolios.html#professional-development",
-          does: "Builds the programs that help members prepare for their careers, and brings together the committee behind our National Symposium.",
-          now: "",
-          join: "You help prepare trainings and the Scientific Research Program, work on the JPSA Podcast and JPSA Talks, and organize our annual National Symposium.",
-          members: [
-            { person: "ahmad-bakri", role: "Local coordinator" },
-            { person: "asma-mefrej", role: "Local coordinator" },
-            { person: "faisal-alhadid", role: "Local coordinator" },
-            { person: "shahed-nasser", role: "Local coordinator" },
-            { person: "mira-hamad", role: "Local coordinator" },
-            { person: "bissan-alghroz", role: "Subcommittee" },
-            { person: "jamal-alrazem", role: "Subcommittee" },
-            { person: "tamam-alttayyeb", role: "Subcommittee" },
-            { person: "zeena-alhaj", role: "Subcommittee" },
-          ],
-        },
-        {
-          id: "humanitarian", name: "Humanitarian Campaigns", group: "portfolios", work: "portfolios.html#humanitarian",
-          does: "Organizes JPSA's volunteering and giving campaigns, run on campuses by its local coordinators.",
-          now: "",
-          join: "As a local coordinator, you gather students at your university and organize the team's campaigns there.",
-          members: [
-            { person: "majd-alshlool", role: "Local coordinator" },
-            { person: "salma-alnasser", role: "Local coordinator" },
-            { person: "tala-almagharbeh", role: "Local coordinator" },
-            { person: "yazan-jarrar", role: "Local coordinator" },
-            { person: "dima-halasa", role: "Local coordinator" },
-          ],
-        },
-        {
-          id: "social", name: "Social Events", group: "portfolios", work: "portfolios.html#social",
-          does: "Brings members from different universities together outside the classroom, so the association feels like a community.",
-          now: "",
-          join: "You plan sports, game nights and creative sessions, from the first idea to the day itself.",
-          members: [
-            { person: "hala-dawoud" },
-            { person: "yasmeen-abudayyeh" },
-            { person: "reema-mustafa" },
-            { person: "suleiman-awjan" },
-          ],
-        },
-        {
-          // The whole team is shown on sep.html (page: "sep"), next to what the programme is and how to apply.
-          id: "student-exchange", name: "Student Exchange Programme", group: "exchange", page: "sep",
-          // No "does" here: sep.html explains the programme above this team. "now" stays for updates.
-          now: "",
-          join: "As a local exchange officer, you answer exchange questions at your university and help welcome incoming students.",
-          members: [
-            { person: "tamam-alttayyeb", role: "Local exchange officer" },
-            { person: "lara-alashi", role: "Promotion & cultural coordinator" },
-            { person: "sadeen-salem", role: "Local exchange officer" },
-            { person: "layan-mansour", role: "Local exchange officer" },
-          ],
-        },
         {
           id: "secretary-general", name: "Secretary General", group: "operations",
           does: "Keeps the association organized: meeting records, official documents and deadlines.",
@@ -382,6 +316,19 @@ export default {
           ],
         },
         {
+          // The whole team is shown on sep.html (page: "sep"), next to what the programme is and how to apply.
+          id: "student-exchange", name: "Student Exchange Programme", group: "exchange", page: "sep",
+          // No "does" here: sep.html explains the programme above this team. "now" stays for updates.
+          now: "",
+          join: "As a local exchange officer, you answer exchange questions at your university and help welcome incoming students.",
+          members: [
+            { person: "tamam-alttayyeb", role: "Local exchange officer" },
+            { person: "lara-alashi", role: "Promotion & cultural coordinator" },
+            { person: "sadeen-salem", role: "Local exchange officer" },
+            { person: "layan-mansour", role: "Local exchange officer" },
+          ],
+        },
+        {
           id: "external-relations", name: "External Relations", group: "operations",
           does: "Builds JPSA's relationships with hospitals, companies and institutions, and looks after our partnerships.",
           now: "",
@@ -397,6 +344,19 @@ export default {
             { person: "layan-faidi", role: "Subcommittee" },
             { person: "zaid-asaad", role: "Subcommittee" },
             { person: "zaid-abushanab", role: "Subcommittee" },
+          ],
+        },
+        {
+          id: "humanitarian", name: "Humanitarian Campaigns", group: "portfolios", work: "portfolios.html#humanitarian",
+          does: "Organizes JPSA's volunteering and giving campaigns, run on campuses by its local coordinators.",
+          now: "",
+          join: "As a local coordinator, you gather students at your university and organize the team's campaigns there.",
+          members: [
+            { person: "majd-alshlool", role: "Local coordinator" },
+            { person: "salma-alnasser", role: "Local coordinator" },
+            { person: "tala-almagharbeh", role: "Local coordinator" },
+            { person: "yazan-jarrar", role: "Local coordinator" },
+            { person: "dima-halasa", role: "Local coordinator" },
           ],
         },
         {
@@ -429,6 +389,48 @@ export default {
             { person: "laina-alzuhiri", role: "Subcommittee" },
             { person: "noor-bataineh", role: "Subcommittee" },
             { person: "tala-amro", role: "Subcommittee" },
+          ],
+        },
+        {
+          id: "professional-development", name: "Professional Development", group: "portfolios", work: "portfolios.html#professional-development",
+          does: "Builds the programs that help members prepare for their careers, and brings together the committee behind our National Symposium.",
+          now: "",
+          join: "You help prepare trainings and the Scientific Research Program, work on the JPSA Podcast and JPSA Talks, and organize our annual National Symposium.",
+          members: [
+            { person: "ahmad-bakri", role: "Local coordinator" },
+            { person: "asma-mefrej", role: "Local coordinator" },
+            { person: "faisal-alhadid", role: "Local coordinator" },
+            { person: "shahed-nasser", role: "Local coordinator" },
+            { person: "mira-hamad", role: "Local coordinator" },
+            { person: "bissan-alghroz", role: "Subcommittee" },
+            { person: "jamal-alrazem", role: "Subcommittee" },
+            { person: "tamam-alttayyeb", role: "Subcommittee" },
+            { person: "zeena-alhaj", role: "Subcommittee" },
+          ],
+        },
+        {
+          id: "public-health", name: "Public Health", group: "portfolios", work: "portfolios.html#public-health",
+          does: "Plans JPSA's public health activities and takes them to campuses through its local coordinators.",
+          now: "",
+          join: "As a local coordinator, you bring the team's activities to your own university and help run them there.",
+          members: [
+            { person: "noura-almajali", role: "Local coordinator" },
+            { person: "jude-rabayah", role: "Local coordinator" },
+            { person: "aya-alajlouni", role: "Local coordinator" },
+            { person: "tala-hilweh", role: "Local coordinator" },
+            { person: "zeena-alhaj", role: "Local coordinator" },
+          ],
+        },
+        {
+          id: "social", name: "Social Events", group: "portfolios", work: "portfolios.html#social",
+          does: "Brings members from different universities together outside the classroom, so the association feels like a community.",
+          now: "",
+          join: "You plan sports, game nights and creative sessions, from the first idea to the day itself.",
+          members: [
+            { person: "hala-dawoud" },
+            { person: "yasmeen-abudayyeh" },
+            { person: "reema-mustafa" },
+            { person: "suleiman-awjan" },
           ],
         },
       ],
