@@ -1,0 +1,25 @@
+---
+// A team's members as a table: name (with photo), role, and university (its short name, with the
+// full name on hover). A column only shows when someone in the table has it, and a person with no
+// university simply has none written. On phones pages.css turns each row into two lines; the
+// ARIA roles keep it a table for screen readers there.
+// rows: [{ p, role }] from membersOf() in src/lib/team.js. labels: content.js, team.teams.labels.
+import Avatar from "./Avatar.astro";
+import { university } from "../lib/team.js";
+
+const { rows, labels: L } = Astro.props;
+const hasRole = rows.some((m) => m.role);
+const hasUniversity = rows.some((m) => m.p.university);
+---
+<table class="members" role="table">
+  <thead role="rowgroup"><tr role="row">
+    <th scope="col" role="columnheader">{L.name}</th>
+    {hasRole && <th scope="col" role="columnheader">{L.role}</th>}
+    {hasUniversity && <th scope="col" role="columnheader">{L.university}</th>}
+  </tr></thead>
+  <tbody role="rowgroup">{rows.map((m) => <tr role="row">
+    <td role="cell"><span class="members__person"><Avatar person={m.p} />{m.p.name}</span></td>
+    {hasRole && <td role="cell" class="members__role">{m.role}</td>}
+    {hasUniversity && <td role="cell" class="members__university">{m.p.university && <abbr title={university(m.p.university).name}>{m.p.university}</abbr>}</td>}
+  </tr>)}</tbody>
+</table>

@@ -31,6 +31,22 @@ export const university = (abbr) => universities.get(abbr);
 /** The Executive Committee position that leads a team. */
 export const leaderOf = (teamId) => T.exco.positions.find((pos) => pos.team === teamId);
 
+// A team's members are one list in content.js: members: [{ person, role }]. A member can also be
+// written as just the id (no role), and the older lists (local and committee) are still read,
+// after members, so a team written the old way still works.
+const entriesOf = (t) => [...(t.members || []), ...(t.local || []), ...(t.committee || [])]
+  .map((m) => (typeof m === "string" ? { person: m } : m));
+const rank = (abbr) => {
+  const i = C.universities.findIndex((u) => u.abbr === abbr);
+  return i < 0 ? C.universities.length : i;
+};
+
+/** A team's members as { p, role }, sorted by university (in the order of the universities list,
+    people without one last). Members of the same university keep the order they are written in. */
+export const membersOf = (t) => entriesOf(t)
+  .map((m) => ({ p: person(m.person, `the team "${t.name}"`), role: m.role || "" }))
+  .sort((a, b) => rank(a.p.university) - rank(b.p.university));
+
 // ---- Checks: each one stops the build with a clear message ----
 for (const p of T.people) {
   if (p.university && !universities.has(p.university)) {
@@ -45,8 +61,15 @@ for (const pos of T.exco.positions) {
 for (const t of T.teams.list) {
   if (!groups.has(t.group)) throw new Error(`${where}: the team "${t.name}" is in the group "${t.group}", which is not in "groups".`);
   if (!leaderOf(t.id)) throw new Error(`${where}: the team "${t.name}" has no leader. Add team: "${t.id}" to its position in exco.positions.`);
-  t.local.forEach((m) => person(m.person, `the team "${t.name}"`));
-  t.committee.forEach((id) => person(id, `the team "${t.name}"`));
+  const seen = new Set();
+  for (const m of entriesOf(t)) {
+    if (!m || typeof m.person !== "string") {
+      throw new Error(`${where}: a member of the team "${t.name}" is written as ${JSON.stringify(m)}. Write { person: "their-id", role: "Their role" }, or just "their-id".`);
+    }
+    const p = person(m.person, `the team "${t.name}"`);
+    if (seen.has(p.id)) throw new Error(`${where}: ${p.name} is in the team "${t.name}" twice. List each member of a team once.`);
+    seen.add(p.id);
+  }
 }
 
 // ---- Warnings: printed in the build log; the build carries on ----

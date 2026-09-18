@@ -3,7 +3,8 @@ import C from "../../../content.js";
 import SectionHead from "../../components/SectionHead.astro";
 import TextLink from "../../components/TextLink.astro";
 import Avatar from "../../components/Avatar.astro";
-import { person, leaderOf, university } from "../../lib/team.js";
+import Members from "../../components/Members.astro";
+import { person, leaderOf, membersOf, university } from "../../lib/team.js";
 
 const T = C.team;
 const S = T.teams;
@@ -11,15 +12,9 @@ const L = S.labels;
 // Teams marked page: "sep" are shown on that page instead (the exchange team).
 const teams = S.list.filter((t) => !t.page);
 const order = C.universities.map((u) => u.abbr);
-const rank = (abbr) => (abbr ? order.indexOf(abbr) : order.length);
 
-// Local members sorted by university (in the order of the universities list), unknown last.
-const localOf = (t) => t.local
-  .map((m) => ({ role: m.role, p: person(m.person, `the team "${t.name}"`) }))
-  .sort((a, b) => rank(a.p.university) - rank(b.p.university));
-
-// Which universities have at least one local coordinator today, and which have none yet.
-const covered = order.filter((abbr) => teams.some((t) => localOf(t).some((m) => m.p.university === abbr)));
+// Which universities have at least one team member today, and which have none yet.
+const covered = order.filter((abbr) => teams.some((t) => membersOf(t).some((m) => m.p.university === abbr)));
 const notYet = order.filter((abbr) => !covered.includes(abbr));
 ---
 <section class="section section--paper" id="teams">
@@ -41,9 +36,8 @@ const notYet = order.filter((abbr) => !covered.includes(abbr));
       {teams.filter((t) => t.group === g.id).map((t) => {
         const lead = leaderOf(t.id);
         const leader = person(lead.person, `the position "${lead.title}"`);
-        const local = localOf(t);
-        const committee = t.committee.map((id) => person(id, `the team "${t.name}"`));
-        const count = local.length + committee.length;
+        const members = membersOf(t);
+        const count = members.length;
         return <article class="team-card reveal" id={t.id}>
           <header class="team-card__head">
             <h4 class="team-card__name">{t.name}</h4>
@@ -55,21 +49,9 @@ const notYet = order.filter((abbr) => !covered.includes(abbr));
             <div><dt>{L.join}</dt><dd>{t.join}</dd></div>
           </dl>
           <div class="team-card__people">
-            {local.length > 0 && <div class="team-card__group">
+            {members.length > 0 && <div class="team-card__group">
               <h5 class="team-card__subtitle">{L.local}</h5>
-              {/* The roles keep this a table for screen readers on phones, where the CSS shows each row as two lines. */}
-              <table class="members" role="table">
-                <thead role="rowgroup"><tr role="row"><th scope="col" role="columnheader">{L.name}</th><th scope="col" role="columnheader">{L.role}</th><th scope="col" role="columnheader">{L.university}</th></tr></thead>
-                <tbody role="rowgroup">{local.map((m) => <tr role="row">
-                  <td role="cell"><span class="members__person"><Avatar person={m.p} />{m.p.name}</span></td>
-                  <td role="cell">{m.role}</td>
-                  <td role="cell">{m.p.university ? <abbr title={university(m.p.university).name}>{m.p.university}</abbr> : L.noUniversity}</td>
-                </tr>)}</tbody>
-              </table>
-            </div>}
-            {committee.length > 0 && <div class="team-card__group">
-              <h5 class="team-card__subtitle">{L.committee}</h5>
-              <ul class="committee" role="list">{committee.map((p) => <li><Avatar person={p} />{p.name}</li>)}</ul>
+              <Members rows={members} labels={L} />
             </div>}
           </div>
         </article>;

@@ -8,7 +8,8 @@ import Icon from "../components/Icon.astro";
 import Btn from "../components/Btn.astro";
 import CtaBand from "../components/CtaBand.astro";
 import Avatar from "../components/Avatar.astro";
-import { person, leaderOf, university } from "../lib/team.js";
+import Members from "../components/Members.astro";
+import { person, leaderOf, membersOf } from "../lib/team.js";
 import ART from "../lib/art.js";
 import { delay, mailto } from "../lib/text.js";
 
@@ -21,10 +22,7 @@ const team = C.team.teams.labels;
 const sepTeam = C.team.teams.list.find((t) => t.id === "student-exchange");
 const sepLead = leaderOf(sepTeam.id);
 const sepLeader = person(sepLead.person, `the position "${sepLead.title}"`);
-const uniOrder = C.universities.map((u) => u.abbr);
-const sepLocal = sepTeam.local
-  .map((m) => ({ role: m.role, p: person(m.person, `the team "${sepTeam.name}"`) }))
-  .sort((a, b) => uniOrder.indexOf(a.p.university) - uniOrder.indexOf(b.p.university));
+const sepMembers = membersOf(sepTeam);
 ---
 <Base page="sep" {...s.meta}>
   <PageHero {...s.hero} />
@@ -71,14 +69,7 @@ const sepLocal = sepTeam.local
       </dl>
       <div class="reveal" style="margin-top:28px">
         <h3 class="team-card__subtitle">{team.local}</h3>
-        <table class="members" role="table">
-          <thead role="rowgroup"><tr role="row"><th scope="col" role="columnheader">{team.name}</th><th scope="col" role="columnheader">{team.role}</th><th scope="col" role="columnheader">{team.university}</th></tr></thead>
-          <tbody role="rowgroup">{sepLocal.map((m) => <tr role="row">
-            <td role="cell"><span class="members__person"><Avatar person={m.p} />{m.p.name}</span></td>
-            <td role="cell">{m.role}</td>
-            <td role="cell">{m.p.university ? <abbr title={university(m.p.university).name}>{m.p.university}</abbr> : team.noUniversity}</td>
-          </tr>)}</tbody>
-        </table>
+        <Members rows={sepMembers} labels={team} />
       </div>
     </div>
   </section>
