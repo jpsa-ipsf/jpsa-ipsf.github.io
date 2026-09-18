@@ -16,7 +16,7 @@
 :root {
   --fx-grain: 0.1;       /* grain opacity */
   --fx-glow-dark: 0.7;   /* light: black sections, the inner pages' hero, the footer */
-  --fx-glow-home: 0.45;  /* light: the home page hero */
+  --fx-glow-home: 0.875; /* light: the home page hero (black) */
   --fx-glow-light: 0.35; /* light: white, paper and grey sections */
   --fx-glow-warm: 0.35;  /* light: red and yellow sections, the call-to-action band */
   --fx-drift: 20s;       /* one loop of the light */
@@ -44,15 +44,15 @@
 /* ---------- 2. Light ---------- */
 /* Colours per kind of section, all from the palette: red light in the dark, warm yellow
    (with a touch of red) on white, deeper shade on red, red warmth on yellow. */
-.section,
-.home-hero { --fx-a: var(--yellow); --fx-b: color-mix(in srgb, var(--red) 40%, transparent); --fx-glow: var(--fx-glow-light); }
-.home-hero { --fx-glow: var(--fx-glow-home); }
+.section { --fx-a: var(--yellow); --fx-b: color-mix(in srgb, var(--red) 40%, transparent); --fx-glow: var(--fx-glow-light); }
 .page-hero,
+.home-hero,
 .section--black,
 .site-footer { --fx-a: var(--red); --fx-b: var(--red-deep); --fx-glow: var(--fx-glow-dark); }
 .section--red,
 .cta-band { --fx-a: var(--red-deep); --fx-b: var(--black); --fx-glow: var(--fx-glow-warm); }
 .section--yellow { --fx-a: var(--red); --fx-b: var(--red-deep); --fx-glow: var(--fx-glow-warm); }
+.home-hero { --fx-glow: var(--fx-glow-home); }
 
 .page-hero,
 .home-hero,
@@ -114,22 +114,11 @@
     animation-timeline: --fx;
     animation-range: exit-crossing;
   }
-  /* Home hero: the giant word lags behind, the collage in front of it runs ahead. */
+  /* Home hero: the giant word lags behind. */
   .home-hero__word {
     animation: fx-word linear both;
     animation-timeline: --fx;
     animation-range: exit-crossing;
-  }
-  .home-hero .collage__photo,
-  .home-hero .collage__leaves {
-    animation: fx-lift linear both;
-    animation-timeline: --fx;
-    animation-range: exit-crossing;
-  }
-  .home-hero .badge-spin {
-    animation: spin 26s linear infinite, fx-lift linear both;
-    animation-timeline: auto, --fx;
-    animation-range: normal, exit-crossing;
   }
 }
 /* An explicit "from": an implied one would get the default ease instead of linear. */
@@ -137,7 +126,6 @@
 @keyframes fx-depth-top { from { translate: 0 0; } to { translate: 0 calc(16% * var(--fx-depth)); } }
 @keyframes fx-ghost { from { translate: 0 0; } to { translate: 0 calc(40% * var(--fx-depth)); } }
 @keyframes fx-word { from { translate: 0 0; } to { translate: 0 calc(22% * var(--fx-depth)); } }
-@keyframes fx-lift { from { translate: 0 0; } to { translate: 0 calc(-18% * var(--fx-depth)); } }
 
 /* The same movement from motion.js where scroll-driven animations are missing:
    --fx-p runs from -1 to 1 across a section (cover), and from 0 to 1 as a hero's top
@@ -149,7 +137,6 @@
 .fx-js .home-hero::before { translate: 0 calc(var(--fx-p, 0) * 16% * var(--fx-depth)); }
 .fx-js .page-hero__ghost { translate: 0 calc(var(--fx-p, 0) * 40% * var(--fx-depth)); }
 .fx-js .home-hero__word { translate: 0 calc(var(--fx-p, 0) * 22% * var(--fx-depth)); }
-.fx-js .home-hero :is(.collage__photo, .collage__leaves, .badge-spin) { translate: 0 calc(var(--fx-p, 0) * -18% * var(--fx-depth)); }
 
 /* Off screen (motion.js adds .fx-idle a quarter of a screen away): no animation at all, so the
    browser keeps no layer for it. Two classes, so it wins over the shorthands above. */
@@ -164,13 +151,9 @@
 @supports not (overflow: clip) {
   .section::before { inset: 0; animation: none; translate: none; }
 }
-/* Phones and tablets: the word simply sits under the collage, without the depth
-   (:root raises these above the motion.js rules). */
+/* Phones and tablets: the word stands still (:root raises this above the motion.js rules). */
 @media (max-width: 900px) {
-  :root .home-hero__word,
-  :root .home-hero .collage__photo,
-  :root .home-hero .collage__leaves { animation: none; translate: none; }
-  :root .home-hero .badge-spin { animation: spin 26s linear infinite; translate: none; }
+  :root .home-hero__word { animation: none; translate: none; }
 }
 /* Everything stands still; the grain and the light stay, where they start. */
 @media (prefers-reduced-motion: reduce) {
@@ -180,10 +163,7 @@
   .cta-band::before,
   .site-footer::before,
   .page-hero__ghost,
-  :root .home-hero__word,
-  :root .home-hero .collage__photo,
-  :root .home-hero .collage__leaves,
-  :root .home-hero .badge-spin { animation: none; translate: none; }
+  :root .home-hero__word { animation: none; translate: none; }
 }
 @media print, (forced-colors: active) {
   .fx-grain,

@@ -2,15 +2,18 @@
 import { Image } from "astro:assets";
 import C from "../../../content.js";
 import Btn from "../../components/Btn.astro";
-import Leaves from "../../components/Leaves.astro";
-import HeroTrials from "../../components/HeroTrials.astro";
 import { img } from "../../lib/images.js";
+import { pad } from "../../lib/text.js";
 
 const h = C.home.hero;
 const L = C.site.links;
+// The faces behind the hero: the first 48 photos of the family wall (assets/img/family/), enough
+// to fill it on any screen.
+const faces = Array.from({ length: Math.min(48, C.home.wallCount) }, (_, i) => `assets/img/family/f${pad(i + 1)}.jpg`);
 ---
 <section class="home-hero">
-  {/* The giant JPSA at the foot of the hero: decoration only (the real title is the h1 below). */}
+  {/* Decoration only, behind the text: the members' faces, and the giant JPSA at the foot (the real title is the h1). */}
+  <div class="home-hero__faces" aria-hidden="true">{faces.map((src) => <Image src={img(src)} alt="" widths={[120, 240]} sizes="(max-width: 900px) 20vw, 12.5vw" quality={50} loading="lazy" fetchpriority="low" />)}</div>
   <div class="home-hero__word" aria-hidden="true"><span>J</span><span>P</span><span>S</span><span>A</span></div>
   <div class="container home-hero__grid">
     <div>
@@ -28,23 +31,6 @@ const L = C.site.links;
         <Btn label="Explore our portfolios" href="portfolios.html" variant="outline" />
       </div>
     </div>
-    <div class="collage reveal" style="--delay:140ms">
-      <div class="collage__block"></div>
-      {h.photos.map((p, i) => <figure class={`collage__photo collage__photo--${i + 1}`}><Image src={img(p.src)} alt={p.alt} widths={[400, 800]} sizes="(max-width: 900px) 50vw, 280px" loading="eager" /></figure>)}
-      <Leaves class="collage__leaves" />
-      <svg class="badge-spin" viewBox="0 0 200 200" aria-hidden="true" focusable="false">
-        <defs><path id="badge-path" d="M100,100 m-76,0 a76,76 0 1,1 152,0 a76,76 0 1,1 -152,0"></path></defs>
-        <circle cx="100" cy="100" r="99" fill="#000"></circle>
-        <text font-family="DM Sans, system-ui, sans-serif" font-size="16.5" font-weight="700" fill="#fdd82e" textLength="470" lengthAdjust="spacing">
-          <textPath href="#badge-path">{h.badge.toUpperCase()}</textPath>
-        </text>
-        <g transform="translate(72 67) scale(0.5)">
-          <path d="M44 118C12 94 12 46 52 10c16 34 18 72-8 108z" fill="#c21f1f"></path>
-          <path d="M52 124c-2-34 20-62 58-68 2 36-20 64-58 68z" fill="#fdd82e"></path>
-        </g>
-      </svg>
-    </div>
   </div>
-  {/* Development only: three looks to compare, switched from the motion panel. */}
-  {import.meta.env.DEV && <HeroTrials />}
+  <div class="home-hero__grain" aria-hidden="true"></div>
 </section>

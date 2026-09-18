@@ -3,16 +3,26 @@
    ========================================================================== */
 
 /* ================= HOME ================= */
-.home-hero { position: relative; overflow: hidden; padding-block: clamp(36px, 6vw, 84px) clamp(56px, 8vw, 112px); }
-.home-hero__grid {
+/* The hero: black and full screen, with members' faces faint behind the text and the giant JPSA
+   at its foot. The faces, the word and the grain are decoration (aria-hidden in the markup); the
+   words are the h1, the line, the chips and the buttons. Back to front: the light (motion.css),
+   the faces, a dark gradient where the text stands, the word, the text, the grain. */
+.home-hero {
+  position: relative;
+  overflow: hidden;
   display: grid;
-  grid-template-columns: minmax(0, 1.12fr) minmax(0, 0.88fr);
-  gap: clamp(32px, 5vw, 72px);
-  align-items: center;
+  align-content: center;
+  min-height: calc(100svh - var(--header-h));
+  padding-block: clamp(36px, 6vw, 84px) clamp(56px, 8vw, 112px);
+  background: var(--black);
+  color: #fff;
 }
-.home-hero__title { font-size: var(--fs-hero); line-height: 0.84; }
+.home-hero__grid { position: relative; z-index: 8; }
+.home-hero__grid > div { max-width: 760px; }
+.home-hero .kicker { color: var(--yellow); }
+.home-hero__title { font-size: var(--fs-hero); line-height: 0.84; color: #fff; }
 .home-hero__title .line { display: block; }
-.home-hero__title .dot { color: var(--red); }
+.home-hero__title .dot { color: var(--yellow); } /* red is too faint on black; red stays for Join JPSA */
 .home-hero__sub {
   margin-top: 22px;
   max-width: 21ch;
@@ -20,44 +30,59 @@
   font-style: italic;
   font-size: clamp(1.55rem, 2.9vw, 2.35rem);
   line-height: 1.18;
+  color: rgba(255, 255, 255, 0.9);
 }
 .home-hero__meta { margin-top: 24px; }
 .home-hero .cluster.actions { margin-top: 32px; }
-@media (max-width: 900px) { .home-hero__grid { grid-template-columns: 1fr; } }
+/* Chips: clear outlines on the dark, the first one filled. */
+.home-hero .chip { background: rgba(0, 0, 0, 0.35); color: #fff; border: 1.5px solid rgba(255, 255, 255, 0.7); }
+.home-hero .chip--dark { background: var(--yellow); color: var(--black); border-color: var(--yellow); }
+/* Join JPSA stays red and leads; the second button is a light outline. */
+.home-hero .btn--outline { color: #fff; border-color: rgba(255, 255, 255, 0.75); background: rgba(0, 0, 0, 0.25); }
+.home-hero .btn--outline:hover { background: #fff; color: var(--black); border-color: #fff; }
 
-.collage { position: relative; width: 100%; max-width: 560px; margin-inline: auto; aspect-ratio: 5 / 6; }
-.collage__block { position: absolute; inset: 9% 2% 3% 12%; border-radius: var(--radius-lg); background: var(--yellow); }
-.collage__photo {
+/* The faces, grey and faint, filling the hero from the top. */
+.home-hero__faces {
   position: absolute;
-  width: 50%;
-  aspect-ratio: 4 / 5;
+  inset: 0;
+  z-index: 0;
+  display: grid;
+  grid-template-columns: repeat(8, 1fr);
+  align-content: start;
   overflow: hidden;
-  border: 6px solid #fff;
-  border-radius: var(--radius);
-  background: var(--gray);
-  box-shadow: var(--shadow-lg);
+  opacity: 0.24;
+  filter: grayscale(1) contrast(1.1);
 }
-.collage__photo img { width: 100%; height: 100%; object-fit: cover; object-position: 50% 22%; }
-.collage__photo--1 { left: 0; top: 13%; transform: rotate(-6deg); }
-.collage__photo--2 { right: 0; top: 0; transform: rotate(4deg); z-index: 2; }
-.collage__photo--3 { left: 27%; bottom: 0; width: 47%; transform: rotate(-1.5deg); z-index: 3; }
-.collage__leaves { position: absolute; right: -3%; bottom: 10%; width: 25%; z-index: 4; filter: drop-shadow(0 10px 18px rgba(0, 0, 0, 0.18)); }
-.badge-spin {
+.home-hero__faces img { width: 100%; height: auto; aspect-ratio: 1; object-fit: cover; object-position: 50% 25%; } /* height: auto, or the HTML height wins over the square */
+/* Darker where the text stands, so the faces are felt, not read. */
+.home-hero::after {
+  content: "";
   position: absolute;
-  left: -3%;
-  bottom: 3%;
-  z-index: 5;
-  width: clamp(104px, 11vw, 142px);
-  animation: spin 26s linear infinite;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+  background: linear-gradient(90deg, rgba(0, 0, 0, 0.88) 0%, rgba(0, 0, 0, 0.62) 42%, rgba(0, 0, 0, 0.2) 100%);
 }
-@keyframes spin { to { transform: rotate(360deg); } }
+/* A stronger grain in the hero, over the site's own. */
+.home-hero__grain {
+  position: absolute;
+  inset: 0;
+  z-index: 9;
+  pointer-events: none;
+  opacity: 0.08;
+  mix-blend-mode: hard-light;
+  background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='g' x='0' y='0' width='1' height='1' color-interpolation-filters='sRGB'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.8' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix values='1 0 0 0 0 1 0 0 0 0 1 0 0 0 0 0 0 0 0 1'/%3E%3CfeComponentTransfer%3E%3CfeFuncR type='linear' slope='2' intercept='-.5'/%3E%3CfeFuncG type='linear' slope='2' intercept='-.5'/%3E%3CfeFuncB type='linear' slope='2' intercept='-.5'/%3E%3C/feComponentTransfer%3E%3C/filter%3E%3Crect width='200' height='200' filter='url(%23g)'/%3E%3C/svg%3E") 0 0 / 200px 200px;
+}
+@media (max-width: 900px) {
+  .home-hero__faces { grid-template-columns: repeat(5, 1fr); }
+  .home-hero::after { background: linear-gradient(0deg, rgba(0, 0, 0, 0.5) 0%, rgba(0, 0, 0, 0.82) 30%, rgba(0, 0, 0, 0.82) 100%); }
+}
+@media print, (forced-colors: active) { .home-hero__faces, .home-hero__grain { display: none; } }
 
-/* The giant JPSA at the foot of the hero (decoration; aria-hidden in the markup). Everything it
-   needs from the hero is scoped with :has(), so without the word the hero is exactly as before.
-   Layers, back to front: the yellow block, the word, then the photos, leaves and badge, which
-   step down into its letters. The text column stays above the word, never over it. */
+/* The giant JPSA at the foot of the hero, in JPSA red, cut by the hero's edge. Everything it needs
+   from the hero is scoped with :has(), so without the word the hero is exactly as before. */
 .home-hero:has(> .home-hero__word) {
-  --word: var(--word-size, 24vw);         /* font size */
+  --word: var(--word-size, 23vw);         /* font size */
   --word-show: calc(var(--word) * 0.607); /* how much of the letters shows (Anton caps are 0.867em; 30% is cut off) */
   --word-gap: clamp(16px, 2vw, 32px);
   padding-bottom: calc(var(--word-gap) + var(--word-show));
@@ -73,35 +98,14 @@
   font-family: var(--font-display);
   font-size: var(--word);
   line-height: 1;
-  color: var(--black);
-  opacity: var(--word-opacity, 1);
+  color: var(--red);
+  opacity: var(--word-opacity, 0.65);
   pointer-events: none;
   user-select: none;
 }
-.home-hero:has(> .home-hero__word) .home-hero__grid > :first-child { position: relative; z-index: 8; }
-.home-hero:has(> .home-hero__word) .collage__block { z-index: 1; }
-.home-hero:has(> .home-hero__word) .collage__photo--1 { z-index: 3; }
-.home-hero:has(> .home-hero__word) .collage__photo--2 { z-index: 4; }
-.home-hero:has(> .home-hero__word) .collage__photo--3 { z-index: 5; }
-.home-hero:has(> .home-hero__word) .collage__leaves { z-index: 6; }
-.home-hero:has(> .home-hero__word) .badge-spin { z-index: 7; }
-@media (min-width: 901px) {
-  /* The collage keeps its top and reaches down into the letters: it grows by --reach at the
-     bottom (padding), and the same negative margin keeps the grid, and so the text, where it was.
-     Photo 1 sits lower and photo 3 further right, so two photos stand in front of letters. */
-  .home-hero:has(> .home-hero__word) .collage {
-    --reach: calc(var(--word-gap) + var(--word-show) * 0.62);
-    align-self: end;
-    box-sizing: content-box;
-    padding-bottom: var(--reach);
-    margin-bottom: calc(-1 * var(--reach));
-  }
-  .home-hero:has(> .home-hero__word) .collage__photo--1 { top: 50%; }
-  .home-hero:has(> .home-hero__word) .collage__photo--3 { left: 46%; }
-}
 @media (max-width: 900px) {
-  /* Phones and tablets: smaller, and simply under the collage. */
-  .home-hero:has(> .home-hero__word) { --word: min(var(--word-size, 24vw), 28vw); }
+  /* Phones and tablets: a little smaller. */
+  .home-hero:has(> .home-hero__word) { --word: min(var(--word-size, 23vw), 28vw); }
 }
 
 /* Manifesto */
@@ -637,8 +641,7 @@
   --gap: 20px;
   --live: 0;              /* 1 once the cards follow the scroll */
   --depth: var(--live);   /* the part of it that moves: size, place and turn */
-  --ground: var(--paper-2);
-  --warm: 0;              /* how much the paler cards turn to sepia */
+  --ground: var(--black);   /* the colour the far cards fade into */
 }
 @media (min-width: 901px) { .exco-reel { --card: clamp(250px, 21vw, 310px); } }
 @supports (animation-timeline: scroll()) {
@@ -648,15 +651,7 @@
 .exco-reel.is-scripted { --live: 1; }
 @keyframes exco-p { from { --exco-p: 0; } to { --exco-p: 1; } }
 
-/* Two grounds to choose from: warm paper with its grain and ruled lines, or black. */
-.exco-reel.section--paper {
-  --ground: color-mix(in srgb, var(--yellow) 12%, var(--paper-2));
-  --warm: 0.3;
-  background:
-    repeating-linear-gradient(180deg, transparent 0 39px, rgba(0, 0, 0, 0.05) 39px 40px),
-    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='p' x='0' y='0' width='1' height='1' color-interpolation-filters='sRGB'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 4 0 0 0 -2.3'/%3E%3C/filter%3E%3Crect width='180' height='180' filter='url(%23p)' opacity='.2'/%3E%3C/svg%3E") 0 0 / 180px 180px,
-    var(--ground);
-}
+/* The ground: black, with faint ruled lines and a grain. */
 .exco-reel.section--black {
   --ground: var(--black);
   background:
@@ -716,7 +711,7 @@
   width: 100%;
   height: 100%;
   object-fit: cover;
-  filter: grayscale(calc(var(--live) * min(1, var(--a)))) sepia(calc(var(--live) * min(1, var(--a)) * var(--warm)));
+  filter: grayscale(calc(var(--live) * min(1, var(--a))));
 }
 .exco-card__initials { display: grid; place-items: center; height: 100%; font-family: var(--font-display); font-size: 30cqi; color: rgba(255, 255, 255, 0.3); }
 .exco-card__foot {

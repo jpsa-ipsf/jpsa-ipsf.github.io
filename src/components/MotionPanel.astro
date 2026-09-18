@@ -16,16 +16,6 @@ const sliders = [
   { name: "--fx-drift", key: "cycle", label: "مدة الدورة (ثانية)", min: 8, max: 60, step: 1, unit: "s" },
   { name: "--fx-depth", key: "parallax", label: "البارالاكس", min: 0, max: 3, step: 0.05 },
 ];
-const heroes = [
-  { value: "now", label: "الحالي" },
-  { value: "a", label: "A · وجوه" },
-  { value: "b", label: "B · صورة" },
-  { value: "c", label: "C · أرقام" },
-];
-const excoGrounds = [
-  { value: "paper", label: "ورقي" },
-  { value: "black", label: "أسود" },
-];
 const wordStyles = [
   { value: "black", label: "أسود معتم" },
   { value: "red", label: "أحمر JPSA" },
@@ -53,14 +43,6 @@ const kinds = [
   <button type="button" class="fx-panel__toggle" data-toggle>⚙ الحركة</button>
   <div class="fx-panel__body">
     <p class="fx-panel__note" data-reduced hidden>جهازك مفعّل عليه "تقليل الحركة"، فالحركة واقفة. طفّيه من إعدادات النظام لتشوفها.</p>
-    <p class="fx-panel__title">هيرو الرئيسية</p>
-    <div class="fx-panel__modes fx-panel__modes--4" role="group" aria-label="نسخة الهيرو">
-      {heroes.map((h) => <button type="button" data-hero={h.value}>{h.label}</button>)}
-    </div>
-    <p class="fx-panel__title">الإكسكو (صفحة الفريق)</p>
-    <div class="fx-panel__modes" role="group" aria-label="خلفية الإكسكو">
-      {excoGrounds.map((g) => <button type="button" data-exco={g.value}>{g.label}</button>)}
-    </div>
     <p class="fx-panel__title">الكلمة العملاقة (الرئيسية)</p>
     <div class="fx-panel__modes fx-panel__modes--3" role="group" aria-label="شكل الكلمة">
       {wordStyles.map((w) => <button type="button" data-word={w.value}>{w.label}</button>)}
@@ -113,12 +95,12 @@ const kinds = [
   #fx-panel .fx-panel__actions button { flex: 1; padding: 7px; border: 1px solid rgba(255,255,255,.3); border-radius: 8px; background: transparent; color: #fff; font: 12px system-ui, sans-serif; cursor: pointer; }
   #fx-panel .fx-panel__note { margin: 0 0 10px; padding: 8px; border-radius: 8px; background: #7a0e0e; }
 
-  /* ---- The giant word's looks (black is the default in pages.css) ---- */
-  html[data-fx-word="red"] .home-hero__word { color: var(--red); }
-  html[data-fx-word="outline"] .home-hero__word { color: transparent; -webkit-text-stroke: max(2px, 0.007em) var(--black); }
+  /* ---- The giant word's looks (red is the default in pages.css) ---- */
+  html[data-fx-word="black"] .home-hero__word { color: var(--black); }
+  html[data-fx-word="outline"] .home-hero__word { color: transparent; -webkit-text-stroke: max(2px, 0.007em) rgba(255, 255, 255, 0.75); }
 
   /* ---- On/off per kind of section ---- */
-  html.fx-off-home .home-hero::before, html.fx-off-home .home-hero::after, html.fx-off-home .home-hero > .fx-dust,
+  html.fx-off-home .home-hero::before, html.fx-off-home .home-hero > .fx-dust,
   html.fx-off-light .section:not(.section--black, .section--red, .section--yellow)::before,
   html.fx-off-light .section:not(.section--black, .section--red, .section--yellow)::after,
   html.fx-off-light .section:not(.section--black, .section--red, .section--yellow) > .fx-dust,
@@ -131,7 +113,7 @@ const kinds = [
   /* ---- B: soft shapes travelling across the background ----
      Two layers turn in opposite directions at different speeds, so the shapes cross paths. */
   html[data-fx-mode="b"] :is(.page-hero, .home-hero, .section, .cta-band, .site-footer)::before,
-  html[data-fx-mode="b"] :is(.page-hero, .home-hero, .section, .cta-band, .site-footer)::after {
+  html[data-fx-mode="b"] :is(.page-hero, .section, .cta-band, .site-footer)::after { /* the home hero's ::after is its text gradient */
     content: ""; position: absolute; inset: -45%; z-index: -1; pointer-events: none;
     opacity: calc(var(--fx-glow) * var(--fx-phone-glow));
   }
@@ -141,7 +123,7 @@ const kinds = [
       radial-gradient(closest-side, var(--fx-b), transparent) 68% 64% / 24% 28% no-repeat;
     animation: fx-orbit calc(var(--fx-drift) * var(--fx-phone-slow)) linear infinite;
   }
-  html[data-fx-mode="b"] :is(.page-hero, .home-hero, .section, .cta-band, .site-footer)::after {
+  html[data-fx-mode="b"] :is(.page-hero, .section, .cta-band, .site-footer)::after {
     background: radial-gradient(closest-side, var(--fx-a), transparent) 62% 34% / 22% 26% no-repeat;
     animation: fx-orbit-back calc(var(--fx-drift) * var(--fx-phone-slow) * 1.35) linear infinite;
   }
@@ -173,8 +155,8 @@ const kinds = [
   }
 
   /* ---- D: specks of dust rising slowly and fading (made by the script below) ---- */
-  .section, .home-hero { --fx-dust: var(--red); }
-  .page-hero, .section--black, .site-footer, .section--red, .cta-band { --fx-dust: var(--yellow); }
+  .section { --fx-dust: var(--red); }
+  .page-hero, .home-hero, .section--black, .site-footer, .section--red, .cta-band { --fx-dust: var(--yellow); }
   .section--yellow { --fx-dust: var(--red-deep); }
   html[data-fx-mode="d"] :is(.page-hero, .home-hero, .section, .cta-band, .site-footer)::before { display: none; }
   .fx-dust { position: absolute; inset: 0; z-index: -1; overflow: hidden; pointer-events: none; opacity: min(1, calc(var(--fx-glow) * 1.6 * var(--fx-phone-glow))); }
@@ -208,20 +190,16 @@ const kinds = [
     const kinds = [...panel.querySelectorAll('input[type="checkbox"]')];
     const modeButtons = [...panel.querySelectorAll("[data-mode]")];
     const wordButtons = [...panel.querySelectorAll("[data-word]")];
-    const heroButtons = [...panel.querySelectorAll("[data-hero]")];
-    const excoButtons = [...panel.querySelectorAll("[data-exco]")];
     const css = getComputedStyle(root);
     const defaults = Object.fromEntries(sliders.map((s) => [s.name, parseFloat(css.getPropertyValue(s.name))]));
     defaults.dust = 60;
-    defaults["--word-size"] = 24;
-    defaults["--word-opacity"] = 1;
+    defaults["--word-size"] = 23;
+    defaults["--word-opacity"] = 0.65;
     const CYCLES = { a: 20, b: 22, c: 16, d: 12 }; // each kind's starting speed
     let saved = {};
     try { saved = JSON.parse(localStorage.getItem(KEY)) || {}; } catch (e) {}
     let mode = saved.mode || "a";
-    let word = saved.word || "black";
-    let hero = saved.hero || "now";
-    let exco = saved.exco || "paper";
+    let word = saved.word || "red";
     const cycles = Object.assign({}, CYCLES, saved.cycles);
 
     // D: specks of dust, as small elements the CSS animates (transform and opacity only).
@@ -244,20 +222,13 @@ const kinds = [
     };
 
     const save = () => {
-      const state = { mode, word, hero, exco, cycles, values: {}, off: kinds.filter((k) => !k.checked).map((k) => k.value), closed: panel.classList.contains("is-closed") };
+      const state = { mode, word, cycles, values: {}, off: kinds.filter((k) => !k.checked).map((k) => k.value), closed: panel.classList.contains("is-closed") };
       sliders.forEach((s) => { state.values[s.name] = Number(s.value); });
       try { localStorage.setItem(KEY, JSON.stringify(state)); } catch (e) {}
     };
     const apply = () => {
       root.dataset.fxMode = mode;
       root.dataset.fxWord = word;
-      if (hero === "now") delete root.dataset.hero; else root.dataset.hero = hero;
-      heroButtons.forEach((b) => b.setAttribute("aria-pressed", String(b.dataset.hero === hero)));
-      excoButtons.forEach((b) => b.setAttribute("aria-pressed", String(b.dataset.exco === exco)));
-      document.querySelectorAll(".exco-reel").forEach((s) => {
-        s.classList.toggle("section--paper", exco === "paper");
-        s.classList.toggle("section--black", exco === "black");
-      });
       wordButtons.forEach((b) => b.setAttribute("aria-pressed", String(b.dataset.word === word)));
       modeButtons.forEach((b) => b.setAttribute("aria-pressed", String(b.dataset.mode === mode)));
       density.closest("label").hidden = mode !== "d";
@@ -282,8 +253,6 @@ const kinds = [
       k.addEventListener("change", apply);
     });
     wordButtons.forEach((b) => b.addEventListener("click", () => { word = b.dataset.word; apply(); }));
-    heroButtons.forEach((b) => b.addEventListener("click", () => { hero = b.dataset.hero; apply(); }));
-    excoButtons.forEach((b) => b.addEventListener("click", () => { exco = b.dataset.exco; apply(); }));
     modeButtons.forEach((b) => b.addEventListener("click", () => {
       cycles[mode] = Number(cycle.value);
       mode = b.dataset.mode;
@@ -298,13 +267,13 @@ const kinds = [
       Object.assign(cycles, CYCLES);
       cycle.value = cycles[mode];
       kinds.forEach((k) => { k.checked = true; });
-      word = "black";
+      word = "red";
       apply();
       dust();
     });
     panel.querySelector("[data-copy]").addEventListener("click", async (e) => {
       const off = kinds.filter((k) => !k.checked).map((k) => k.value);
-      const text = "hero " + hero + " · exco " + exco + " · word " + word + " · mode " + mode.toUpperCase() + " · " + sliders.filter((s) => mode === "d" || s !== density).map((s) => `${s.dataset.key} ${s.value}${s.dataset.unit}`).join(" · ") + " · off: " + (off.join(", ") || "none");
+      const text = "word " + word + " · mode " + mode.toUpperCase() + " · " + sliders.filter((s) => mode === "d" || s !== density).map((s) => `${s.dataset.key} ${s.value}${s.dataset.unit}`).join(" · ") + " · off: " + (off.join(", ") || "none");
       try { await navigator.clipboard.writeText(text); e.target.textContent = "انتسخت ✓"; }
       catch (err) { window.prompt("الأرقام:", text); }
       setTimeout(() => { e.target.textContent = "نسخ الأرقام"; }, 1500);
