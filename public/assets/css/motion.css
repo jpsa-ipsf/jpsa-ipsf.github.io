@@ -1,0 +1,113 @@
+/* ==========================================================================
+   JPSA — motion layers. Decoration only: every word stays real HTML above
+   them, and without this file (and the grain element and motion.js) the site
+   looks and works exactly as before.
+
+   1.  Grain: a still film grain over the whole site. No JavaScript.
+   2.  Light: slow red light behind the black sections and the inner pages'
+       hero. CSS animation, no JavaScript.
+   2b. Depth: that light and the hero's giant letter move slower than the page
+       while scrolling (CSS scroll-driven animations). src/scripts/motion.js does
+       the same where those are missing, and pauses the light while off screen.
+
+   Colours: --red and --red-deep only. The grain is grey noise blended with
+   hard-light, so it only lightens or darkens the colour that is already there.
+   ========================================================================== */
+
+/* ---------- 1. Grain ---------- */
+/* hard-light: noise above mid-grey lightens, below it darkens, and mid-grey
+   leaves the colour as it is. So the grain shows on white and on black alike
+   and adds no grey veil (overlay and soft-light vanish on pure white and black). */
+.fx-grain {
+  position: fixed;
+  inset: 0;
+  z-index: 2000; /* above everything, the header included; clicks pass through */
+  pointer-events: none;
+  opacity: 0.06;
+  mix-blend-mode: hard-light;
+  background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='g' x='0' y='0' width='1' height='1' color-interpolation-filters='sRGB'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.8' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix values='1 0 0 0 0 1 0 0 0 0 1 0 0 0 0 0 0 0 0 1'/%3E%3CfeComponentTransfer%3E%3CfeFuncR type='linear' slope='2' intercept='-.5'/%3E%3CfeFuncG type='linear' slope='2' intercept='-.5'/%3E%3CfeFuncB type='linear' slope='2' intercept='-.5'/%3E%3C/feComponentTransfer%3E%3C/filter%3E%3Crect width='200' height='200' filter='url(%23g)'/%3E%3C/svg%3E") 0 0 / 200px 200px;
+}
+
+/* ---------- 2. Light behind the dark ---------- */
+.page-hero,
+.section--black {
+  isolation: isolate; /* keeps the light (z-index: -1) above the section's own black */
+  --fx-drift: 50s;    /* one full loop */
+  --fx-glow: 0.5;
+}
+.section--black { overflow: hidden; overflow: clip; } /* the hero already clips */
+.page-hero::before,
+.section--black::before {
+  content: "";
+  position: absolute;
+  inset: -30% -20%; /* room to drift without showing an edge */
+  z-index: -1;
+  pointer-events: none;
+  background:
+    radial-gradient(34% 40% at 24% 32%, var(--red), transparent 70%),
+    radial-gradient(30% 36% at 76% 70%, var(--red-deep), transparent 70%);
+  opacity: var(--fx-glow);
+  animation: fx-drift var(--fx-drift) ease-in-out infinite;
+}
+
+@keyframes fx-drift {
+  0%, 100% { transform: translate3d(-4%, -3%, 0) rotate(-3deg) scale(1); }
+  33% { transform: translate3d(4%, -1%, 0) rotate(2deg) scale(1.08); }
+  66% { transform: translate3d(0, 4%, 0) rotate(-1deg) scale(1.03); }
+}
+
+/* ---------- 2b. Depth while scrolling ---------- */
+/* translate (not transform), so it adds to the drift instead of replacing it. */
+@supports (animation-timeline: view()) {
+  /* inset 0: measured from the edges of the screen, like motion.js (the default would follow
+     the page's scroll-padding-top, which is there for the sticky header's anchor jumps). */
+  .page-hero,
+  .section--black { view-timeline: --fx block; view-timeline-inset: 0; }
+  .section--black::before {
+    animation: fx-drift var(--fx-drift) ease-in-out infinite, fx-depth linear both;
+    animation-timeline: auto, --fx;
+  }
+  .page-hero::before {
+    animation: fx-drift var(--fx-drift) ease-in-out infinite, fx-depth-top linear both;
+    animation-timeline: auto, --fx;
+    animation-range: normal, exit-crossing;
+  }
+  .page-hero__ghost {
+    animation: fx-ghost linear both;
+    animation-timeline: --fx;
+    animation-range: exit-crossing;
+  }
+}
+/* Paused while off screen (motion.js adds .fx-idle); the scroll-driven movement keeps its place.
+   Two classes, so it wins over the animation shorthands above, which reset the play state. */
+.page-hero.fx-idle::before,
+.section--black.fx-idle::before { animation-play-state: paused, running; }
+
+@keyframes fx-depth { from { translate: 0 -10%; } to { translate: 0 10%; } }
+/* An explicit "from": an implied one would get the default ease instead of linear. */
+@keyframes fx-depth-top { from { translate: 0 0; } to { translate: 0 16%; } }
+@keyframes fx-ghost { from { translate: 0 0; } to { translate: 0 40%; } }
+
+/* The same movement from motion.js where scroll-driven animations are missing:
+   --fx-p runs from -1 to 1 across a black section (cover), and from 0 to 1 as the hero's top
+   edge crosses the top of the screen and its bottom edge follows (exit-crossing). */
+.fx-js .section--black::before { translate: 0 calc(var(--fx-p, 0) * 10%); }
+.fx-js .page-hero::before { translate: 0 calc(var(--fx-p, 0) * 16%); }
+.fx-js .page-hero__ghost { translate: 0 calc(var(--fx-p, 0) * 40%); }
+
+/* ---------- Phones, reduced motion, print ---------- */
+@media (max-width: 720px) {
+  .page-hero,
+  .section--black { --fx-drift: 80s; --fx-glow: 0.32; } /* slower and lighter */
+}
+/* Everything stands still; the grain and the light stay, where they start. */
+@media (prefers-reduced-motion: reduce) {
+  .page-hero::before,
+  .section--black::before,
+  .page-hero__ghost { animation: none; translate: none; }
+}
+@media print, (forced-colors: active) {
+  .fx-grain,
+  .page-hero::before,
+  .section--black::before { display: none; }
+}
