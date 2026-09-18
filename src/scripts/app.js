@@ -28,6 +28,15 @@ function initHeader() {
     document.body.style.overflow = open ? "hidden" : "";
   };
   toggle.addEventListener("click", () => setOpen(!nav.classList.contains("is-open")));
+
+  // The first visit on a phone: one pulse around the button (components.css), then never again.
+  // Remembered once it has played, so a visit cut short still gets it next time.
+  try {
+    if (window.matchMedia("(max-width: 940px)").matches && !localStorage.getItem("jpsa-menu-hint")) {
+      toggle.classList.add("is-hint");
+      toggle.addEventListener("animationend", () => { try { localStorage.setItem("jpsa-menu-hint", "1"); } catch (e) {} }, { once: true });
+    }
+  } catch (e) {}
   nav.addEventListener("click", (e) => { if (e.target.closest("a")) setOpen(false); });
   document.addEventListener("keydown", (e) => {
     if (e.key === "Escape" && nav.classList.contains("is-open")) { setOpen(false); toggle.focus(); }

@@ -55,16 +55,31 @@
   background: var(--yellow);
 }
 
+/* Phones and tablets only (the full menu shows above 940px): a pill with the icon and the word. */
 .menu-toggle {
   display: none;
   align-items: center;
   justify-content: center;
-  width: 48px; height: 48px;
+  gap: 8px;
+  min-width: 48px;
+  height: 48px;
+  padding: 0 16px 0 13px;
   border: 2px solid var(--black);
-  border-radius: 50%;
+  border-radius: var(--radius-pill);
   background: #fff;
 }
 .menu-toggle .icon { width: 22px; height: 22px; }
+.menu-toggle__label { font-size: 1rem; font-weight: 700; line-height: 1; }
+/* The first visit on a phone: one soft pulse, so the button reads as something to press. app.js
+   adds .is-hint and remembers in the browser once it has played; reduced motion leaves it out. */
+.menu-toggle.is-hint { animation: menu-hint 1.4s var(--ease) 0.9s backwards; } /* nothing stays once it ends */
+@keyframes menu-hint {
+  0% { box-shadow: 0 0 0 0 color-mix(in srgb, var(--red) 60%, transparent); transform: scale(1); }
+  25% { transform: scale(1.06); }
+  60% { transform: scale(1); }
+  100% { box-shadow: 0 0 0 16px color-mix(in srgb, var(--red) 0%, transparent); transform: scale(1); }
+}
+@media (prefers-reduced-motion: reduce) { .menu-toggle.is-hint { animation: none; } }
 
 @media (max-width: 940px) {
   .menu-toggle { display: inline-flex; }
