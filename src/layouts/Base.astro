@@ -1,6 +1,7 @@
 ---
 import Header from "../components/Header.astro";
 import Footer from "../components/Footer.astro";
+import MotionPanel from "../components/MotionPanel.astro";
 
 const { page, title, description } = Astro.props;
 ---
@@ -50,6 +51,8 @@ const { page, title, description } = Astro.props;
   <footer class="site-footer" id="site-footer"><Footer /></footer>
   {/* Film grain over the whole site (motion.css). Decoration only, like the light behind the dark sections. */}
   <div class="fx-grain" aria-hidden="true"></div>
+  {/* Development only: live sliders for the motion layers (never in the built site). */}
+  {import.meta.env.DEV && <MotionPanel />}
   <script>
     import "../scripts/app.js";
     import "../scripts/motion.js";
