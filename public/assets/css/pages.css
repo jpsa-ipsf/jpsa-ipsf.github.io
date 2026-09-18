@@ -416,8 +416,10 @@
 .event-gallery { display: grid; gap: clamp(28px, 4vw, 44px); margin-top: clamp(40px, 5vw, 64px); }
 .event-gallery__title { font-size: clamp(1.3rem, 2.2vw, 1.6rem); }
 .event-gallery__when { margin-top: 4px; font-size: 0.92rem; font-weight: 600; opacity: 0.75; }
-.event-gallery__photos { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px; margin-top: 16px; }
-.event-gallery__photos img { width: 100%; height: auto; aspect-ratio: 4 / 3; object-fit: cover; object-position: 50% 30%; border-radius: var(--radius-sm); }
+/* Each photo shows whole, at its own shape: today's event photos carry a frame along their bottom
+   edge, and cropping them to one shape would cut it. Rows line up on that bottom edge. */
+.event-gallery__photos { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); align-items: end; gap: 12px; margin-top: 16px; }
+.event-gallery__photos img { width: 100%; height: auto; border-radius: var(--radius-sm); }
 @media (max-width: 720px) { .event-gallery__photos { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
 
 .item-card { display: flex; flex-direction: column; gap: 8px; padding: 26px; border-top: 4px solid var(--accent, var(--red)); border-radius: var(--radius-sm); background: #fff; box-shadow: var(--shadow-sm); }

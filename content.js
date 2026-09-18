@@ -615,7 +615,16 @@ export default {
       list: [
         { tag: "July 2018", icon: "earth", title: "IPSF Eastern Mediterranean Pharmaceutical Symposium", text: "JPSA hosted IPSF's regional symposium (EMPS), welcoming pharmacy students from across the Eastern Mediterranean region.", where: "Amman, Jordan" },
         // TODO confirm, then uncomment: { tag: "2010", icon: "earth", title: "1st IPSF Eastern Mediterranean Pharmaceutical Symposium", text: "…", where: "Jordan" },
-        { tag: "Every year", icon: "presentation", title: "National Symposium", text: "Our flagship annual conference, now in its seventh edition, built with the Jordan Pharmacists Association.", where: "Jordan" },
+        { tag: "Every year", icon: "presentation", title: "National Symposium", text: "Our flagship annual conference, now in its seventh edition, built with the Jordan Pharmacists Association.", where: "Jordan",
+          gallery: [
+            { event: "7th National Symposium", photos: [
+                { src: "assets/img/conferences/7th-national-symposium/01.jpg", alt: "A group on stage holding certificates and an oversized cheque, in front of the symposium backdrop" },
+                { src: "assets/img/conferences/7th-national-symposium/02.jpg", alt: "A large group photo in front of the symposium backdrop" },
+                { src: "assets/img/conferences/7th-national-symposium/03.jpg", alt: "A row of people standing in front of the symposium backdrop" },
+                { src: "assets/img/conferences/7th-national-symposium/04.jpg", alt: "Two people working together on a laptop in the conference hall" },
+                { src: "assets/img/conferences/7th-national-symposium/05.jpg", alt: "Three people posing in front of the symposium backdrop" },
+              ] },
+          ] },
         { tag: "Public Health", icon: "stethoscope", title: "Medical Convention", text: "Organized by our Public Health Team so students can expand their medical knowledge and look beyond the classroom.", where: "" },
         { tag: "Professional Development", icon: "microscope", title: "Scientific Research Program", text: "An annual program that introduces students to the fundamentals of research and their first steps into scientific inquiry.", where: "" },
       ],
@@ -628,8 +637,26 @@ export default {
       title: "Conferences we took part in",
       list: [
         { name: "Pharmarise", year: "2025", with: ["HopeGivers"] },
-        { name: "Step Up", year: "2026", with: ["HopeGivers", "JADS", "Medical Club"] },
-        { name: "Mandala", year: "2026", with: [] }, // TODO: partners not confirmed yet
+        { name: "Step Up", year: "2026", with: ["HopeGivers", "JADS", "Medical Club"],
+          gallery: [
+            { event: "Step Up Forum 2026", photos: [
+                { src: "assets/img/conferences/step-up-forum-2026/01.jpg", alt: "A group posing in front of the Step Up Forum 2026 sponsor wall" },
+                { src: "assets/img/conferences/step-up-forum-2026/02.jpg", alt: "A panel seated on stage under a screen reading Rethinking Health in Oncology" },
+                { src: "assets/img/conferences/step-up-forum-2026/03.jpg", alt: "Six people posing on stage in front of the panel screen" },
+              ] },
+          ] },
+        { name: "Mandala", year: "2026", with: [], // TODO: partners not confirmed yet
+          gallery: [
+            { event: "Mandala 2026", photos: [
+                { src: "assets/img/conferences/mandala-2026/01.jpg", alt: "An award presented in front of a projection screen" },
+                { src: "assets/img/conferences/mandala-2026/02.jpg", alt: "Attendees seated around a round table during a session" },
+                { src: "assets/img/conferences/mandala-2026/03.jpg", alt: "A group posing with a certificate beside the Jordanian flag" },
+                { src: "assets/img/conferences/mandala-2026/04.jpg", alt: "A crowded hall of attendees at round tables" },
+                { src: "assets/img/conferences/mandala-2026/05.jpg", alt: "A panel of six seated beneath the projection screen" },
+                { src: "assets/img/conferences/mandala-2026/06.jpg", alt: "A panel at a table, one member speaking into a microphone" },
+                { src: "assets/img/conferences/mandala-2026/07.jpg", alt: "Attendees listening from their seats in a warmly lit hall" },
+              ] },
+          ] },
       ],
       // Full names of abbreviations used above: shown on hover and read by screen readers.
       abbr: { JADS: "Jordanian Association of Dental Students" },
@@ -689,7 +716,19 @@ export default {
           { icon: "stethoscope", title: "Medical Convention", text: "Our convention that lets students expand their medical knowledge and meet the field." },
           { icon: "hospital", title: "Hospital collaborations", text: "Awareness activities and scientific sessions with hospitals such as Jordan Hospital, KHCC and Specialty Hospital, plus campaigns with the Jordan Breast Cancer Program (JBCP).", href: "partners.html#hospitals" },
         ],
-        gallery: [],
+        gallery: [
+          { event: "Medical Convention", photos: [
+              { src: "assets/img/portfolios/public-health/medical-convention-01.jpg", alt: "A plaque presented on stage, in front of a screen showing the Jordanian flag" },
+              { src: "assets/img/portfolios/public-health/medical-convention-02.jpg", alt: "A group photo on stage, in front of a screen showing the Medical Convention logo" },
+              { src: "assets/img/portfolios/public-health/medical-convention-03.jpg", alt: "Visitors looking at a leaflet at an outdoor exhibition stand" },
+              { src: "assets/img/portfolios/public-health/medical-convention-04.jpg", alt: "The audience standing in the front rows of a lecture hall" },
+              { src: "assets/img/portfolios/public-health/medical-convention-05.jpg", alt: "Visitors talking at a supplements stand outdoors" },
+              { src: "assets/img/portfolios/public-health/medical-convention-06.jpg", alt: "A panel of five seated on stage, under the Medical Convention screen" },
+              { src: "assets/img/portfolios/public-health/medical-convention-07.jpg", alt: "A full lecture hall during the convention" },
+              { src: "assets/img/portfolios/public-health/medical-convention-08.jpg", alt: "Five people on stage, one holding an award, in front of a presentation screen" },
+              { src: "assets/img/portfolios/public-health/medical-convention-09.jpg", alt: "A plaque presented on stage, in front of the Medical Convention screen" },
+            ] },
+        ],
       },
       {
         id: "professional-development", name: "Professional Development", theme: "gray",
@@ -733,7 +772,22 @@ export default {
           tagline: "Where ideas find their voice.",
           text: "Conversations beyond the classroom that bring together students, professionals, leaders, and changemakers to explore the experiences, challenges, and opportunities shaping the future of pharmacy.",
         },
-        gallery: [],
+        gallery: [
+          { event: "Scientific Research Program 2025/2026", photos: [
+              { src: "assets/img/portfolios/professional-development/scientific-research-program-2025-2026-01.jpg", alt: "A group holding a certificate, in front of a panel discussion slide" },
+              { src: "assets/img/portfolios/professional-development/scientific-research-program-2025-2026-02.jpg", alt: "A certificate folder handed over on stage" },
+              { src: "assets/img/portfolios/professional-development/scientific-research-program-2025-2026-03.jpg", alt: "Six people on stage, two of them holding a certificate" },
+              { src: "assets/img/portfolios/professional-development/scientific-research-program-2025-2026-04.jpg", alt: "Two people at a lectern, one speaking while reading from a tablet" },
+              { src: "assets/img/portfolios/professional-development/scientific-research-program-2025-2026-05.jpg", alt: "The audience smiling in the front rows of a lecture hall" },
+              { src: "assets/img/portfolios/professional-development/scientific-research-program-2025-2026-06.jpg", alt: "A large group on stage in front of the JPSA logo, holding awards and an oversized cheque" },
+              { src: "assets/img/portfolios/professional-development/scientific-research-program-2025-2026-07.jpg", alt: "An award handed over on stage, beside a JPSA banner" },
+            ] },
+          { event: "Scientific Research Program 2024/2025", photos: [
+              { src: "assets/img/portfolios/professional-development/scientific-research-program-2024-2025-01.jpg", alt: "A large group photo on a lecture hall stage" },
+              { src: "assets/img/portfolios/professional-development/scientific-research-program-2024-2025-02.jpg", alt: "A speaker at a lectern, beside a JPSA banner" },
+              { src: "assets/img/portfolios/professional-development/scientific-research-program-2024-2025-03.jpg", alt: "A plaque presented on stage" },
+            ] },
+        ],
       },
       {
         id: "humanitarian", name: "Humanitarian Campaigns", theme: "white",
