@@ -1,0 +1,15 @@
+---
+// Photos from big events, one group per event: its name, its date when known, then the photos.
+// Checked by checkGallery() (src/lib/gallery.js) before the page renders. Nothing shows while empty.
+import { Image } from "astro:assets";
+import { img } from "../lib/images.js";
+
+const { gallery = [] } = Astro.props;
+---
+{gallery.length > 0 && <div class="event-gallery">
+  {gallery.map((ev) => <div class="event-gallery__event reveal">
+    <h3 class="event-gallery__title">{ev.event}</h3>
+    {ev.when && <p class="event-gallery__when">{ev.when}</p>}
+    <div class="event-gallery__photos">{ev.photos.map((ph) => <Image src={img(ph.src)} alt={ph.alt} widths={[400, 800]} sizes="(max-width: 720px) 45vw, (max-width: 1200px) 30vw, 380px" />)}</div>
+  </div>)}
+</div>}

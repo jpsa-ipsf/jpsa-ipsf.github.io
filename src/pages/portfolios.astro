@@ -1,12 +1,12 @@
 ---
-import { Image } from "astro:assets";
 import Base from "../layouts/Base.astro";
 import C from "../../content.js";
 import PageHero from "../components/PageHero.astro";
 import Icon from "../components/Icon.astro";
 import Btn from "../components/Btn.astro";
 import TextLink from "../components/TextLink.astro";
-import { img } from "../lib/images.js";
+import EventGallery from "../components/EventGallery.astro";
+import { checkGallery } from "../lib/gallery.js";
 import { rich, delay, pad } from "../lib/text.js";
 
 const p = C.portfolios;
@@ -34,17 +34,7 @@ const portfolios = p.list.filter((x) => x.portfolio !== false);
 const numberOf = (x) => (x.portfolio === false ? "" : pad(portfolios.indexOf(x) + 1));
 
 // Event photos: a mistake stops the build with a message saying what to fix.
-for (const x of p.list) {
-  (x.gallery || []).forEach((ev, i) => {
-    const where = `content.js, portfolio "${x.name}", gallery entry ${i + 1}`;
-    if (!ev.event) throw new Error(`${where}: the event has no name (event: "...").`);
-    if (!ev.photos || !ev.photos.length) throw new Error(`${where} ("${ev.event}"): add at least one photo, or remove the entry.`);
-    ev.photos.forEach((ph, j) => {
-      if (!ph.alt || !ph.alt.trim()) throw new Error(`${where} ("${ev.event}"), photo ${j + 1} (${ph.src}): add a description (alt: "...").`);
-      img(ph.src); // stops the build if the file is missing
-    });
-  });
-}
+for (const x of p.list) checkGallery(x.gallery, `content.js, portfolio "${x.name}"`);
 ---
 <Base page="portfolios" {...p.meta}>
   <PageHero {...p.hero} />
@@ -77,13 +67,7 @@ for (const x of p.list) {
               </article>)}
         </div>
         {x.highlight && <div class="highlight reveal"><span class="highlight__num">{x.highlight.num}</span><p set:html={rich(x.highlight.text)}></p></div>}
-        {x.gallery && x.gallery.length > 0 && <div class="event-gallery">
-          {x.gallery.map((ev) => <div class="event-gallery__event reveal">
-            <h3 class="event-gallery__title">{ev.event}</h3>
-            {ev.when && <p class="event-gallery__when">{ev.when}</p>}
-            <div class="event-gallery__photos">{ev.photos.map((ph) => <Image src={img(ph.src)} alt={ph.alt} widths={[400, 800]} sizes="(max-width: 720px) 45vw, (max-width: 1200px) 30vw, 380px" />)}</div>
-          </div>)}
-        </div>}
+        <EventGallery gallery={x.gallery} />
         {x.talks && <div class="talks reveal">
           <div>
             <h3 class="talks__name">{x.talks.name}</h3>

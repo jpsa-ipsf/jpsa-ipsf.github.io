@@ -606,6 +606,9 @@ export default {
         { src: "assets/img/moments/national-symposium-7-b.jpg", alt: "A JPSA member with arms crossed in front of the 7th National Symposium banner" },
       ],
     },
+    /* Each conference below (events and joined) can carry event photos, shown under its section:
+         gallery: [{ event: "Name", when: "Month Year", photos: [{ src: "assets/img/conferences/<event>/01.jpg", alt: "What the photo shows" }] }]
+       The same guard as the portfolios: a name, at least one photo, a description for each. */
     events: {
       kicker: "Hosted by JPSA",
       title: "Conferences we've organized",

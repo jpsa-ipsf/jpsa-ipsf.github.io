@@ -7,6 +7,8 @@ import SectionHead from "../components/SectionHead.astro";
 import Icon from "../components/Icon.astro";
 import Btn from "../components/Btn.astro";
 import CtaBand from "../components/CtaBand.astro";
+import EventGallery from "../components/EventGallery.astro";
+import { checkGallery } from "../lib/gallery.js";
 import { img } from "../lib/images.js";
 import { rich, delay, mailto } from "../lib/text.js";
 
@@ -29,6 +31,10 @@ const abbrs = (c.joined && c.joined.abbr) || {};
 joined.forEach((e, i) => {
   if (!e.name || !e.year) throw new Error(`content.js, conferences.joined.list entry ${i + 1}: add the conference's name and year.`);
 });
+
+// Event photos under both lists of conferences: the same guard as the portfolios.
+ev.forEach((e) => checkGallery(e.gallery, `content.js, conferences.events "${e.title}"`));
+joined.forEach((e) => checkGallery(e.gallery, `content.js, conferences.joined "${e.name}"`));
 patrons.forEach((p, i) => {
   if (!p.event || !p.year) {
     throw new Error(`content.js, conferences.patrons.list entry ${i + 1} ("${p.name}"): add the event and its year (event: "...", year: "..."), or remove the entry — a name without a specific event is not listed.`);
@@ -80,6 +86,7 @@ patrons.forEach((p, i) => {
               {e.where && <p class="event-card__where"><Icon name="map-pin" />{e.where}</p>}
             </article>)}
       </div>
+      {ev.map((e) => <EventGallery gallery={e.gallery} />)}
     </div>
   </section>
 
@@ -94,6 +101,7 @@ patrons.forEach((p, i) => {
               {(e.with || []).length > 0 && <p class="event-card__where"><Icon name="users" /><span>With {e.with.map((w, k) => <Fragment>{k > 0 && (k === e.with.length - 1 ? " and " : ", ")}{abbrs[w] ? <abbr title={abbrs[w]}>{w}</abbr> : w}</Fragment>)}</span></p>}
             </article>)}
       </div>
+      {joined.map((e) => <EventGallery gallery={e.gallery} />)}
     </div>
   </section>}
 
