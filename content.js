@@ -72,6 +72,13 @@ export default {
       titleLines: ["This is", "JPSA"],
       sub: "What if one decision to join could turn into a hundred stories worth telling?",
       chips: ["Est. May 2007", "Affiliated with IPSF", "7 universities"],
+      // ⚠️ NOT SHOWN ON THE SITE (since September 2026): "photos" and "badge" below.
+      // They belonged to the hero's collage (three framed photos and a spinning round badge). The
+      // hero now shows members' faces instead (the family wall photos, assets/img/family/), so
+      // editing these three photos, their alt texts or the badge text changes nothing visible.
+      // They are kept in case the collage comes back. To bring it back, it goes in
+      // src/sections/home/HomeHero.astro (the collage markup, with its styles in
+      // public/assets/css/pages.css). Its last version is in the git history: commit 150fe4a.
       photos: [
         { src: "assets/img/moments/jpsa-banner.jpg", alt: "A JPSA member next to the JPSA banner: Students Today, Pharmacists Tomorrow" },
         { src: "assets/img/moments/national-symposium-7.jpg", alt: "A JPSA member in a suit in front of the 7th National Symposium backdrop" },

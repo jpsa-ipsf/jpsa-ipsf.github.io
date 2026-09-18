@@ -8,12 +8,13 @@ import { pad } from "../../lib/text.js";
 const h = C.home.hero;
 const L = C.site.links;
 // The faces behind the hero: the first 48 photos of the family wall (assets/img/family/), enough
-// to fill it on any screen.
+// to fill it on any screen. One small file each (120 px wide): they are faint decoration, and the
+// hero is on the first screen, so all of them load at once.
 const faces = Array.from({ length: Math.min(48, C.home.wallCount) }, (_, i) => `assets/img/family/f${pad(i + 1)}.jpg`);
 ---
 <section class="home-hero">
   {/* Decoration only, behind the text: the members' faces, and the giant JPSA at the foot (the real title is the h1). */}
-  <div class="home-hero__faces" aria-hidden="true">{faces.map((src) => <Image src={img(src)} alt="" widths={[120, 240]} sizes="(max-width: 900px) 20vw, 12.5vw" quality={50} loading="lazy" fetchpriority="low" />)}</div>
+  <div class="home-hero__faces" aria-hidden="true">{faces.map((src) => <Image src={img(src)} alt="" width={120} quality={50} loading="lazy" fetchpriority="low" />)}</div>
   <div class="home-hero__word" aria-hidden="true"><span>J</span><span>P</span><span>S</span><span>A</span></div>
   <div class="container home-hero__grid">
     <div>

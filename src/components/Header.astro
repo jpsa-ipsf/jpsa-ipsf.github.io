@@ -8,7 +8,7 @@ import { img } from "../lib/images.js";
 const { page } = Astro.props;
 ---
 <div class="container header-inner">
-  <a class="brand" href="index.html" aria-label="JPSA — home"><Image src={img(C.site.logo.dark)} alt="JPSA — Jordan Pharmaceutical Students' Association" widths={[200, 400]} sizes="96px" loading="eager" /></a>
+  <a class="brand" href="index.html" aria-label="JPSA — home"><Image src={img(C.site.logo.dark)} alt="JPSA — Jordan Pharmaceutical Students' Association" widths={[200, 400]} width={400} sizes="96px" loading="eager" /></a>
   <button class="menu-toggle" type="button" aria-expanded="false" aria-controls="site-nav" aria-label="Open menu"><span data-menu-icon="open"><Icon name="menu" /></span><span data-menu-icon="close" hidden><Icon name="x" /></span></button>
   <nav class="nav" id="site-nav" aria-label="Main">
     <ul class="nav-list">{C.nav.filter((n) => n.menu !== false).map((n) => <li><a class="nav-link" href={n.href} aria-current={n.page === page ? "page" : undefined}>{n.menuLabel || n.label}</a></li>)}</ul>
