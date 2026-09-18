@@ -26,6 +26,7 @@ export default {
       facebook: "https://www.facebook.com/JPSA.IPSF/",
       linkedin: "https://www.linkedin.com/company/jordan-pharmaceutical-students-association-jpsa",
       sepInstagram: "https://www.instagram.com/sep.jordan/",
+      sepJordan: "https://sepjordan.net", // JPSA's exchange platform: the application form, destinations, stories, FAQ
       ipsf: "https://www.ipsf.org",
       ipsfSep: "https://www.ipsf.org/student-exchange-programme",
       ipsfFaq: "https://www.ipsf.org/faq",
@@ -527,8 +528,10 @@ export default {
       list: [
         { title: "Be a JPSA member", text: "The exchange is open to pharmacy students and recent graduates through IPSF member associations like JPSA." },
         { title: "Talk to our SEP team", text: "JPSA's Student Exchange Officer guides you through deadlines, requirements and destinations." },
-        { title: "Register with IPSF", text: "Create your account on the IPSF website. Once our officer approves it, complete your SEP application." },
-        { title: "Pick your destinations", text: "Choose up to three countries and the kind of training you're looking for." },
+        // button: shows the yellow "apply" button (links.sepJordan) inside this step.
+        { title: "Apply on SEP Jordan", text: "Fill in the form on sepjordan.net and choose your destinations and the kind of training you're looking for.", button: "Apply on SEP Jordan" },
+        { title: "Interview", text: "A short interview with our exchange team." },
+        { title: "Register with IPSF", text: "Once you're accepted, create your account on the IPSF website and complete the official SEP application." },
         { title: "Get matched & prepare", text: "When a host accepts you, sort out your visa, insurance, travel and accommodation." },
         { title: "Train, explore, share", text: "Gain practical experience abroad — then come back and share your story with the family." },
       ],

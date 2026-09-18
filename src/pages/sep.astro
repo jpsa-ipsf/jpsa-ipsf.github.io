@@ -55,7 +55,7 @@ const sepLocal = sepTeam.local
     <div class="container">
       <SectionHead kicker={s.steps.kicker} title={s.steps.title} />
       <ol class="steps" role="list">
-        {s.steps.list.map((st, i) => <li class="step reveal" style={delay(i)}><h3>{st.title}</h3><p>{st.text}</p></li>)}
+        {s.steps.list.map((st, i) => <li class="step reveal" style={delay(i)}><h3>{st.title}</h3><p>{st.text}</p>{st.button && <div class="step__action"><Btn label={st.button} href={L.sepJordan} variant="yellow" iconName="arrow-up-right" /></div>}</li>)}
       </ol>
       <p class="note reveal"><Icon name="info" /><span>{s.steps.note} <a href={L.ipsfSep} target="_blank" rel="noopener">IPSF's SEP page</a> · <a href={L.ipsfFaq} target="_blank" rel="noopener">IPSF FAQ</a></span></p>
     </div>
@@ -94,7 +94,7 @@ const sepLocal = sepTeam.local
           <p class="lead">{s.incoming.note}</p>
           <p class="small muted" style="margin-top:14px">{s.incoming.source}</p>
           <div class="cluster" style="margin-top:24px">
-            <Btn label="Follow @sep.jordan" href={L.sepInstagram} variant="yellow" iconName="instagram" />
+            <Btn label="Follow @sep.jordan" href={L.sepInstagram} variant="outline-light" iconName="instagram" />
             <Btn label="JPSA on ipsf.org" href={L.ipsfJpsa} variant="outline-light" iconName="arrow-up-right" />
           </div>
         </div>
@@ -117,5 +117,5 @@ const sepLocal = sepTeam.local
     </div>
   </section>
 
-  <CtaBand title={s.cta.title} text={s.cta.text}><Btn label="@sep.jordan" href={L.sepInstagram} variant="yellow" iconName="instagram" /><Btn label="Email the SEP team" href={mailto("Student Exchange Programme")} variant="outline-light" iconName="mail" /></CtaBand>
+  <CtaBand title={s.cta.title} text={s.cta.text}><Btn label="Apply on SEP Jordan" href={L.sepJordan} variant="yellow" iconName="arrow-up-right" /><Btn label="@sep.jordan" href={L.sepInstagram} variant="outline-light" iconName="instagram" /><Btn label="Email the SEP team" href={mailto("Student Exchange Programme")} variant="outline-light" iconName="mail" /></CtaBand>
 </Base>

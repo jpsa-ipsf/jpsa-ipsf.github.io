@@ -318,7 +318,14 @@
 }
 .step h3 { font-size: 1.15rem; margin-bottom: 6px; }
 .step p { color: var(--ink-2); font-size: 0.97rem; }
+.step__action { margin-top: 16px; }
+/* A last step alone on its row takes the whole row (seven steps: 3 + 3 + 1 on wide screens). */
+.step:last-child:nth-child(3n + 1) { grid-column: 1 / -1; }
 @media (max-width: 960px) { .steps { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+@media (max-width: 960px) {
+  .step:last-child:nth-child(3n + 1) { grid-column: auto; }
+  .step:last-child:nth-child(odd) { grid-column: 1 / -1; }
+}
 @media (max-width: 600px) { .steps { grid-template-columns: 1fr; } }
 .note { display: flex; gap: 12px; align-items: flex-start; margin-top: 22px; padding: 16px 20px; border-radius: var(--radius); background: var(--yellow-soft); font-size: 0.97rem; }
 .note .icon { margin-top: 2px; width: 20px; height: 20px; color: var(--red); }
