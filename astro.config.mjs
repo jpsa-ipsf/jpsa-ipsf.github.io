@@ -3,17 +3,21 @@ import { defineConfig } from "astro/config";
 import sitemap from "@astrojs/sitemap";
 
 export default defineConfig({
-  // The website's public address. It is written ONLY here: the sitemap and
-  // robots.txt read it from this line. When jpsa-ipsf.com is connected,
-  // change this one value (and add public/CNAME).
+  // The website's public address: https://jpsaipsf.net (no hyphen). It is written
+  // ONLY here: the sitemap and robots.txt read it from this line.
   //
-  // The site must be served from the ROOT of this address, so the GitHub
-  // repository has to be named exactly jpsa-ipsf.github.io. Pictures and scripts
-  // are linked from the root (/_astro/...): under any other repository name
-  // (github.io/<name>/) the pages open with their colours and fonts, but no
-  // picture loads, nothing interactive works, and every section that fades in
-  // while scrolling stays hidden.
-  site: "https://jpsa-ipsf.github.io",
+  // The domain is also in public/CNAME (one line: jpsaipsf.net). Keep that file,
+  // always, and keep it the same as this line: GitHub Pages reads the domain from
+  // it when a site is published from a branch. This repository publishes with
+  // GitHub Actions (.github/workflows/deploy.yml), and then GitHub ignores the
+  // file and keeps the domain in the repository's Settings > Pages > Custom
+  // domain, which must stay jpsaipsf.net as well.
+  //
+  // The site must be served from the ROOT of this address. Pictures and scripts
+  // are linked from the root (/_astro/...): under a sub-path (github.io/<name>/)
+  // the pages open with their colours and fonts, but no picture loads, nothing
+  // interactive works, and every section that fades in while scrolling stays hidden.
+  site: "https://jpsaipsf.net",
 
   build: {
     // Output partners.html, sep.html … exactly like the old site (not /partners/),
