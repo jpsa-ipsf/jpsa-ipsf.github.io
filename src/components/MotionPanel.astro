@@ -16,11 +16,13 @@ const sliders = [
   { name: "--fx-drift", key: "cycle", label: "مدة الدورة (ثانية)", min: 8, max: 60, step: 1, unit: "s" },
   { name: "--fx-depth", key: "parallax", label: "البارالاكس", min: 0, max: 3, step: 0.05 },
 ];
-const menuLooks = [
-  { value: "word", label: "Menu بس" },
-  { value: "pulse", label: "نبضة بس" },
+const menuGlows = [
+  { value: "red", label: "أحمر JPSA" },
+  { value: "yellow", label: "أصفر" },
   { value: "both", label: "الاثنين" },
-  { value: "none", label: "ولا إشي" },
+];
+const menuSliders = [
+  { name: "--menu-glow-strength", key: "glow", label: "شدة التوهج (بتوقف عند الحد الآمن)", min: 0.1, max: 1, step: 0.05 },
 ];
 const wordStyles = [
   { value: "black", label: "أسود معتم" },
@@ -49,10 +51,14 @@ const kinds = [
   <button type="button" class="fx-panel__toggle" data-toggle>⚙ الحركة</button>
   <div class="fx-panel__body">
     <p class="fx-panel__note" data-reduced hidden>جهازك مفعّل عليه "تقليل الحركة"، فالحركة واقفة. طفّيه من إعدادات النظام لتشوفها.</p>
-    <p class="fx-panel__title">زر القائمة (عرض موبايل)</p>
-    <div class="fx-panel__modes" role="group" aria-label="زر القائمة">
-      {menuLooks.map((m) => <button type="button" data-menu-look={m.value}>{m.label}</button>)}
+    <p class="fx-panel__title">توهج زر القائمة (عرض موبايل)</p>
+    <div class="fx-panel__modes fx-panel__modes--3" role="group" aria-label="لون التوهج">
+      {menuGlows.map((m) => <button type="button" data-menu-glow={m.value}>{m.label}</button>)}
     </div>
+    {menuSliders.map((s) => <label class="fx-panel__row">
+      <span>{s.label} <output></output></span>
+      <input type="range" name={s.name} min={s.min} max={s.max} step={s.step} data-key={s.key} data-unit="" />
+    </label>)}
     <div class="fx-panel__actions fx-panel__actions--menu"><button type="button" data-replay-hint>شغّل النبضة مرة كمان</button></div>
     <p class="fx-panel__title">الكلمة العملاقة (الرئيسية)</p>
     <div class="fx-panel__modes fx-panel__modes--3" role="group" aria-label="شكل الكلمة">
@@ -108,10 +114,10 @@ const kinds = [
 
   #fx-panel .fx-panel__actions--menu { margin: -6px 0 14px; }
 
-  /* ---- The menu button on phones: the word, the pulse, both (components.css as it stands), or neither ---- */
-  html:is([data-menu-look="pulse"], [data-menu-look="none"]) .menu-toggle__label { display: none; }
-  html:is([data-menu-look="pulse"], [data-menu-look="none"]) .menu-toggle { width: 48px; padding: 0; border-radius: 50%; }
-  html:is([data-menu-look="word"], [data-menu-look="none"]) .menu-toggle.is-hint { animation: none; }
+  /* ---- The menu button's inner glow: red is components.css as it stands. Each colour keeps its own cap,
+     the strongest glow at which the word and the lines keep a contrast of 4.5 (measured). ---- */
+  html[data-menu-glow="yellow"] .menu-toggle { --menu-glow: var(--yellow); --menu-glow-cap: 1; }
+  html[data-menu-glow="both"] .menu-toggle { --menu-glow: linear-gradient(90deg, var(--red), var(--yellow)); --menu-glow-cap: 0.6; }
 
   /* ---- The giant word's looks (red is the default in pages.css) ---- */
   html[data-fx-word="black"] .home-hero__word { color: var(--black); }
@@ -208,18 +214,19 @@ const kinds = [
     const kinds = [...panel.querySelectorAll('input[type="checkbox"]')];
     const modeButtons = [...panel.querySelectorAll("[data-mode]")];
     const wordButtons = [...panel.querySelectorAll("[data-word]")];
-    const menuButtons = [...panel.querySelectorAll("[data-menu-look]")];
+    const glowButtons = [...panel.querySelectorAll("[data-menu-glow]")];
     const css = getComputedStyle(root);
     const defaults = Object.fromEntries(sliders.map((s) => [s.name, parseFloat(css.getPropertyValue(s.name))]));
     defaults.dust = 60;
     defaults["--word-size"] = 23;
     defaults["--word-opacity"] = 0.65;
+    defaults["--menu-glow-strength"] = 0.45;
     const CYCLES = { a: 20, b: 22, c: 16, d: 12 }; // each kind's starting speed
     let saved = {};
     try { saved = JSON.parse(localStorage.getItem(KEY)) || {}; } catch (e) {}
     let mode = saved.mode || "a";
     let word = saved.word || "red";
-    let menuLook = saved.menuLook || "both";
+    let menuGlow = saved.menuGlow || "red";
     // Plays the first-visit pulse again: forgets that it has played, and restarts it.
     const replayHint = () => {
       const t = document.querySelector(".menu-toggle");
@@ -252,15 +259,15 @@ const kinds = [
     };
 
     const save = () => {
-      const state = { mode, word, menuLook, cycles, values: {}, off: kinds.filter((k) => !k.checked).map((k) => k.value), closed: panel.classList.contains("is-closed") };
+      const state = { mode, word, menuGlow, cycles, values: {}, off: kinds.filter((k) => !k.checked).map((k) => k.value), closed: panel.classList.contains("is-closed") };
       sliders.forEach((s) => { state.values[s.name] = Number(s.value); });
       try { localStorage.setItem(KEY, JSON.stringify(state)); } catch (e) {}
     };
     const apply = () => {
       root.dataset.fxMode = mode;
       root.dataset.fxWord = word;
-      root.dataset.menuLook = menuLook;
-      menuButtons.forEach((b) => b.setAttribute("aria-pressed", String(b.dataset.menuLook === menuLook)));
+      root.dataset.menuGlow = menuGlow;
+      glowButtons.forEach((b) => b.setAttribute("aria-pressed", String(b.dataset.menuGlow === menuGlow)));
       wordButtons.forEach((b) => b.setAttribute("aria-pressed", String(b.dataset.word === word)));
       modeButtons.forEach((b) => b.setAttribute("aria-pressed", String(b.dataset.mode === mode)));
       density.closest("label").hidden = mode !== "d";
@@ -285,11 +292,7 @@ const kinds = [
       k.addEventListener("change", apply);
     });
     wordButtons.forEach((b) => b.addEventListener("click", () => { word = b.dataset.word; apply(); }));
-    menuButtons.forEach((b) => b.addEventListener("click", () => {
-      menuLook = b.dataset.menuLook;
-      apply();
-      if (menuLook === "pulse" || menuLook === "both") replayHint();
-    }));
+    glowButtons.forEach((b) => b.addEventListener("click", () => { menuGlow = b.dataset.menuGlow; apply(); replayHint(); }));
     panel.querySelector("[data-replay-hint]").addEventListener("click", replayHint);
     modeButtons.forEach((b) => b.addEventListener("click", () => {
       cycles[mode] = Number(cycle.value);
@@ -306,12 +309,13 @@ const kinds = [
       cycle.value = cycles[mode];
       kinds.forEach((k) => { k.checked = true; });
       word = "red";
+      menuGlow = "red";
       apply();
       dust();
     });
     panel.querySelector("[data-copy]").addEventListener("click", async (e) => {
       const off = kinds.filter((k) => !k.checked).map((k) => k.value);
-      const text = "menu " + menuLook + " · word " + word + " · mode " + mode.toUpperCase() + " · " + sliders.filter((s) => mode === "d" || s !== density).map((s) => `${s.dataset.key} ${s.value}${s.dataset.unit}`).join(" · ") + " · off: " + (off.join(", ") || "none");
+      const text = "menu glow " + menuGlow + " · word " + word + " · mode " + mode.toUpperCase() + " · " + sliders.filter((s) => mode === "d" || s !== density).map((s) => `${s.dataset.key} ${s.value}${s.dataset.unit}`).join(" · ") + " · off: " + (off.join(", ") || "none");
       try { await navigator.clipboard.writeText(text); e.target.textContent = "انتسخت ✓"; }
       catch (err) { window.prompt("الأرقام:", text); }
       setTimeout(() => { e.target.textContent = "نسخ الأرقام"; }, 1500);

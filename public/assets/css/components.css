@@ -57,6 +57,8 @@
 
 /* Phones and tablets only (the full menu shows above 940px): a pill with the icon and the word. */
 .menu-toggle {
+  position: relative;
+  isolation: isolate; /* keeps the glow below (z-index: -1) inside the button, under the icon and the word */
   display: none;
   align-items: center;
   justify-content: center;
@@ -70,16 +72,35 @@
 }
 .menu-toggle .icon { width: 22px; height: 22px; }
 .menu-toggle__label { font-size: 1rem; font-weight: 700; line-height: 1; }
-/* The first visit on a phone: one soft pulse, so the button reads as something to press. app.js
-   adds .is-hint and remembers in the browser once it has played; reduced motion leaves it out. */
+/* The first visit on a phone: one pulse, so the button reads as something to press. A ring grows
+   around it while its inside lights up and fades, in the same moment. app.js adds .is-hint and
+   remembers in the browser once it has played; reduced motion leaves it out.
+   The glow never goes past --menu-glow-cap: at its peak, the word and the lines keep a contrast
+   of at least 4.5 with it (measured on the rendered button). */
+.menu-toggle::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  border-radius: inherit;
+  background: var(--menu-glow, var(--red));
+  opacity: 0;
+  pointer-events: none;
+}
+.menu-toggle { --menu-glow-peak: min(var(--menu-glow-strength, 0.45), var(--menu-glow-cap, 0.6)); }
 .menu-toggle.is-hint { animation: menu-hint 1.4s var(--ease) 0.9s backwards; } /* nothing stays once it ends */
+.menu-toggle.is-hint::before { animation: menu-glow 1.4s var(--ease) 0.9s backwards; }
+@keyframes menu-glow {
+  0%, 100% { opacity: 0; }
+  25% { opacity: var(--menu-glow-peak); }
+}
 @keyframes menu-hint {
   0% { box-shadow: 0 0 0 0 color-mix(in srgb, var(--red) 60%, transparent); transform: scale(1); }
   25% { transform: scale(1.06); }
   60% { transform: scale(1); }
   100% { box-shadow: 0 0 0 16px color-mix(in srgb, var(--red) 0%, transparent); transform: scale(1); }
 }
-@media (prefers-reduced-motion: reduce) { .menu-toggle.is-hint { animation: none; } }
+@media (prefers-reduced-motion: reduce) { .menu-toggle.is-hint, .menu-toggle.is-hint::before { animation: none; } }
 
 @media (max-width: 940px) {
   .menu-toggle { display: inline-flex; }
