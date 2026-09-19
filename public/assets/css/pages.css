@@ -74,8 +74,10 @@
   background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='g' x='0' y='0' width='1' height='1' color-interpolation-filters='sRGB'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.8' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix values='1 0 0 0 0 1 0 0 0 0 1 0 0 0 0 0 0 0 0 1'/%3E%3CfeComponentTransfer%3E%3CfeFuncR type='linear' slope='2' intercept='-.5'/%3E%3CfeFuncG type='linear' slope='2' intercept='-.5'/%3E%3CfeFuncB type='linear' slope='2' intercept='-.5'/%3E%3C/feComponentTransfer%3E%3C/filter%3E%3Crect width='200' height='200' filter='url(%23g)'/%3E%3C/svg%3E") 0 0 / 200px 200px;
 }
 @media (max-width: 900px) {
-  .home-hero__faces { grid-template-columns: repeat(5, 1fr); }
-  .home-hero::after { background: linear-gradient(0deg, rgba(0, 0, 0, 0.5) 0%, rgba(0, 0, 0, 0.82) 30%, rgba(0, 0, 0, 0.82) 100%); }
+  /* Phones and tablets: the text covers the whole hero, so it is darkened evenly, and the faces
+     show about as clearly as on the right of a wide screen (the text keeps its contrast; measured). */
+  .home-hero__faces { grid-template-columns: repeat(5, 1fr); opacity: 0.36; }
+  .home-hero::after { background: linear-gradient(0deg, rgba(0, 0, 0, 0.35) 0%, rgba(0, 0, 0, 0.5) 30%, rgba(0, 0, 0, 0.5) 100%); }
 }
 @media print, (forced-colors: active) { .home-hero__faces, .home-hero__grain { display: none; } }
 
