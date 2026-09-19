@@ -75,24 +75,23 @@
 /* The first visit on a phone: one pulse, so the button reads as something to press. A ring grows
    around it while its inside lights up and fades, in the same moment. app.js adds .is-hint and
    remembers in the browser once it has played; reduced motion leaves it out.
-   The glow never goes past --menu-glow-cap: at its peak, the word and the lines keep a contrast
-   of at least 4.5 with it (measured on the rendered button). */
+   The glow (red into yellow) peaks at 60%: at that moment the word keeps a contrast of 8.1 and
+   the lines 5.9 (measured on the rendered button). Red past about 65% would drop below 4.5. */
 .menu-toggle::before {
   content: "";
   position: absolute;
   inset: 0;
   z-index: -1;
   border-radius: inherit;
-  background: var(--menu-glow, var(--red));
+  background: linear-gradient(90deg, var(--red), var(--yellow));
   opacity: 0;
   pointer-events: none;
 }
-.menu-toggle { --menu-glow-peak: min(var(--menu-glow-strength, 0.45), var(--menu-glow-cap, 0.6)); }
 .menu-toggle.is-hint { animation: menu-hint 1.4s var(--ease) 0.9s backwards; } /* nothing stays once it ends */
 .menu-toggle.is-hint::before { animation: menu-glow 1.4s var(--ease) 0.9s backwards; }
 @keyframes menu-glow {
   0%, 100% { opacity: 0; }
-  25% { opacity: var(--menu-glow-peak); }
+  25% { opacity: 0.6; }
 }
 @keyframes menu-hint {
   0% { box-shadow: 0 0 0 0 color-mix(in srgb, var(--red) 60%, transparent); transform: scale(1); }
@@ -309,39 +308,6 @@ a.card { text-decoration: none; color: inherit; display: block; }
 }
 .marquee--red .marquee__item::after { background: var(--yellow); }
 @keyframes marquee { to { transform: translateX(-50%); } }
-
-/* ---------- People ---------- */
-.people { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: clamp(14px, 2.4vw, 28px); }
-@media (max-width: 960px) { .people { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
-@media (max-width: 640px) {
-  .people { grid-template-columns: repeat(2, minmax(0, 1fr)); }
-  .person__name { font-size: 1rem; }
-}
-.person { display: grid; gap: 14px; align-content: start; }
-.person__photo {
-  position: relative;
-  aspect-ratio: 4 / 5;
-  overflow: hidden;
-  border-radius: var(--radius);
-  background: var(--gray);
-}
-.person__photo img {
-  width: 100%; height: 100%;
-  object-fit: cover;
-  object-position: 50% 18%;
-  transition: transform 700ms var(--ease);
-}
-.person:hover .person__photo img { transform: scale(1.045); }
-.person__initials {
-  position: absolute; inset: 0;
-  display: grid; place-items: center;
-  font-family: var(--font-display);
-  font-size: 3rem;
-  color: var(--red);
-}
-.person__name { font-weight: 700; font-size: 1.1rem; line-height: 1.25; }
-.person__role { margin-top: 2px; color: var(--red); font-weight: 600; font-size: 0.92rem; line-height: 1.35; }
-.person__meta { margin-top: 2px; color: var(--ink-3); font-size: 0.88rem; }
 
 /* ---------- Family wall (photo marquee) ---------- */
 .wall {
