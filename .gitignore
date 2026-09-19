@@ -11,3 +11,4 @@ dist/
 
 # Private working notes: never commit them (this repository is public)
 NOTES.md
+/.playwright-mcp
